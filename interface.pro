@@ -49,3 +49,14 @@ HEADERS  += src/about.h \
 
 FORMS    += src/mainwindow.ui \
     src/about.ui
+
+unix: LIBS += -L$$PWD/OGDF/_release/ -lOGDF
+
+INCLUDEPATH += $$PWD/OGDF/include
+DEPENDPATH += $$PWD/OGDF/include
+
+unix: PRE_TARGETDEPS += $$PWD/OGDF/_release/libOGDF.a
+
+unix: LIBS += -L$$PWD/OGDF/_release/ -lCOIN
+
+unix: PRE_TARGETDEPS += $$PWD/OGDF/_release/libCOIN.a

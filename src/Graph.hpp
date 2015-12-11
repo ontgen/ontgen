@@ -5,6 +5,9 @@
 #define DIJKSTRA_H
 
 #include "Node.hpp"
+#include <ogdf/basic/Graph.h>
+#include <ogdf/basic/GraphAttributes.h>
+#include <ogdf/fileformats/GraphIO.h>
 
 using namespace std;
 

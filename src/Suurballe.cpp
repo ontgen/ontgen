@@ -1,5 +1,5 @@
 /**
- * Algoritmo de roteamento
+ * Algoritmo de Suurballe para encontrar dois caminhos disjuntos por aresta
  */
 
 #include "Suurballe.hpp"
@@ -10,18 +10,14 @@ Suurballe::~Suurballe(){}
 
 void Suurballe::insertSubtree(Graph graph, tree<int> &tr, typename tree<int>::iterator root,vector<int> nodes, vector<int> &controller, int source)
 {
-    // cout<<"source "<<source<<endl;
+
     Node node = graph.getNodeAtPosition(source);
     vector<int> adjacents = node.getAdjacentsNodes();
     typename tree<int>::iterator temp;
     typename tree<int>::iterator newRoot;
     int newSource = source;
 
-    // for (unsigned int w = 0; w < nodes.size(); w++)
-    // {
-    //     cout<<" "<<nodes[w];
-    // }
-    // cout<<endl;
+
     if (find(this->nodeInTree.begin(),this->nodeInTree.end(),source) == this->nodeInTree.end())
     {
         this->nodeInTree.push_back(source);
