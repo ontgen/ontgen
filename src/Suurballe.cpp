@@ -1,5 +1,16 @@
 /**
- * Algoritmo de Suurballe para encontrar dois caminhos disjuntos por aresta
+ * Copyright 2015 Silvana Trindade
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 #include "Suurballe.hpp"
@@ -10,20 +21,18 @@ Suurballe::~Suurballe(){}
 
 void Suurballe::insertSubtree(Graph graph, tree<int> &tr, typename tree<int>::iterator root,vector<int> nodes, vector<int> &controller, int source)
 {
-
     Node node = graph.getNodeAtPosition(source);
     vector<int> adjacents = node.getAdjacentsNodes();
     typename tree<int>::iterator temp;
     typename tree<int>::iterator newRoot;
     int newSource = source;
 
-
     if (find(this->nodeInTree.begin(),this->nodeInTree.end(),source) == this->nodeInTree.end())
     {
         this->nodeInTree.push_back(source);
     }
 
-    unsigned  int it = 0;
+    unsigned int it = 0;
 
     while( adjacents.size() > it )
     {
@@ -50,10 +59,9 @@ void Suurballe::insertSubtree(Graph graph, tree<int> &tr, typename tree<int>::it
     }
 
     int n = nodes.size()-1;
-    // cout<<"n "<<n<<" "<<nodes[n]<<endl;
+
     if (source == nodes[n] )
     {
-        // cout<<"cai fora"<<endl;
         return;
     }
 
@@ -67,7 +75,7 @@ tree<int> Suurballe::makeTree(Graph graph, vector<int> nodes, int source)
 
     tree<int> tr;
 
-    tree<int>::iterator root, top;
+    tree<int>::iterator root, top, parent;
 
     top = tr.begin();
     root = tr.insert( top, source );
@@ -80,6 +88,12 @@ tree<int> Suurballe::makeTree(Graph graph, vector<int> nodes, int source)
 
     // cout<<endl;
     // kptree::print_tree_bracketed(tr,cout); //imprime árvore
+    // cout<<endl;
+
+    // for (unsigned int i = 0; i < this->nodeInTree.size(); ++i)
+    // {
+    //     cout<<this->nodeInTree[i]<<" ";
+    // }
     // cout<<endl;
 
     return tr;
@@ -104,6 +118,7 @@ void Suurballe::updateEdgesWeight(const tree<int>& t, typename tree<int>::iterat
     else
     {
         // child1, ..., childn
+        // int siblingCount = t.number_of_siblings( t.begin(iRoot) );
         int siblingNum;
 
         typename tree<int>::sibling_iterator iChildren;
@@ -112,7 +127,8 @@ void Suurballe::updateEdgesWeight(const tree<int>& t, typename tree<int>::iterat
         for (iChildren = t.begin(iRoot), siblingNum = 0; iChildren != t.end(iRoot); ++iChildren, ++siblingNum)
         {
             weight = 0.0f;
-            int u = *iRoot, v = *iChildren;   
+            int u = *iRoot, v = *iChildren;
+              // cout<<"\n----------------------------------------"<<endl;   
              /**
              * Remove arestas do caminho mínimo de ida
              * Deixando somente as arestas de volta
@@ -120,24 +136,27 @@ void Suurballe::updateEdgesWeight(const tree<int>& t, typename tree<int>::iterat
             if ( (nodes[ u ] == u || u == source) && ( nodes[ v ] == v || v == source) )
             {
                 graph.setWeightEdgeDirected(u,v,weight);
+                // cout<<"w'("<<u<<" , "<<v<<" ) = "<<weight<<endl;
 
                 graph.setWeightEdgeDirected(v,u,weight);
+                // cout<<"w'("<<v<<" , "<<u<<" ) = "<<weight<<endl;
 
                 graph.removeNode(u,v);
             }
             else if (find(this->nodeInTree.begin(),this->nodeInTree.end(),u) != this->nodeInTree.end() && find(this->nodeInTree.begin(),this->nodeInTree.end(),v) != this->nodeInTree.end() )
             {
                 graph.setWeightEdgeDirected(u,v,weight);
+                // cout<<"w'("<<u<<" , "<<v<<" ) = "<<weight<<endl;
 
                 weight = this->distance[v][u] - this->distance[source][u] + this->distance[source][v];
                 graph.setWeightEdgeDirected(v,u,weight);
-
+                // cout<<"w'("<<v<<" , "<<u<<" ) = "<<weight<<endl;
                 
             }
             else
             {
                 weight = this->distance[u][v] - this->distance[source][v] + this->distance[source][u];
-
+                // cout<<"w'("<<u<<" , "<<v<<" ) = "<<weight<<endl;
                 graph.setWeightEdgeDirected(u,v,weight);
 
                 u = *iChildren, v = *iRoot;
@@ -146,7 +165,9 @@ void Suurballe::updateEdgesWeight(const tree<int>& t, typename tree<int>::iterat
 
                 graph.setWeightEdgeDirected(u,v,weight);
 
+                // cout<<"w'("<<u<<" , "<<v<<" ) = "<<weight<<endl;
             }
+            // cout<<"( "<<u<<", "<<adjacents[w]<<" )"<<endl;
 
             this->treePath[v][u] = 1;
             this->treePath[u][v] = 1;
@@ -154,6 +175,12 @@ void Suurballe::updateEdgesWeight(const tree<int>& t, typename tree<int>::iterat
             updateEdgesWeight(t,iChildren,nodes,graph,source);
         }
     }
+    // cout<<"tamanho "<<this->nodeInTree.size()<<endl;
+    // for (unsigned int i = 0; i < this->nodeInTree.size(); i++)
+    // {
+    //     cout<<" "<<this->nodeInTree[i];
+    // }
+    // cout<<endl;
 }
 
 /**
@@ -172,6 +199,8 @@ void Suurballe::changeEdgesWeights(Graph & graph, tree<int> tr, vector<int> node
      * Sendo s o source e u e v nós pertencentes a árvore
      *      w'(u,v) = w (u,v) - d(s,v) + d(s,u)
      */
+
+    // int headCount = tr.number_of_siblings(tr.begin());//número de cabeças da árvore
 
     typename tree<int>::sibling_iterator iRoot = tr.begin();
 
@@ -207,11 +236,11 @@ void Suurballe::changeEdgesWeights(Graph & graph, tree<int> tr, vector<int> node
                 weight = this->distance[u][w] - this->distance[source][w] + this->distance[source][u];
                 
                 graph.setWeightEdgeDirected(u,w,weight);
-
+                // cout<<"w'("<<u<<" , "<<w<<" ) = "<<weight<<endl;
                 weight = this->distance[w][u] - this->distance[source][u] + this->distance[source][w];
                 
                 graph.setWeightEdgeDirected(w,u,weight);
-
+                // cout<<"w'("<<v<<" , "<<u<<" ) = "<<weight<<endl;
                 this->treePath[w][u] = 1;
                 this->treePath[u][w] = 1;
             }
@@ -248,6 +277,12 @@ vector<int> Suurballe::disjointPath(int target)
 
     reverse( path.begin(),path.end() );//inverte caminho
 
+    // for (unsigned int i = 0; i < path.size(); i++)
+    // {
+    //  cout<<" "<<path[i];
+    // }
+    // cout<<endl;
+
     return path;
 }
 
@@ -267,6 +302,8 @@ bool Suurballe::findPath(Graph &g, vector<Node> nodes,int source, int target)
         //verifica se existe ligação
         if ( find(adjacents.begin(),adjacents.end(),u) != adjacents.end() )
         {
+            // cout<<"u "<<source<<" v "<<u<<endl;
+
             g.removeNode(source,u);
             this->parent[u] = source;
 
@@ -326,7 +363,76 @@ bool Suurballe::makeSubgraphDisjointPaths(Graph &g, int source, int target)
     return true;
 }
 
-bool Suurballe::makeDisjointPaths(vector<int> path1, vector<int> path2)
+void Suurballe::discardCommonEdge(vector<int> &p1, vector<int> &p2, int x, int y)
+{
+    vector<int> t1, t2;
+    unsigned int u = 0;
+    // cout<<"\n-----------D---------------"<<endl;
+    
+    // cout<<endl;
+    for (u = 0; u < p1.size(); u += 2)
+    {
+        if( u == (unsigned int)x )
+        {
+            break;
+        }
+
+        t1.push_back(p1[u]);
+        t1.push_back(p1[u+1]);
+    }
+    // cout<<"\n"<<endl; v = 0;   
+    for (u = 0; u < p2.size(); u += 2)
+    {
+        if( u == (unsigned int)y ) {
+            break;
+        }
+        
+        t2.push_back(p2[u]);
+        t2.push_back(p2[u+1]);
+    }
+
+    // cout<<"\nsegunda parte "<<u<<" "<<v<<"\n"<<endl;
+    for (u = y+2; u < p2.size(); u += 2)
+    {
+        if (p2[u] == t1[t1.size() - 1] && p2[u+1] == t1[t1.size() - 2])
+        {
+            t1.erase( t2.begin() + t1.size() - 1 );
+            t1.erase( t2.begin() + t1.size() - 1 );
+            continue;
+        }
+
+        t1.push_back(p2[u]);
+        t1.push_back(p2[u+1]);
+    }
+  
+    for (u = x+2; u < p1.size(); u += 2)
+    {
+        if (p1[u] == t2[t2.size() - 1] && p1[u+1] == t2[t2.size() - 2])
+        {
+            t2.erase( t2.begin() + t2.size() - 1 );
+            t2.erase( t2.begin() + t2.size() - 1 );
+            continue;
+        }
+
+        t2.push_back(p1[u]);
+        t2.push_back(p1[u+1]);
+    }
+
+    p1.clear();
+    p2.clear();
+
+    for (u = 0; u < t1.size(); u++)
+    {
+        p1.push_back(t1[u]);
+    }
+
+    for (u = 0; u < t2.size(); u++)
+    {
+        p2.push_back(t2[u]);
+    }
+}
+
+bool Suurballe::makeDisjointPaths(vector<int> path1, vector<int> path2, Graph &graph)
 {
 
     vector<int> p1,p2;
@@ -345,17 +451,19 @@ bool Suurballe::makeDisjointPaths(vector<int> path1, vector<int> path2)
     {
         for (unsigned int v = 0; v < p2.size()-1; v+=2)
         {
-            //exclui enlace
+            //exclui arestas em comum mas invertidas
             if (p1[u] == p2[v+1] && p1[u+1] == p2[v])
             {
-                p1.erase( p1.begin() + u );
-                p1.erase( p1.begin() + ( u + 1 ) );
-
-                p2.erase( p2.begin() + v );
-                p2.erase( p2.begin() + ( v + 1 ) );
+                discardCommonEdge(p1,p2,u,v);
             }
+
         }
     }
+
+    /**
+     * Contruir sub-grafo
+     */
+    vector< vector<int> > subGraph = vector< vector<int> > ( this->numberOfNodes, vector<int> (this->numberOfNodes,0) );
 
     Graph g;
 
@@ -369,15 +477,14 @@ bool Suurballe::makeDisjointPaths(vector<int> path1, vector<int> path2)
     g.setMaximumDegree(g.getNumberOfNodes()-1);
     g.setMinimumDegree(1);
 
-    unsigned int u = 0;
 
-    for (u = 0; u < p1.size(); u+=2)
+    for (unsigned int u = 0; u < p1.size(); u+=2)
     {
         g.setEdgeDirected(p1[u],p1[u+1]);
 
     }
 
-    for (u = 0; u < p2.size(); u+=2)
+    for (unsigned int u = 0; u < p2.size(); u+=2)
     {
         g.setEdgeDirected(p2[u],p2[u+1]);
 
@@ -385,108 +492,98 @@ bool Suurballe::makeDisjointPaths(vector<int> path1, vector<int> path2)
 
     int source = path1[0];
     int target = path1[ path1.size()-1 ];
-
-    /**
-     * Verifica se existem duas arestas de saída no source
-     * E duas arestas de entrada no target, além disso deve
-     * haver uma de entrada e uma de saída nos nós restantes
-     */
-
+    
     return makeSubgraphDisjointPaths(g,source,target);
 }
 
 bool Suurballe::execute(Graph & graph)
 {
-
     bool survivor = false;
 
-    this->numberOfPaths = 0;
-
-    Dijkstra dijkstra;
-
-    this->numberOfNodes = graph.getNumberOfNodes();
-
-    this->distance = vector<vector<int>> (this->numberOfNodes,vector<int>( this->numberOfNodes,0) );
-
-    int n = 0, v = 0;
-   
-    /**
-     * Para cada par de nós (u,v)
-     * Obtêm caminho mínimo
-     */
-    for (int u = 0; u < this->numberOfNodes-1; u++)
+    if (this->datas.is_open())
     {
-        for(v = u+1; v < this->numberOfNodes; v++)
+
+        this->numberOfPaths = 0;
+        //cout<<"Suurballe "<<endl;
+        Dijkstra dijkstra;
+
+        this->numberOfNodes = graph.getNumberOfNodes();
+
+        this->distance = vector<vector<int>> (this->numberOfNodes,vector<int>( this->numberOfNodes,0) );
+
+        int n = 0;
+       
+        
+        /**
+         * Para cada par de nós (u,v)
+         * Obtêm caminho mínimo
+         */
+        for (int u = 0; u < this->numberOfNodes-1; u++)
         {
-            this->distance[u][v] = this->distance[v][u] = dijkstra.execute(graph,u,v);
-            
-            this->path.push_back( dijkstra.shortestPath(v) );
-
-            if ( path[n].size() <= 1)
+            for(int v = u+1; v < this->numberOfNodes; v++)
             {
-                return survivor;
-            }
+                this->distance[u][v] = this->distance[v][u] = dijkstra.execute(graph,u,v);
+                // cout<<"distance entre "<<u<<" e "<<v<<" = "<<this->distance[u][v]<<endl;
+                this->path.push_back( dijkstra.shortestPath(v) );
 
-            n++;
+                if ( path[n].size() <= 1)
+                {
+                    return survivor;
+                }
+                this->numberOfPaths++;
+                n++;
+            }
+        }
+
+        int iterator = 0;
+        double dist = 0;
+
+        for (int u = 0; u < this->numberOfNodes-1; u++)
+        {
+            for (int v = u+1; v < this->numberOfNodes; v++)
+            {
+                Graph auxiliar = graph;
+
+                /**
+                 * mudança de peso nas arestas
+                 * Monta árvore a partir do nó u
+                 */
+                // cout<<"----------------------------\n"<<endl;
+                // cout<<"U "<<u<<" V "<<v<<endl;
+                this->treePath = vector<vector<int>> (this->numberOfNodes,vector<int>(this->numberOfNodes,0)); 
+                tree<int> tr = makeTree(auxiliar, this->path[iterator], u);
+                // cout<<"------------------------ "<<u+1<<" "<<v+1<<"------------------"<<endl;
+                changeEdgesWeights(auxiliar, tr, this->path[iterator]);
+                // auxiliar.printAdjacents(u);
+                // cout<<"----------------------------------------------------------"<<endl;
+                dist =  dijkstra.execute(auxiliar,u,v);
+
+                if ( dist == std::numeric_limits<double>::max() )
+                {
+                    return false;
+                }
+
+                vector<int> newPath = dijkstra.shortestPath(v);
+
+                //não encontrou caminho
+                if (newPath.size() == 1)
+                {
+                    return false;
+                }
+
+
+                survivor = makeDisjointPaths(path[iterator],newPath, graph);
+
+                if (survivor == false)
+                {
+                    break;
+                }
+
+                this->nodeInTree.empty();
+
+                iterator++;
+            }
         }
     }
-
-    this->numberOfPaths = n;
-
-    // cout<<"numberOfPaths "<<this->numberOfPaths<<endl;
-
-    int iterator = 0;
-    double dist = 0;
-
-    for ( int u = 0; u < this->numberOfNodes-1; u++)
-    {
-        for (v = u+1; v < this->numberOfNodes; v++)
-        {
-            Graph auxiliar = graph;
-
-            /**
-             * mudança de peso nas arestas
-             * Monta árvore a partir do nó u
-             */
-            this->treePath = vector<vector<int>> (this->numberOfNodes,vector<int>(this->numberOfNodes,0)); 
-            // cout<<"\n----------------------"<<u<<" "<<v <<"---------------------------"<<endl;
-            // for (unsigned int w = 0; w < path[iterator].size(); w++)
-            // {
-            //     cout<<" "<<path[iterator][w];
-            // }
-            // cout<<endl;
-
-            tree<int> tr = makeTree(auxiliar, this->path[iterator], u);
-           
-            changeEdgesWeights(auxiliar, tr, this->path[iterator]);
-          
-            dist =  dijkstra.execute(auxiliar,u,v);
-
-            if ( dist == std::numeric_limits<double>::max() )
-            {
-                return false;
-            }
-
-            vector<int> newPath = dijkstra.shortestPath(v);
-
-            //não encontrou caminho
-            if (newPath.size() <= 1)
-            {
-                return false;
-            }
-
-            survivor = makeDisjointPaths(path[iterator],newPath);
-
-            if (survivor == false)
-            {
-                return false;
-            }
-
-            this->nodeInTree.empty();
-
-            iterator++;
-        }
-    }
- 
     return survivor;
 }

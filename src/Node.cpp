@@ -18,8 +18,6 @@ Node::~Node(){}
 void Node::setEdgeNode(int target){
 
 	adjacents.push_back(target);
-	weight.push_back(1);//padrão para 1 como havendo ligação
-
 	setDegree();
 }
 
@@ -28,22 +26,20 @@ void Node::setDegree(){
 	this->degree++;
 }
 
-void Node::setDistanceNode(double distance){
+void Node::setDistanceNode(double d){
 
-	this->weight.push_back(distance);
+	this->distance.push_back(d);
 }
 
-void Node::setWeight(int node, double value)
+void Node::setNewDistance(int node, double value)
 {
+	vector<int>::iterator it;
 
-	for (unsigned int i = 0; i < this->adjacents.size(); i++)
+	it = find(this->adjacents.begin(),this->adjacents.end(),node);
+
+	if (it  != this->adjacents.end())
 	{
-		if (this->adjacents[i] == node)
-		{
-			this->weight[i] = value;
-
-			break;
-		}
+        this->distance[*it] = value;
 	}
 }
 
@@ -70,7 +66,6 @@ void Node::setDegreeCentrality(int value)
 
 void Node::setBetweennessCentrality(double value)
 {
-	// cout<<"<bc> "<<value<<endl;
 
 	this->betweenCentrality = value;
 }
@@ -167,7 +162,7 @@ int Node::getNumberOfNodesFromPath(int index)
 
 double Node::getWeightEdge(int position)
 {
-	return this->weight[position];
+	return this->distance[position];
 }	
 
 int Node::getAdjacentNode(int position)

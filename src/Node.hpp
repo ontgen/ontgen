@@ -27,7 +27,7 @@ public:
      */
     void setEdgeNode(int);						//faz uma ligação
     void setDegree();							//aumenta o grau do nó
-    void setWeight(int, double);				//atualiza peso de uma ligação
+    void setNewDistance(int, double);				//atualiza peso de uma ligação
     void setDistanceNode(double);				//atribui distância entre dois nós
     void setDegreeCentrality(int);				//atribui o valor da centralidade de grau
     void setBetweennessCentrality(double);			//atribui o valor da centralidade de intermediação
@@ -65,7 +65,7 @@ private:
 
     int degree; 					     //número de links da topologia
     vector<int> adjacents;  		     //vetor de adjacências de um nó
-    vector<double> weight;			     //vetor de peso de ligações entre nós adjacentes
+    vector<double> distance;			 //vetor de distância das ligações entre nós adjacentes
     vector<double> distanceEuclidean;   //armazena a distância euclidiana de um par de nós adjacentes
 
     /**

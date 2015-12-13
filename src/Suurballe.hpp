@@ -16,7 +16,7 @@ public:
 	bool execute(Graph &);								//encontra caminhos disjuntos 
 	bool findPath(Graph &, vector<Node>, int, int);
 	tree<int> makeTree(Graph, vector<int>, int);						//insere nós em uma árvore binária
-	bool makeDisjointPaths(vector<int>, vector<int>);
+	bool makeDisjointPaths(vector<int>, vector<int>, Graph &);
 	void changeEdgesWeights(Graph &, tree<int>, vector<int>);			//atualiza peso dos nós da árvore
 	void makePathVector(vector<int>,vector<int> &,vector<int> &inPath);
 	void insertSubtree(Graph, tree<int> &, typename tree<int>::iterator, vector<int>, vector<int> &, int);
@@ -24,6 +24,7 @@ public:
 	vector<int> disjointPath(int);
 	bool makeSubgraphDisjointPaths(Graph &, int, int);
 	vector<double> averageHops();										//calculo o número médio de saltos para o caminho principal e o de backup
+	void discardCommonEdge(vector<int> &, vector<int> &, int, int);									//calculo o número médio de saltos para o caminho principal e o de backup
 
 private:
 

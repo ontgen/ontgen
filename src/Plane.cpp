@@ -998,7 +998,8 @@ void Plane::connectionNodesRegion(Graph &graph,vector<vector<int>> &nodes)
                     else if(targets[target] == 0 && target != end && controller < n && waxmanProbability(graph,source,target) == true)
                     {
                         graph.setEdge(source,target);//liga os dois nós no grafo
-                        graph.setEuclideanDistance(source,target,this->euclidean);
+                        double e = getEuclidean(source,target);
+                        graph.setEuclideanDistance(source,target,e);
 
                         targets[target] = 1;
                         sources[source] = 1;
@@ -1010,7 +1011,8 @@ void Plane::connectionNodesRegion(Graph &graph,vector<vector<int>> &nodes)
                     else if( targets[target] == 0  && controller == n-1 && waxmanProbability(graph,source,target) == true)
                     {
                         graph.setEdge(source,target);//liga os dois nós no grafo
-                        graph.setEuclideanDistance(source,target,this->euclidean);
+                        double e = getEuclidean(source,target);
+                        graph.setEuclideanDistance(source,target,e);
 
                         targets[target] = 1;
                         sources[source] = 1;
@@ -1212,7 +1214,6 @@ void Plane::initialize(Graph &graph,int simulation)
 
             j++;
         }
-        // cout<<endl;
 
         j = 0;
     }

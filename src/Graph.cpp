@@ -99,14 +99,13 @@ void Graph::setDistancePairOfNodes(int u,int v,double distance)
 
 void Graph::setWeightEdgeDirected(int u,int v, double value)
 {
-	this->nodes[u].setWeight(v,value);//peso 1 caso ocorra ligação
+	this->nodes[u].setNewDistance(v,value);//peso 1 caso ocorra ligação
 }
 
 void Graph::setWeight(int u,int v, double value)
 {
-    //cout<<" u "<<u<<" v "<<v<<endl;
-	this->nodes[u].setWeight(v,value);//peso 1 caso ocorra ligação 
-	this->nodes[v].setWeight(u,value);//peso 1 caso ocorra ligação 
+	this->nodes[u].setNewDistance(v,value);//peso 1 caso ocorra ligação 
+	this->nodes[v].setNewDistance(u,value);//peso 1 caso ocorra ligação 
 }
 
 

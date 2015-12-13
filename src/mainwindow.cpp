@@ -57,7 +57,6 @@ void MainWindow::on_pushButton_clicked()
       * Configurações do plano
       */
     // cout<<ui->bc->isChecked()<< ui->cc->isChecked()<< ui->dc->isChecked()<< ui->ec->isChecked()<<endl;
-
      Plane plane;
 
      plane.setArea(ui->area->value()); //valor da raiz da area
@@ -126,6 +125,7 @@ void MainWindow::on_pushButton_clicked()
         graph.memsetGraph();
 
         plane.initialize(graph,simulation);
+
         
          /**
           * Verifica se o número de ligações foi atingido
@@ -147,12 +147,13 @@ void MainWindow::on_pushButton_clicked()
             }
          }
 
+         for(int w = 0; w < graph.getNumberOfNodes();w++) graph.printAdjacents(w);
 
         Suurballe s;
 
         bool survivor = s.execute(graph);
 
-        // cout<<"survivor "<<survivor<<endl;
+        cout<<" Survivor "<<survivor<<endl;
 
         if(survivor)
         {
@@ -167,7 +168,6 @@ void MainWindow::on_pushButton_clicked()
 
             if( (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked() ) && survivor)
             {
-                // cout<<"\n Measures"<<endl;
                 if (simulation)
                 {
                     file.createXls();
