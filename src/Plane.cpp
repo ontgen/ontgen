@@ -56,7 +56,7 @@ void Plane::setNumberRegions(int n)
 /**
  * Atribui coordenadas correspondentes ao nó
  */
-void Plane::setNodeCoordinates(Graph graph, int x, int y,int node)
+void Plane::setNodeCoordinates(int x, int y,int node)
 {
 
     this->plane[x][y] = node;
@@ -86,7 +86,7 @@ void Plane::setNodesCoordinates(Graph graph)
 
             if (this->coordinates[node][0] == -1 && this->coordinates[node][1] == -1)
             {
-                setNodeCoordinates(graph,x,y,node);
+                setNodeCoordinates(x,y,node);
                 break;
             }
         }
@@ -495,7 +495,7 @@ bool Plane::waxmanProbability(Graph graph,int u,int v)
 
     double probability = getBetha()*exponent;//calculo da probalidade
 
-    double temp = randomDouble(0,1)*0.75f;
+    double temp = randomDouble(0.0f,1.0f)*0.75f;
 
     if (probability > temp && !graph.getEdge(u,v) == true)
     {
@@ -934,7 +934,7 @@ void Plane::connectionNodesRegion(Graph &graph,vector<vector<int>> &nodes)
         nodes.push_back( temp );//retorna os nós de uma região
 
         int controller = 0;
-        int n = nodes[i].size();
+        int n = (int)nodes[i].size();
 
         /**
          * Região possui somente dois nós
@@ -942,8 +942,7 @@ void Plane::connectionNodesRegion(Graph &graph,vector<vector<int>> &nodes)
         if (n == 2)
         {
             graph.setEdge(nodes[i][0],nodes[i][1]);//liga os dois nós no grafo
-            
-            double e = getEuclidean(nodes[i][0],nodes[i][0]);
+            double e = getEuclidean(nodes[i][0],nodes[i][1]);
             graph.setEuclideanDistance(nodes[i][0],nodes[i][1],e);
 
             continue;
@@ -1036,13 +1035,13 @@ void Plane::connectionNodesRegion(Graph &graph,vector<vector<int>> &nodes)
 void Plane::regionsInterconnection(Graph &graph,vector<vector<int>> &nodes)
 {
     int controller = 0, j = 0;
-    unsigned int count = 0;
+    int count = 0;
     double e = 0.0f;
     vector<int> neighbor;
 
     for (int i = 0; i < this->nRegions; i++)
     {
-        neighbor = vector<int> (nodes[i].size(),0);
+        neighbor = vector<int> ((int)nodes[i].size(),0);
         j = 0;
         count = 0;
         /**
@@ -1065,7 +1064,6 @@ void Plane::regionsInterconnection(Graph &graph,vector<vector<int>> &nodes)
                 target = targetSearch(nodes[i][j],graph,nodes,i);
 
                 graph.setEdge(nodes[i][j],target); //faz a ligação dos nós no grafo de matriz adjacente
-                
                 e = getEuclidean(nodes[i][j],target);
                 graph.setEuclideanDistance(nodes[i][j],target,e);
 
@@ -1078,7 +1076,7 @@ void Plane::regionsInterconnection(Graph &graph,vector<vector<int>> &nodes)
              * Escolhe um par de nós origem e um par destino
              * Os nós destinos não podem ser da mesma região
              */
-            unsigned int n = nodes[i].size();
+            int n = (int)nodes[i].size();
             vector< vector<int> > pair = vector< vector<int> > (n);
 
             /**
@@ -1200,13 +1198,13 @@ void Plane::initialize(Graph &graph,int simulation)
      */
     connectionNodesRegion(graph,nodesFromRegion);
 
-    int i = 0, j = 0;
-    unsigned int n = 0;
+    int j = 0;
+    int n = 0;
 
     //armazena em qual região cada nó se encontra
     for (int i = 0; i < this->nRegions; i++)
     {
-        n = nodesFromRegion[i].size();
+        n = (int)nodesFromRegion[i].size();
 
         while(j < n)
         {
@@ -1271,7 +1269,7 @@ int Plane::randomLink(Graph &graph)
             e = getEuclidean(nodes[0],nodes[1]);
             graph.setEuclideanDistance(nodes[0],nodes[1],e);
 
-            return nodes.size();
+            return (int)nodes.size();
         }
         else
         {
@@ -1329,9 +1327,9 @@ int Plane::randomLink(Graph &graph)
             double e = getEuclidean(source,target);
             graph.setEuclideanDistance(source,target,e);
 
-            return nodes.size();
+            return (int)nodes.size();
         }
     }
 
-    return nodes.size();
+    return (int)nodes.size();
 }

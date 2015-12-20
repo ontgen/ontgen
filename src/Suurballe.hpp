@@ -38,5 +38,4 @@ private:
 	vector< double> hopBackup;			//número de saltos(i,j) de backup
 	vector< vector<int> > distance;				//armazena distância entre um par de nós d(u,v)
 	vector< vector<int> > treePath;				//matriz que armazena enlaces da árvore de u a v
-	ofstream datas;								//dados obtidos com o algoritmo de Suurballe
 };

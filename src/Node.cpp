@@ -39,13 +39,13 @@ void Node::setNewDistance(int node, double value)
 
 	if (it  != this->adjacents.end())
 	{
-        this->distance[*it] = value;
+        this->distance[it - this->adjacents.begin()] = value;
 	}
 }
 
-void Node::setEuclideanDistance(double distance)
+void Node::setEuclideanDistance(double d)
 {
-	this->distanceEuclidean.push_back(distance);
+	this->distance.push_back(d);
 }
 
 void Node::setRegion(int r)
@@ -118,7 +118,7 @@ int Node::getDegree()
 
 vector<double> Node::getEuclideanDistance()
 {
-	return this->distanceEuclidean;
+	return this->distance;
 }
 
 vector<int> Node::getAdjacentsNodes() 
@@ -139,6 +139,7 @@ int Node::getRegionOfNode()
 bool Node::getEdgeNode(int target){
 
 	vector<int>::iterator it;
+	
 	it = find(this->adjacents.begin(),this->adjacents.end(),target);
 
 	if (it  != this->adjacents.end())
@@ -162,11 +163,21 @@ int Node::getNumberOfNodesFromPath(int index)
 
 double Node::getWeightEdge(int position)
 {
+	if (position < 0 || position >= (int)this->adjacents.size())
+	{
+		return -1;
+	}
+
 	return this->distance[position];
 }	
 
 int Node::getAdjacentNode(int position)
 {
+	if (position < 0 || position >= (int)this->adjacents.size())
+	{
+		return -1;
+	}
+
 	return this->adjacents[position];
 }
 

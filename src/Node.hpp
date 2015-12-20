@@ -66,7 +66,6 @@ private:
     int degree; 					     //número de links da topologia
     vector<int> adjacents;  		     //vetor de adjacências de um nó
     vector<double> distance;			 //vetor de distância das ligações entre nós adjacentes
-    vector<double> distanceEuclidean;   //armazena a distância euclidiana de um par de nós adjacentes
 
     /**
      * Variáveis utilizadas para medidas de centralidade

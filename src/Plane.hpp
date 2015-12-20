@@ -35,7 +35,7 @@ public:
     void setCoodinatesUniformRegion(Graph);     //distribuição uniforme dos nodos
     void setWaxmanParameters(double,double);    //atribui parâmetros de Waxman que variam de (0,1]
     void setDistributionType(int);
-    void setNodeCoordinates(Graph,int,int,int);                                     // set nas coordenadas
+    void setNodeCoordinates(int,int,int);                                     // set nas coordenadas
     /**
      * Getters
      */

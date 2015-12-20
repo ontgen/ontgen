@@ -26,7 +26,11 @@ vector<int> Dijkstra::shortestPath(int target)
     }
 
     reverse( path.begin(),path.end() );//inverte caminho
-
+    // for (int i = 0; i < (int)path.size(); i++)
+    // {
+    //     cout<<" "<<path[i];
+    // }
+    // cout<<endl;
     return path;
 }
 
@@ -35,14 +39,15 @@ vector<int> Dijkstra::shortestPath(int target)
  */
 int Dijkstra::execute( Graph graph, int source, int target)
 {
-    Node p; 					//vetor temporário
-    vector<bool> inTree;		//O nó já esta na árvore?
-    vector<double> distance;	//armazena distância para source
-    int v;						//nó atual
-    int w;						//candidato a próximo nó
-    int n;						//número de nós adjacentes
-    double weight;				//peso da aresta
-    double dist;				//melhor distância atual para o nó de partida
+    // cout<<"Dijkstra\n";
+    Node p;                     //vetor temporário
+    vector<bool> inTree;        //O nó já esta na árvore?
+    vector<double> distance;    //armazena distância para source
+    int v;                      //nó atual
+    int w;                      //candidato a próximo nó
+    int n;                      //número de nós adjacentes
+    double weight;              //peso da aresta
+    double dist;                //melhor distância atual para o nó de partida
 
 
     inTree = vector<bool> ( graph.getNumberOfNodes(), false);
@@ -50,9 +55,9 @@ int Dijkstra::execute( Graph graph, int source, int target)
     this->parent = vector<int> ( graph.getNumberOfNodes(), -1);
 
     v = source;
-    distance[v] = 0;
+    distance[v] = 0.0f;
 
-    while( inTree[target] == false)
+    while( inTree[target] == false && inTree[v] == false)
     {
         inTree[v] = true;
 
@@ -62,8 +67,6 @@ int Dijkstra::execute( Graph graph, int source, int target)
 
         if (n == 0)
         {
-            // cout<<"Topologia com nó "<<v<<" desconexo."<<endl;
-
             return -std::numeric_limits<double>::max() ;
         }
 
@@ -77,7 +80,7 @@ int Dijkstra::execute( Graph graph, int source, int target)
             /**
              * Verificação de caminho
              */
-            if ( distance[w] > ( distance[v] + weight ) && inTree[w] == false )
+            if ( ( distance[w] > ( distance[v] + weight ) ) && weight > -1) 
             {
                 distance[w] = distance[v] + weight;
                 this->parent[w] = v;
@@ -99,7 +102,7 @@ int Dijkstra::execute( Graph graph, int source, int target)
             }
         }
 
-        if (inTree[v] == true)
+        if (v == target)
         {
             break;
         }
