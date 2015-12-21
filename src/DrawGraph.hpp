@@ -15,6 +15,6 @@ class DrawGraph
 public:
 	DrawGraph(Graph &,string);
 	~DrawGraph();
-
+    ogdf::Graph constructGraphOGDF(Graph);
 	string file;//nome do arquivo que será armazenado a imagem
 };

@@ -32,7 +32,8 @@ SOURCES += src/about.cpp \
     src/Measure.cpp \
     src/Node.cpp \
     src/Plane.cpp \
-    src/Suurballe.cpp
+    src/Suurballe.cpp \
+    src/DrawGraph.cpp
 
 HEADERS  += src/about.h \
     src/Brandes.hpp \
@@ -45,7 +46,8 @@ HEADERS  += src/about.h \
     src/Plane.hpp \
     src/Suurballe.hpp \
     src/tree.hh \
-    src/tree_util.hh
+    src/tree_util.hh \
+    src/DrawGraph.hpp
 
 FORMS    += src/mainwindow.ui \
     src/about.ui

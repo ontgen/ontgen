@@ -7,6 +7,7 @@
 #include "Measure.hpp"
 #include "Suurballe.hpp"
 #include "FileWriter.hpp"
+#include "DrawGraph.hpp"
 
 using namespace std;
 
