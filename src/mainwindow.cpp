@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "svgviewer.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QString>
@@ -159,6 +160,9 @@ void MainWindow::on_pushButton_clicked()
         if(survivor == true)
         {
             DrawGraph draw(graph,plane,"uuu");//desenha grafo
+            SVGViewer *svg = new SVGViewer();
+            svg->setWindowFlags(Qt::Dialog | Qt::Desktop);
+            svg->show();
 
             if (simulation == 1)
             {

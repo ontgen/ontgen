@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui svg
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11
@@ -33,7 +33,8 @@ SOURCES += src/about.cpp \
     src/Node.cpp \
     src/Plane.cpp \
     src/Suurballe.cpp \
-    src/DrawGraph.cpp
+    src/DrawGraph.cpp \
+    src/svgviewer.cpp
 
 HEADERS  += src/about.h \
     src/Brandes.hpp \
@@ -47,10 +48,12 @@ HEADERS  += src/about.h \
     src/Suurballe.hpp \
     src/tree.hh \
     src/tree_util.hh \
-    src/DrawGraph.hpp
+    src/DrawGraph.hpp \
+    src/svgviewer.h
 
 FORMS    += src/mainwindow.ui \
-    src/about.ui
+    src/about.ui \
+    src/svgviewer.ui
 
 unix: LIBS += -L$$PWD/OGDF/_release/ -lOGDF
 
