@@ -134,11 +134,8 @@ bool Graph::getEdge(int u,int v)
 
 int Graph::getDegree(int node)
 {
-    //cout << "NOdes? " << this->nodes.size() << endl;
-
 	int degree = this->nodes[node].getDegree();
 
-    //cout<<"degree[ "<<node<<" "<<degree;
 	return degree;
 }
 
@@ -157,7 +154,6 @@ int Graph::getMaximumNumberOfEdges()
 {
 	int maximumDegree = ( ( this->maxDegree * this->nNodes )/ 2 ); //máximo de ligações que terá a topologia
 
-    //cout<<"maximo de ligações "<<maximumDegree<<endl;
 	try 
 	{
         limitDegree();
@@ -182,11 +178,9 @@ double Graph::getAverageDegree()
 
 	for (int u = 0; u < getNumberOfNodes(); u++)
 	{
-		// cout<<" "<<nodes[u].getDegree()<<endl;
 		sum = sum + nodes[u].getDegree();
 	}
-	// cout<<endl;
-	
+
 	return ( sum/getNumberOfNodes() );
 }
 
@@ -207,7 +201,6 @@ int Graph::getMaximumDegree()
 
 int Graph::getMinimumDistanceOfNode()
 {
-	// cout<<"minima distancia "<<this->minDistance<<endl;
 	return this->minDistance;
 }
 
@@ -237,8 +230,6 @@ void Graph::memsetGraph()
  */
 void Graph::limitDegree() 
 {
-	// int temp = ( this->nNodes * ( this->nNodes-1 ) ) / 2; //número máximo de nós em um grafo completo
-
 	if ( this->maxDegree >= this->nNodes  )	
 	{
 		// throw "2 ≤ Maximum Degree ≤ [N*(N-1)]/2";

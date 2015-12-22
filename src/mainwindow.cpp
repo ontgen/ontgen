@@ -156,8 +156,10 @@ void MainWindow::on_pushButton_clicked()
 
         cout<<" Survivor "<<survivor<<endl;
 
-        if(survivor)
+        if(survivor == true)
         {
+            DrawGraph draw(graph,"uuu");
+
             if (simulation == 1)
             {
                 file.openFile();
