@@ -58,7 +58,8 @@ DrawGraph::DrawGraph(Graph &graph, Plane &plane,string file)
  
     ogdf::GraphIO::SVGSettings s;
     s.fontSize(fontSize);
-    ogdf::GraphIO::drawSVG( GA, "Output.svg", s );//gera imagem
+    this->file = "Output.svg";
+    ogdf::GraphIO::drawSVG( GA, this->file, s );//gera imagem
  
 }
 

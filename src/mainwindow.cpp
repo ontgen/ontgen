@@ -159,8 +159,12 @@ void MainWindow::on_pushButton_clicked()
 
         if(survivor == true)
         {
+            /**
+             * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
+             */
             DrawGraph draw(graph,plane,"uuu");//desenha grafo
             SVGViewer *svg = new SVGViewer();
+            svg->openSVG("Output.svg");
             svg->setWindowFlags(Qt::Dialog | Qt::Desktop);
             svg->show();
 
@@ -326,3 +330,5 @@ void MainWindow::on_help_clicked()
 {
     QDesktopServices::openUrl(QUrl(QString::fromStdString(this->appPath+"/help/index.html"), QUrl::TolerantMode));
 }
+
+
