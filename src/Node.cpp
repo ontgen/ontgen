@@ -163,11 +163,6 @@ int Node::getNumberOfNodesFromPath(int index)
 
 double Node::getWeightEdge(int position)
 {
-	if (position < 0 || position >= (int)this->adjacents.size())
-	{
-		return -1;
-	}
-
 	return this->distance[position];
 }	
 

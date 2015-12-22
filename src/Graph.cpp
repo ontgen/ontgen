@@ -92,7 +92,6 @@ void Graph::setMinimumDistanceOfNode(int min)
  */
 void Graph::setDistancePairOfNodes(int u,int v,double distance)
 {
-
 	this->nodes[u].setDistanceNode(distance);
 	this->nodes[v].setDistanceNode(distance);
 }

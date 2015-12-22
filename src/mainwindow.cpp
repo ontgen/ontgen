@@ -158,7 +158,7 @@ void MainWindow::on_pushButton_clicked()
 
         if(survivor == true)
         {
-            DrawGraph draw(graph,"uuu");
+            DrawGraph draw(graph,plane,"uuu");//desenha grafo
 
             if (simulation == 1)
             {
