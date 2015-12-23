@@ -46,8 +46,19 @@
  <p>
   The network section allows you to configure some characteristics of the graph that represents the network. You can set the number of nodes, the minimum and maximum degree of each node (note that on OTNs the minimum degree is greater or equal to 2), the average maximum degree of the network and the minimum distance of each pair of nodes.
  </p>
-
-
+ <img src="img/nttgen_network.png">
+  <br>
+  <br>
+  <p>
+    Be aware of the minimum distance between nodes, not to block the distribution of nodes on the regions.
+  </p>
+  <p class="clearfix">
+    <img style="margin: 0 20px 20px 0" class="pull-left" src="img/distance.png" width="200">
+    This is because  blocks the area around the nodes, and this could make impossible to distribute all the nodes on the plane because de of the limited area.
+    <br>
+    The average maximum degree of the network must follow the properties of the graph, where the node degree is N-1, where <strong>N</strong>  is the number of nodes of the network.
+  </p>
+  <br>
 <h3>
 <a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating pages manually</h3>
 
