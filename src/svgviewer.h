@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <string>
+#include <QTabWidget>
 #include "svgview.h"
 
 using namespace std;
@@ -19,7 +20,7 @@ public:
     explicit SVGViewer(QWidget *parent = 0);
     void openSVG(string);
     ~SVGViewer();
-    SvgView *svg;
+    QTabWidget *tabs;
 
 private:
     Ui::SVGViewer *ui;

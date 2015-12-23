@@ -55,6 +55,9 @@ void MainWindow::on_pushButton_clicked()
 
      graph.setMaximumAverageDegree(ui->max_average_degree->value());
 
+     SVGViewer *svg = new SVGViewer();
+     svg->setWindowFlags(Qt::Dialog | Qt::Desktop);
+
      /**
       * Configurações do plano
       */
@@ -159,14 +162,6 @@ void MainWindow::on_pushButton_clicked()
 
         if(survivor == true)
         {
-            /**
-             * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
-             */
-            DrawGraph draw(graph,plane,"uuu");//desenha grafo
-            SVGViewer *svg = new SVGViewer();
-            svg->openSVG("Output.svg");
-            svg->setWindowFlags(Qt::Dialog | Qt::Desktop);
-            svg->show();
 
             if (simulation == 1)
             {
@@ -193,6 +188,14 @@ void MainWindow::on_pushButton_clicked()
             topology++;
         }
 
+        /**
+         * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
+         */
+        DrawGraph draw(graph,plane,"uuu");//desenha grafo
+
+        svg->openSVG("Output.svg");
+
+
         int nEdges = graph.getNumberOfEdges();
 
 
@@ -215,7 +218,6 @@ void MainWindow::on_pushButton_clicked()
                     survivor = suurballe.execute(graph);
                 }
 
-                // cout<<"survivor "<<survivor<<endl;
                 if(survivor)
                 {
                     if (simulation == 1 && topology == 1)
@@ -225,6 +227,7 @@ void MainWindow::on_pushButton_clicked()
                     }
 
                     file.writeTopologies(graph,simulation,topology);
+
 
                     if( (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked() ) && survivor )
                     {
@@ -240,6 +243,12 @@ void MainWindow::on_pushButton_clicked()
                          file.writeMeasures(graph,ui->bc->isChecked(),ui->ec->isChecked(),ui->dc->isChecked(),ui->cc->isChecked());
                     }
 
+                    /**
+                     * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
+                     */
+                    DrawGraph draw(graph,plane,"uuu");//desenha grafo
+
+                    svg->openSVG("Output.svg");
                     topology++;
                 }
 
@@ -254,6 +263,8 @@ void MainWindow::on_pushButton_clicked()
 
         simulation++;
      }
+
+     svg->show();
 
      QString message = "Simulation complete. File located at \"";
      message.append(QDir::homePath());
