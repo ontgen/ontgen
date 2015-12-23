@@ -18,7 +18,7 @@ SVGViewer::~SVGViewer()
     delete ui;
 }
 
-void SVGViewer::openSVG(string file) {
+void SVGViewer::openSVG(string file, int index) {
     QFile f(QString::fromStdString(file));
     QWidget *tab = new QWidget();
     SvgView *svg = new SvgView();
@@ -26,5 +26,7 @@ void SVGViewer::openSVG(string file) {
     QHBoxLayout *l = new QHBoxLayout;
     tab->setLayout(l);
     l->addWidget(svg);
-    tabs->addTab(tab, "BLABAL");
+    string t = "topology "+to_string(index);
+
+    tabs->addTab(tab,QString::fromStdString(t));
 }

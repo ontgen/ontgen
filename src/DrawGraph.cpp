@@ -1,6 +1,6 @@
 #include "DrawGraph.hpp"
 
-DrawGraph::DrawGraph(Graph &graph, Plane &plane,string file)
+DrawGraph::DrawGraph(Graph &graph, Plane &plane,string dateTime, int index)
 {
  
     ogdf::Graph g = constructGraphOGDF(graph,plane);//constrói grafo no formato da biblioteca
@@ -58,12 +58,38 @@ DrawGraph::DrawGraph(Graph &graph, Plane &plane,string file)
  
     ogdf::GraphIO::SVGSettings s;
     s.fontSize(fontSize);
-    this->file = "Output.svg";
-    ogdf::GraphIO::drawSVG( GA, this->file, s );//gera imagem
+
+    QString temp = QDir::homePath();
+    temp.append("/simulations");
+    /**
+     * Cria diretório caso não exista
+     */
+    QDir dir(temp);
+
+    if (!dir.exists())
+    {
+        dir.mkpath(".");
+    }
+
+    temp.append("/topology_");
+    temp.append(QString::fromStdString(to_string(index)));
+    temp.append("_");
+    temp.append(QString::fromStdString(dateTime));
+    temp.append(".svg");
+    this->file = temp.toStdString();
+
+    cout<<"File "<<this->file<<endl;
+    
+    ogdf::GraphIO::drawSVG( GA,this->file, s );//gera imagem
  
 }
 
 DrawGraph::~DrawGraph(){}
+
+string DrawGraph::getFile()
+{
+    return this->file;
+}
 
 ogdf::Graph DrawGraph::constructGraphOGDF(Graph &g,Plane &plane)
 {

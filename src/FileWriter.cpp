@@ -11,6 +11,12 @@ FileWriter::FileWriter()
 
 FileWriter::~FileWriter(){}
 
+
+string FileWriter::getDateTime()
+{
+	return this->dateTime;
+}
+
 string FileWriter::returnCurrentTimeAndDate()
 {
     time_t rawtime;

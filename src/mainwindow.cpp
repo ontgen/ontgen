@@ -185,15 +185,16 @@ void MainWindow::on_pushButton_clicked()
                 file.writeMeasures(graph,ui->bc->isChecked(),ui->ec->isChecked(),ui->dc->isChecked(),ui->cc->isChecked());
             }
 
+            /**
+             * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
+             */
+            DrawGraph draw(graph,plane,file.getDateTime(),topology);//desenha grafo
+
+            svg->openSVG(draw.getFile(),topology);
+
             topology++;
         }
 
-        /**
-         * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
-         */
-        DrawGraph draw(graph,plane,"uuu");//desenha grafo
-
-        svg->openSVG("Output.svg");
 
 
         int nEdges = graph.getNumberOfEdges();
@@ -246,9 +247,10 @@ void MainWindow::on_pushButton_clicked()
                     /**
                      * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
                      */
-                    DrawGraph draw(graph,plane,"uuu");//desenha grafo
+                    DrawGraph draw(graph,plane,file.getDateTime(),topology);//desenha grafo
 
-                    svg->openSVG("Output.svg");
+                    svg->openSVG(draw.getFile(),topology);
+
                     topology++;
                 }
 

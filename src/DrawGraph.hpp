@@ -8,14 +8,19 @@
 #include <ogdf/layered/MedianHeuristic.h>
 #include <ogdf/layered/OptimalHierarchyLayout.h>
 
+#include <QtCore>
+#include "xlsxdocument.h"
+#include "xlsxconditionalformatting.h"
+
 #include "Plane.hpp"
 
 class DrawGraph
 {
 public:
-	DrawGraph(Graph &, Plane &plane,string);
+	DrawGraph(Graph &, Plane &plane,string,int);
 	~DrawGraph();
     ogdf::Graph constructGraphOGDF(Graph &,Plane &);
+    string getFile();
 
 	string file;//nome do arquivo que será armazenado a imagem
     vector<vector<double>> mAdjacents;//matriz de adjacências com a distância entre cada par de nós

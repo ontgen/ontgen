@@ -18,6 +18,8 @@ public:
 	FileWriter();
 	~FileWriter();
 
+	string getDateTime();
+
 	void openFile();
 	string returnCurrentTimeAndDate();
     void createXls();

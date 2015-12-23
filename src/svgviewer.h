@@ -18,7 +18,7 @@ class SVGViewer : public QDialog
 
 public:
     explicit SVGViewer(QWidget *parent = 0);
-    void openSVG(string);
+    void openSVG(string, int);
     ~SVGViewer();
     QTabWidget *tabs;
 
