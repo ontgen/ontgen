@@ -1143,46 +1143,46 @@ void Plane::regionsInterconnection(Graph &graph,vector<vector<int>> &nodes)
  */
 void Plane::initialize(Graph &graph,int simulation)
 {
-    if (simulation == 1)
+    // if (simulation == 1)
+    // {
+
+    memsetCoordinates( graph.getNumberOfNodes() );
+
+    this->xy = vector<vector<int>> (graph.getNumberOfNodes(),vector<int>(2,0));
+
+    /**
+     * Verifica com procedera a distribuição dos nodos
+     * Tendo duas opções: uniforme e aleatória
+     * de acordo com a configuração referente ao número
+     * de regiões do plano
+     */
+
+    if(!this->nRegions)
     {
-
-        memsetCoordinates( graph.getNumberOfNodes() );
-
-        this->xy = vector<vector<int>> (graph.getNumberOfNodes(),vector<int>(2,0));
-
-        /**
-         * Verifica com procedera a distribuição dos nodos
-         * Tendo duas opções: uniforme e aleatória
-         * de acordo com a configuração referente ao número
-         * de regiões do plano
-         */
-
-        if(!this->nRegions)
-        {
-            setRegion( getNumberRegions() );
-        }
-
-        setCoordinatesRegion();//obtêm valores das coordenadas(x,y) das regiões no plano
-        
-        /**
-         * Gerando coordenadas (X,Y) de forma randomica
-         * para distribuir os nós nas regiões
-        */
-        if (this->distributionType)
-        {
-            setCoodinatesRandomRegion(graph);//distribuição randomica dos nós nas regiões
-        }
-        else
-        {
-            int n = graph.getNumberOfNodes();
-
-            setNodesLimitPerRegion(n);
-
-            setCoodinatesUniformRegion(graph);
-        }
-        
-        setNodesCoordinates(graph);
+        setRegion( getNumberRegions() );
     }
+
+    setCoordinatesRegion();//obtêm valores das coordenadas(x,y) das regiões no plano
+    
+    /**
+     * Gerando coordenadas (X,Y) de forma randomica
+     * para distribuir os nós nas regiões
+    */
+    if (this->distributionType)
+    {
+        setCoodinatesRandomRegion(graph);//distribuição randomica dos nós nas regiões
+    }
+    else
+    {
+        int n = graph.getNumberOfNodes();
+
+        setNodesLimitPerRegion(n);
+
+        setCoodinatesUniformRegion(graph);
+    }
+    
+    setNodesCoordinates(graph);
+    // }
 
     vector<vector<int>> nodesFromRegion;
 

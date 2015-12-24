@@ -86,9 +86,9 @@ tree<int> Suurballe::makeTree(Graph graph, vector<int> nodes, int source)
 
     insertSubtree(graph,tr,root,nodes,controller,source);
 
-    cout<<endl;
-    kptree::print_tree_bracketed(tr,cout); //imprime árvore
-    cout<<endl;
+    // cout<<endl;
+    // kptree::print_tree_bracketed(tr,cout); //imprime árvore
+    // cout<<endl;
 
     // for (unsigned int i = 0; i < this->nodeInTree.size(); ++i)
     // {
@@ -521,15 +521,15 @@ bool Suurballe::execute(Graph & graph)
              * mudança de peso nas arestas
              * Monta árvore a partir do nó u
              */
-            cout<<"----------------------------\n"<<endl;
+            // cout<<"----------------------------\n"<<endl;
             // cout<<"U "<<u<<" V "<<v<<endl;
             this->treePath = vector<vector<int>> (this->numberOfNodes,vector<int>(this->numberOfNodes,0)); 
             tree<int> tr = makeTree(auxiliar, this->path[iterator], u);
-            cout<<"------------------------ "<<u<<" "<<v<<"------------------"<<endl;
+            // cout<<"------------------------ "<<u<<" "<<v<<"------------------"<<endl;
             changeEdgesWeights(auxiliar, tr, this->path[iterator]);
-            for(int w = 0; w < auxiliar.getNumberOfNodes();w++) auxiliar.printAdjacents(w);
+            // for(int w = 0; w < auxiliar.getNumberOfNodes();w++) auxiliar.printAdjacents(w);
             dist =  dijkstra.execute(auxiliar,u,v);
-            cout<<"----------------------------------------------------------"<<endl;
+            // cout<<"----------------------------------------------------------"<<endl;
 
             //verifica se encontrou caminho
             if ( dist == std::numeric_limits<double>::max() )

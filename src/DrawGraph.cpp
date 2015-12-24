@@ -1,6 +1,6 @@
 #include "DrawGraph.hpp"
 
-DrawGraph::DrawGraph(Graph &graph, Plane &plane,string dateTime, int index)
+DrawGraph::DrawGraph(Graph &graph, Plane &plane,string dateTime, int index,int simulation)
 {
  
     ogdf::Graph g = constructGraphOGDF(graph,plane);//constrói grafo no formato da biblioteca
@@ -71,14 +71,16 @@ DrawGraph::DrawGraph(Graph &graph, Plane &plane,string dateTime, int index)
         dir.mkpath(".");
     }
 
+    //adicionando caminho e nome de arquivo completo
+    //indice da topologia+indice da simulação+instante da simulação
     temp.append("/topology_");
+    temp.append(QString::fromStdString(to_string(simulation)));
+    temp.append("_");
     temp.append(QString::fromStdString(to_string(index)));
     temp.append("_");
     temp.append(QString::fromStdString(dateTime));
     temp.append(".svg");
     this->file = temp.toStdString();
-
-    cout<<"File "<<this->file<<endl;
     
     ogdf::GraphIO::drawSVG( GA,this->file, s );//gera imagem
  
@@ -111,7 +113,6 @@ ogdf::Graph DrawGraph::constructGraphOGDF(Graph &g,Plane &plane)
 
         for (int j = 0; j < (int)adjacents.size(); j++)
         {
-            cout<<" "<<i<<" "<<j<<" = "<<n[i].getWeightEdge(j)<<endl;
             mAdjacents[i][ adjacents[j] ] = n[i].getWeightEdge(j);
         }
     }

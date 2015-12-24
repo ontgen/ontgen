@@ -78,7 +78,6 @@ public:
     void regionsInterconnection(Graph &,vector<vector<int>> &);                   //conecção dos nós entre as regiões
     void generateCoordinatesUniform(Graph graph,int position);                  //gera coordenadas com base em uma distribuição uniforme dos nós
     void connectionNodesRegion(Graph &,vector<vector<int>> &);    //conecta nós por região utilizando a probabilidade de Waxman
-
 private:
 
     int side; 								//area do plano -- refere-se a quanto irá a raiz quadrada do planos
@@ -93,6 +92,7 @@ private:
     int nodesLimitPerRegion;                //limite de nós por região, considerando distribuição uniforme
     int distributionType;                   //tipo de distribuição dos nós nas regiões do plano
     int nSimulations;                       //número de simulações para construir as ligações
+    
     vector < vector<int> > xy; 				//armazena as coordenas randomicas
     vector < vector<int> > plane;  			//matriz do plano dinâmica
     vector < vector<int> > coordinates;  	//matriz de coordenadas de cada nodo da rede

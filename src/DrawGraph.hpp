@@ -17,7 +17,7 @@
 class DrawGraph
 {
 public:
-	DrawGraph(Graph &, Plane &plane,string,int);
+	DrawGraph(Graph &, Plane &plane,string,int,int);
 	~DrawGraph();
     ogdf::Graph constructGraphOGDF(Graph &,Plane &);
     string getFile();

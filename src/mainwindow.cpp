@@ -41,96 +41,94 @@ void MainWindow::on_pushButton_clicked()
      ui->pushButton->setText("Simulating...");
      ui->pushButton->repaint();
      int simulation = 1;
+     int limitSimulation = ui->numberOfSimulations->value();
      FileWriter file;
-
-     Graph graph; // cria objeto grafo
-
-     graph.setNumberOfNodes( ui->nodes->value() ); //número de nós
-
-     graph.setMinimumDegree(ui->minimumDegree->value());//grau mínimo
-
-     graph.setMaximumDegree(ui->maximumDegree->value());//grau máximo
-
-     graph.setMinimumDistanceOfNode(ui->distance->value());//distância mínima entre dois nós
-
-     graph.setMaximumAverageDegree(ui->max_average_degree->value());
-
+     
      SVGViewer *svg = new SVGViewer();
      svg->setWindowFlags(Qt::Dialog | Qt::Desktop);
-
-     /**
-      * Configurações do plano
-      */
-    // cout<<ui->bc->isChecked()<< ui->cc->isChecked()<< ui->dc->isChecked()<< ui->ec->isChecked()<<endl;
-     Plane plane;
-
-     plane.setArea(ui->area->value()); //valor da raiz da area
-
-     /**
-      * Verifica tipo de configuração para as regiões
-      * Caso o usuário inserir somente o número de regiões
-      * Então será calculado a largura e o comprimento.
-      */
-     if (ui->fexibleRegions->isChecked())
-     {
-        plane.setLength(ui->length->value());//comprimento
-
-        plane.setBreadth(ui->breadth->value());//largura
-
-     }
-     else
+     
+     while( simulation <= limitSimulation )
      {
 
-        plane.setNumberRegions(ui->numberOfRegions->value());
+        Graph graph; // cria objeto grafo
 
-        plane.setRegionsMeasures();
-     }
+         graph.setNumberOfNodes( ui->nodes->value() ); //número de nós
 
-     plane.setWaxmanParameters(ui->alpha->value(),ui->beta->value());
+         graph.setMinimumDegree(ui->minimumDegree->value());//grau mínimo
 
-     // qDebug()<<ui->nodesDistribution->currentText();
+         graph.setMaximumDegree(ui->maximumDegree->value());//grau máximo
 
-     if(ui->nodesDistribution->currentText() == "Uniform")
-     {
-         plane.setDistributionType(0);
-     }
-     else
-     {
-         plane.setDistributionType(1);
-     }
+         graph.setMinimumDistanceOfNode(ui->distance->value());//distância mínima entre dois nós
 
-     try
-     {
-        plane.limitArea(graph.getNumberOfNodes());
-     }
-     catch(const char *error)
-     {
-        ui->error->setText(QString::fromUtf8("2N ≤ R ≤ N²\n"));
-        ui->pushButton->setEnabled(true);
-        ui->pushButton->setText("Begin simulation");
-        return;
-     }
+         graph.setMaximumAverageDegree(ui->max_average_degree->value());
 
-     try
-     {
-        graph.limitDegree();
-     }
-     catch(const char *error)
-     {
-        ui->error->setText(QString::fromUtf8("2 ≤ Maximum Degree ≤ N-1\n"));
-        ui->pushButton->setEnabled(true);
-        ui->pushButton->setText("Begin simulation");
-        return;
-     }
 
-     plane.setNumberOfSimulations(ui->numberOfSimulations->value());
+         /**
+          * Configurações do plano
+          */
+         Plane plane;
 
-     while( simulation <= plane.getNumberOfSimulations() )
-     {
+         plane.setArea(ui->area->value()); //valor da raiz da area
+
+         /**
+          * Verifica tipo de configuração para as regiões
+          * Caso o usuário inserir somente o número de regiões
+          * Então será calculado a largura e o comprimento.
+          */
+         if (ui->fexibleRegions->isChecked())
+         {
+            plane.setLength(ui->length->value());//comprimento
+
+            plane.setBreadth(ui->breadth->value());//largura
+
+         }
+         else
+         {
+
+            plane.setNumberRegions(ui->numberOfRegions->value());
+
+            plane.setRegionsMeasures();
+         }
+
+         plane.setWaxmanParameters(ui->alpha->value(),ui->beta->value());
+
+         if(ui->nodesDistribution->currentText() == "Uniform")
+         {
+             plane.setDistributionType(0);
+         }
+         else
+         {
+             plane.setDistributionType(1);
+         }
+
+         try
+         {
+            plane.limitArea(graph.getNumberOfNodes());
+         }
+         catch(const char *error)
+         {
+            ui->error->setText(QString::fromUtf8("2N ≤ R ≤ N²\n"));
+            ui->pushButton->setEnabled(true);
+            ui->pushButton->setText("Begin simulation");
+            return;
+         }
+
+         try
+         {
+            graph.limitDegree();
+         }
+         catch(const char *error)
+         {
+            ui->error->setText(QString::fromUtf8("2 ≤ Maximum Degree ≤ N-1\n"));
+            ui->pushButton->setEnabled(true);
+            ui->pushButton->setText("Begin simulation");
+            return;
+         }
+
+         plane.setNumberOfSimulations(ui->numberOfSimulations->value());
+
         graph.memsetGraph();
-
         plane.initialize(graph,simulation);
-
         
          /**
           * Verifica se o número de ligações foi atingido
@@ -152,13 +150,11 @@ void MainWindow::on_pushButton_clicked()
             }
          }
 
-         for(int w = 0; w < graph.getNumberOfNodes();w++) graph.printAdjacents(w);
+         // for(int w = 0; w < graph.getNumberOfNodes();w++) graph.printAdjacents(w);
 
         Suurballe s;
 
         bool survivor = s.execute(graph);
-
-        cout<<" Survivor "<<survivor<<endl;
 
         if(survivor == true)
         {
@@ -170,7 +166,6 @@ void MainWindow::on_pushButton_clicked()
             }
 
             file.writeTopologies(graph,simulation,topology);
-
 
             if( (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked() ) && survivor)
             {
@@ -188,7 +183,7 @@ void MainWindow::on_pushButton_clicked()
             /**
              * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
              */
-            DrawGraph draw(graph,plane,file.getDateTime(),topology);//desenha grafo
+            DrawGraph draw(graph,plane,file.getDateTime(),topology,simulation);//desenha grafo
 
             svg->openSVG(draw.getFile(),topology);
 
@@ -247,7 +242,7 @@ void MainWindow::on_pushButton_clicked()
                     /**
                      * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
                      */
-                    DrawGraph draw(graph,plane,file.getDateTime(),topology);//desenha grafo
+                    DrawGraph draw(graph,plane,file.getDateTime(),topology,simulation);//desenha grafo
 
                     svg->openSVG(draw.getFile(),topology);
 
