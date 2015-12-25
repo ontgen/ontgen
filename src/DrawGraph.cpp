@@ -37,6 +37,7 @@ DrawGraph::DrawGraph(Graph &graph, Plane &plane,string dateTime, int index,int s
         char const *pchar = s.c_str(); //use char const* as target type
         GA.label( v ) = pchar;
 
+        //posições x e y da imagem
         GA.x(v) = plane.getCoordinateX(i)*f;
         GA.y(v) = plane.getCoordinateY(i)*f;
 
@@ -72,7 +73,7 @@ DrawGraph::DrawGraph(Graph &graph, Plane &plane,string dateTime, int index,int s
     }
 
     //adicionando caminho e nome de arquivo completo
-    //indice da topologia+indice da simulação+instante da simulação
+    //indice da simulação+indice da topologia+instante da simulação
     temp.append("/topology_");
     temp.append(QString::fromStdString(to_string(simulation)));
     temp.append("_");
