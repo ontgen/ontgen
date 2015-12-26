@@ -225,7 +225,17 @@
    <string notr="true">font: 11pt &quot;Droid Sans&quot;;
 background: #2c3e50;
 color: rgb(255, 255, 255);
-</string>
+
+QPushButton{
+	background: #fff;
+	color:#2c3e50;
+	border: 1px solid transparent;
+	border-radius:4px;
+}
+QPushButton:!enabled{
+	background: #d0d0d0;
+    color: #888;
+}</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="tabWidget">
@@ -1270,6 +1280,67 @@ color:#000</string>
      <attribute name="title">
       <string>Manual</string>
      </attribute>
+     <widget class="QPushButton" name="addnode">
+      <property name="geometry">
+       <rect>
+        <x>720</x>
+        <y>10</y>
+        <width>71</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+	background: #fff;
+	color:#2c3e50;
+	border: 1px solid transparent;
+	border-radius:4px;
+}
+QPushButton:!enabled{
+	background: #d0d0d0;
+    color: #888;
+}</string>
+      </property>
+      <property name="text">
+       <string>Node</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="addedge">
+      <property name="geometry">
+       <rect>
+        <x>720</x>
+        <y>60</y>
+        <width>71</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+	background: #fff;
+	color:#2c3e50;
+	border: 1px solid transparent;
+	border-radius:4px;
+}
+QPushButton:!enabled{
+	background: #d0d0d0;
+    color: #888;
+}</string>
+      </property>
+      <property name="text">
+       <string>Edge</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="gridLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>29</x>
+        <y>29</y>
+        <width>681</width>
+        <height>491</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout"/>
+     </widget>
     </widget>
    </widget>
   </widget>

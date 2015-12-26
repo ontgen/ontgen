@@ -86,8 +86,12 @@ void SvgView::drawBackground(QPainter *p, const QRectF &)
 
 void SvgView::openFile(const QFile &file)
 {
-    if (!file.exists())
+    if (!file.exists()) {
+        printf("ah é");
         return;
+    }
+
+    printf("ah é 2");
 
     QGraphicsScene *s = scene();
 

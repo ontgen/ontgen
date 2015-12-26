@@ -17,6 +17,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     std::string appPath;
+    bool addingNode;
 
 private slots:
     void on_pushButton_clicked();
@@ -30,6 +31,10 @@ private slots:
     void on_help_clicked();
 
     void openNewWindow();
+
+    void on_pushButton_2_released();
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::MainWindow *ui;

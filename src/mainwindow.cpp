@@ -20,6 +20,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionOpen_help, SIGNAL(triggered()), this, SLOT(on_help_clicked()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(openNewWindow()));
+
+    SvgView *f = new SvgView();
+
+    QFile file("/home/silvana/simulations/topology_1_6_25_12_2015_19:11:19.svg");
+    f->openFile(file);
+    ui->gridLayout->addWidget(f);
+
+    addingNode = false;
+
 }
 
 MainWindow::~MainWindow()
@@ -339,4 +348,8 @@ void MainWindow::on_help_clicked()
     QDesktopServices::openUrl(QUrl(QString::fromStdString(this->appPath+"/help/index.html"), QUrl::TolerantMode));
 }
 
-
+void MainWindow::on_pushButton_2_clicked()
+{
+    addingNode = !addingNode;
+    ui->pushButton->setChecked(addingNode);
+}
