@@ -9,6 +9,7 @@
 #include "Suurballe.hpp"
 #include "FileWriter.hpp"
 #include "DrawGraph.hpp"
+#include "graphicsview.h"
 
 using namespace std;
 
@@ -21,14 +22,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOpen_help, SIGNAL(triggered()), this, SLOT(on_help_clicked()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(openNewWindow()));
 
-    SvgView *f = new SvgView();
-    f->main = this;
-    this->graphEditor = new GraphEditor(f);
+    GraphicsView *q = new GraphicsView();
+
+    this->graphEditor = new GraphEditor(q);
     cout << "grapheditor n nodes " << graphEditor->g.numberOfNodes() << endl;
 
-    QFile file("/home/silvana/simulations/topology_1_6_25_12_2015_19:11:19.svg");
-    f->openFile(file);
-    ui->gridLayout->addWidget(f);
+    q->setGeometry(0, 0, ui->gridLayout->geometry().width(), ui->gridLayout->geometry().height());
+    ui->gridLayout->addWidget(q);
 
     addingNode = false;
 
@@ -353,8 +353,8 @@ void MainWindow::on_help_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    addingNode = !addingNode;
-    ui->pushButton->setChecked(addingNode);
+    cout << "aqui" << endl;
+    graphEditor->addingNode = true;
 }
 
 void MainWindow::addNode(int x, int y)
@@ -362,4 +362,9 @@ void MainWindow::addNode(int x, int y)
     cout << "grapheditor n nodes 2: " << graphEditor->g.numberOfNodes() << endl;
 
     graphEditor->addNode(x, y);
+}
+
+void MainWindow::on_addnode_clicked()
+{
+    graphEditor->addingNode = true;
 }

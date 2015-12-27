@@ -36,7 +36,8 @@ SOURCES += src/about.cpp \
     src/DrawGraph.cpp \
     src/svgviewer.cpp \
     src/svgview.cpp \
-    src/GraphEditor.cpp
+    src/GraphEditor.cpp \
+    src/graphicsview.cpp
 
 HEADERS  += src/about.h \
     src/Brandes.hpp \
@@ -53,7 +54,8 @@ HEADERS  += src/about.h \
     src/DrawGraph.hpp \
     src/svgviewer.h \
     src/svgview.h \
-    src/GraphEditor.hpp
+    src/GraphEditor.hpp \
+    src/graphicsview.h
 
 FORMS    += src/mainwindow.ui \
     src/about.ui \

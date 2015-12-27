@@ -5,6 +5,7 @@
 #include "about.h"
 #include "svgview.h"
 #include "GraphEditor.hpp"
+#include <QGraphicsView>
 
 namespace Ui {
 class MainWindow;
@@ -37,6 +38,8 @@ private slots:
     void openNewWindow();
 
     void on_pushButton_2_clicked();
+
+    void on_addnode_clicked();
 
 private:
     Ui::MainWindow *ui;
