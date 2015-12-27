@@ -46,6 +46,7 @@
 #include <QGraphicsSvgItem>
 #include <QPaintEvent>
 #include <qmath.h>
+#include <iostream>
 
 #ifndef QT_NO_OPENGL
 #include <QOpenGLWidget>
@@ -65,23 +66,29 @@ SvgView::SvgView(QWidget *parent)
     setViewportUpdateMode(FullViewportUpdate);
 
     // Prepare background check-board pattern
-//    QPixmap tilePixmap(64, 64);
-//    tilePixmap.fill(Qt::white);
-//    QPainter tilePainter(&tilePixmap);
-//    QColor color(220, 220, 220);
-//    tilePainter.fillRect(0, 0, 32, 32, color);
-//    tilePainter.fillRect(32, 32, 32, 32, color);
-//    tilePainter.end();
+    QPixmap tilePixmap(64, 64);
+    tilePixmap.fill(Qt::white);
+    QPainter tilePainter(&tilePixmap);
+    QColor color(255, 255, 255);
+    tilePainter.fillRect(0, 0, 32, 32, color);
+    tilePainter.fillRect(32, 32, 32, 32, color);
+    tilePainter.end();
 
-//    setBackgroundBrush(tilePixmap);
+    setBackgroundBrush(tilePixmap);
+}
+
+void SvgView::mousePressEvent(QMouseEvent *event)
+{
+    QPoint p = this->mapFromGlobal(event->pos());
+    std::cout << event->pos().x() << " " << event->pos().y() << std::endl;
 }
 
 void SvgView::drawBackground(QPainter *p, const QRectF &)
 {
-//    p->save();
-//    p->resetTransform();
-//    p->drawTiledPixmap(viewport()->rect(), backgroundBrush().texture());
-//    p->restore();
+    p->save();
+    p->resetTransform();
+    p->drawTiledPixmap(viewport()->rect(), backgroundBrush().texture());
+    p->restore();
 }
 
 void SvgView::openFile(const QFile &file)
@@ -106,11 +113,11 @@ void SvgView::openFile(const QFile &file)
     m_svgItem->setCacheMode(QGraphicsItem::NoCache);
     m_svgItem->setZValue(0);
 
-//    m_backgroundItem = new QGraphicsRectItem(m_svgItem->boundingRect());
-//    m_backgroundItem->setBrush(Qt::white);
-//    m_backgroundItem->setPen(Qt::NoPen);
-//    m_backgroundItem->setVisible(drawBackground);
-//    m_backgroundItem->setZValue(-1);
+    m_backgroundItem = new QGraphicsRectItem(m_svgItem->boundingRect());
+    m_backgroundItem->setBrush(Qt::white);
+    m_backgroundItem->setPen(Qt::NoPen);
+    m_backgroundItem->setVisible(drawBackground);
+    m_backgroundItem->setZValue(-1);
 
 //    m_outlineItem = new QGraphicsRectItem(m_svgItem->boundingRect());
 //    QPen outline(Qt::black, 2, Qt::DashLine);
@@ -120,7 +127,7 @@ void SvgView::openFile(const QFile &file)
 //    m_outlineItem->setVisible(drawOutline);
 //    m_outlineItem->setZValue(1);
 
-//    s->addItem(m_backgroundItem);
+    s->addItem(m_backgroundItem);
     s->addItem(m_svgItem);
 //    s->addItem(m_outlineItem);
 

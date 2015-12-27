@@ -59,6 +59,7 @@ public:
     void openFile(const QFile &file);
     void setRenderer(RendererType type = Native);
     void drawBackground(QPainter *p, const QRectF &rect);
+    void mousePressEvent(QMouseEvent *event);
 
 public slots:
     void setHighQualityAntialiasing(bool highQualityAntialiasing);

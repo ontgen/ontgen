@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "svgviewer.h"
+#include "GraphEditor.hpp"
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QString>
