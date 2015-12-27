@@ -12,7 +12,6 @@ DrawGraph::DrawGraph(Graph &graph, Plane &plane,string dateTime, int index,int s
         ogdf::GraphAttributes::edgeType |
         ogdf::GraphAttributes::edgeArrow |
         ogdf::GraphAttributes::edgeStyle ); // cria atributos para o grafo
-
  
     ogdf::node v;
 

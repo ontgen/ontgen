@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include "about.h"
-
+#include "svgview.h"
+#include "GraphEditor.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -18,6 +19,9 @@ public:
     ~MainWindow();
     std::string appPath;
     bool addingNode;
+    GraphEditor *graphEditor;
+
+    void addNode(int x, int y);
 
 private slots:
     void on_pushButton_clicked();
@@ -31,8 +35,6 @@ private slots:
     void on_help_clicked();
 
     void openNewWindow();
-
-    void on_pushButton_2_released();
 
     void on_pushButton_2_clicked();
 

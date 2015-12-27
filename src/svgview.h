@@ -42,6 +42,7 @@
 #define SVGVIEW_H
 
 #include <QGraphicsView>
+#include <QMainWindow>
 
 class QWheelEvent;
 class QPaintEvent;
@@ -55,6 +56,7 @@ public:
     enum RendererType { Native, OpenGL, Image };
 
     SvgView(QWidget *parent = 0);
+    QMainWindow *main;
 
     void openFile(const QFile &file);
     void setRenderer(RendererType type = Native);

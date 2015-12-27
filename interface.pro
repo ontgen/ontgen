@@ -35,7 +35,8 @@ SOURCES += src/about.cpp \
     src/Suurballe.cpp \
     src/DrawGraph.cpp \
     src/svgviewer.cpp \
-    src/svgview.cpp
+    src/svgview.cpp \
+    src/GraphEditor.cpp
 
 HEADERS  += src/about.h \
     src/Brandes.hpp \
@@ -51,7 +52,8 @@ HEADERS  += src/about.h \
     src/tree_util.hh \
     src/DrawGraph.hpp \
     src/svgviewer.h \
-    src/svgview.h
+    src/svgview.h \
+    src/GraphEditor.hpp
 
 FORMS    += src/mainwindow.ui \
     src/about.ui \

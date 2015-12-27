@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "svgviewer.h"
-#include "GraphEditor.hpp"
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QString>
@@ -23,6 +22,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(openNewWindow()));
 
     SvgView *f = new SvgView();
+    f->main = this;
+    this->graphEditor = new GraphEditor(f);
+    cout << "grapheditor n nodes " << graphEditor->g.numberOfNodes() << endl;
 
     QFile file("/home/silvana/simulations/topology_1_6_25_12_2015_19:11:19.svg");
     f->openFile(file);
@@ -353,4 +355,11 @@ void MainWindow::on_pushButton_2_clicked()
 {
     addingNode = !addingNode;
     ui->pushButton->setChecked(addingNode);
+}
+
+void MainWindow::addNode(int x, int y)
+{
+    cout << "grapheditor n nodes 2: " << graphEditor->g.numberOfNodes() << endl;
+
+    graphEditor->addNode(x, y);
 }
