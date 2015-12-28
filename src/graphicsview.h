@@ -16,7 +16,9 @@ public:
 signals:
 
 public slots:
-    void mousePressEvent(QMouseEvent *e);
+    void mousePressEvent(QMouseEvent *e);//preciona o nó
+    void mouseMoveEvent(QMouseEvent *e);//passa com o mouse sobre a aresta
+    void mouseDoubleClickEvent(QMouseEvent *e);
 };
 
 #endif // GRAPHICSVIEW_H

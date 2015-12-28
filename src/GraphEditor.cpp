@@ -1,6 +1,7 @@
 #include "GraphEditor.hpp"
 #include "graphicsview.h"
 #include <QGraphicsTextItem>
+#include "editorpathitem.h"
 
 GraphEditor::GraphEditor(QGraphicsView *q)
 {
@@ -11,7 +12,8 @@ GraphEditor::GraphEditor(QGraphicsView *q)
         ogdf::GraphAttributes::nodeStyle |
         ogdf::GraphAttributes::edgeType |
         ogdf::GraphAttributes::edgeArrow |
-        ogdf::GraphAttributes::edgeStyle ); // cria atributos para o grafo
+        ogdf::GraphAttributes::edgeStyle |
+        ogdf::GraphAttributes::edgeDoubleWeight ); // cria atributos para o grafo
 
     this->view->setBackgroundBrush(QBrush(QColor("#fff")));
     rerender();
@@ -95,7 +97,16 @@ void GraphEditor::rerender()
         pathPen.setWidth(2);
         pathPen.setColor(QColor("#333"));
 
-        scene->addPath(path, pathPen);
+        QGraphicsPathItem *s = scene->addPath(path, pathPen);
+        ((EditorPathItem *)s)->edgeIndex = iterateEdge->index();
+        QPointF middle = path.pointAtPercent(path.percentAtLength(path.length() / 2));
+
+        QGraphicsTextItem *label = scene->addText(QString::fromStdString(to_string(GA.doubleWeight(iterateEdge))));
+        label->setPos(middle);
+
+        s->setAcceptHoverEvents(true);
+        s->setActive(true);
+        s->setFlag(QGraphicsItem::ItemIsSelectable, true);
     }
 
     for(ogdf::node iterateNode = g.firstNode(); iterateNode; iterateNode = iterateNode->succ()){
@@ -107,11 +118,17 @@ void GraphEditor::rerender()
         pathPen.setWidth(2);
         pathPen.setColor(QColor("#333"));
 
-        scene->addEllipse(x,y,30,30, pathPen, QBrush(QColor("#ffffff")));
+        QGraphicsEllipseItem *s = scene->addEllipse(x,y,30,30, pathPen, QBrush(QColor("#ffffff")));
+        s->setCursor(Qt::PointingHandCursor);
+        s->setAcceptHoverEvents(true);
+        s->setActive(true);
+        s->setFlag(QGraphicsItem::ItemIsSelectable, true);
 
         //configurações da fonte
         string in = to_string(iterateNode->index());
         QGraphicsTextItem *text =  scene->addText(QString::fromStdString(in));
+        text->setCursor(Qt::PointingHandCursor);
+        text->setAcceptHoverEvents(true);
         text->setPos(x+(iterateNode->index() < 10 ? 6 : 2),y);//posição do indice do nó
     }
 
