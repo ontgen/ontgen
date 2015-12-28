@@ -13,7 +13,7 @@ GraphEditor::GraphEditor(QGraphicsView *q)
         ogdf::GraphAttributes::edgeType |
         ogdf::GraphAttributes::edgeArrow |
         ogdf::GraphAttributes::edgeStyle |
-        ogdf::GraphAttributes::edgeDoubleWeight ); // cria atributos para o grafo
+        ogdf::GraphAttributes::edgeIntWeight ); // cria atributos para o grafo
 
     this->view->setBackgroundBrush(QBrush(QColor("#fff")));
     rerender();
@@ -101,7 +101,7 @@ void GraphEditor::rerender()
         ((EditorPathItem *)s)->edgeIndex = iterateEdge->index();
         QPointF middle = path.pointAtPercent(path.percentAtLength(path.length() / 2));
 
-        QGraphicsTextItem *label = scene->addText(QString::fromStdString(to_string(GA.doubleWeight(iterateEdge))));
+        QGraphicsTextItem *label = scene->addText(QString::fromStdString(to_string(GA.intWeight(iterateEdge))));
         label->setPos(middle);
 
         s->setAcceptHoverEvents(true);

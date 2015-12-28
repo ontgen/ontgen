@@ -103,7 +103,7 @@ void GraphicsView::mouseDoubleClickEvent(QMouseEvent *e)
             path->setSelected(true);
             bool ok;
             int index = ((EditorPathItem *)path)->edgeIndex;
-            double distance = 0.0f;
+            int distance = 0;
             ogdf::edge t;
             ogdf::edge edge;
 
@@ -113,7 +113,7 @@ void GraphicsView::mouseDoubleClickEvent(QMouseEvent *e)
             {
                 if (k == index)
                 {
-                    distance = editor->GA.doubleWeight(t);
+                    distance = editor->GA.intWeight(t);
                     edge = t;
                     break;
                 }
@@ -128,7 +128,7 @@ void GraphicsView::mouseDoubleClickEvent(QMouseEvent *e)
 
             if (ok) {
                 distance = text.toDouble();
-                editor->GA.doubleWeight(edge) = distance;
+                editor->GA.intWeight(edge) = distance;
                 editor->rerender();
             }
         }

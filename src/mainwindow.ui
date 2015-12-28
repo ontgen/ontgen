@@ -10,205 +10,6 @@
     <height>668</height>
    </rect>
   </property>
-  <property name="palette">
-   <palette>
-    <active>
-     <colorrole role="WindowText">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Button">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>44</red>
-        <green>62</green>
-        <blue>80</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Text">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="ButtonText">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Base">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>44</red>
-        <green>62</green>
-        <blue>80</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Window">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>44</red>
-        <green>62</green>
-        <blue>80</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="ToolTipText">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-    </active>
-    <inactive>
-     <colorrole role="WindowText">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Button">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>44</red>
-        <green>62</green>
-        <blue>80</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Text">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="ButtonText">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Base">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>44</red>
-        <green>62</green>
-        <blue>80</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Window">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>44</red>
-        <green>62</green>
-        <blue>80</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="ToolTipText">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-    </inactive>
-    <disabled>
-     <colorrole role="WindowText">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Button">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>44</red>
-        <green>62</green>
-        <blue>80</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Text">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="ButtonText">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Base">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>44</red>
-        <green>62</green>
-        <blue>80</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Window">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>44</red>
-        <green>62</green>
-        <blue>80</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="ToolTipText">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-    </disabled>
-   </palette>
-  </property>
   <property name="font">
    <font>
     <family>Droid Sans</family>
@@ -222,20 +23,7 @@
    <string>Network Topologies Generator</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 11pt &quot;Droid Sans&quot;;
-background: #2c3e50;
-color: rgb(255, 255, 255);
-
-QPushButton{
-	background: #fff;
-	color:#2c3e50;
-	border: 1px solid transparent;
-	border-radius:4px;
-}
-QPushButton:!enabled{
-	background: #d0d0d0;
-    color: #888;
-}</string>
+   <string notr="true">font: 11pt &quot;Droid Sans&quot;;</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="tabWidget">
@@ -247,8 +35,11 @@ QPushButton:!enabled{
       <height>641</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -912,13 +703,6 @@ color:#000
         <string>Waxman</string>
        </property>
       </widget>
-      <zorder>label_7</zorder>
-      <zorder>alpha</zorder>
-      <zorder>label_6</zorder>
-      <zorder>beta</zorder>
-      <zorder>label_17</zorder>
-      <zorder>tabWidget</zorder>
-      <zorder>tabWidget</zorder>
      </widget>
      <widget class="QLabel" name="label_2">
       <property name="geometry">
@@ -1037,16 +821,7 @@ color:#000</string>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">QPushButton{
-	background: #fff;
-	color:#2c3e50;
-	border: 1px solid transparent;
-	border-radius:4px;
-}
-QPushButton:!enabled{
-	background: #d0d0d0;
-    color: #888;
-}</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>Begin Simulation</string>
@@ -1284,50 +1059,16 @@ color:#000</string>
       <property name="geometry">
        <rect>
         <x>720</x>
-        <y>10</y>
+        <y>30</y>
         <width>71</width>
         <height>41</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">QPushButton{
-	background: #fff;
-	color:#2c3e50;
-	border: 1px solid transparent;
-	border-radius:4px;
-}
-QPushButton:!enabled{
-	background: #d0d0d0;
-    color: #888;
-}</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>Node</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="addedge">
-      <property name="geometry">
-       <rect>
-        <x>720</x>
-        <y>60</y>
-        <width>71</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-	background: #fff;
-	color:#2c3e50;
-	border: 1px solid transparent;
-	border-radius:4px;
-}
-QPushButton:!enabled{
-	background: #d0d0d0;
-    color: #888;
-}</string>
-      </property>
-      <property name="text">
-       <string>Edge</string>
       </property>
      </widget>
      <widget class="QWidget" name="gridLayoutWidget">
@@ -1350,48 +1091,15 @@ QPushButton:!enabled{
      <x>0</x>
      <y>0</y>
      <width>799</width>
-     <height>30</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QMenuBar {
-background: #23303d;
-}
-
-QMenuBar::item {
-	background: transparent;
-    padding: 5px 10px;
-}
-
-QMenuBar::item:selected {
-	background: #263544;
-}
-
-QMenuBar::item:pressed {
-	background: #263544;
-}
-
-QMenu {
-  background: #263544;
-}
-
-QMenu::item {
-  background: transparent;
-}
-
-QMenu::item:selected {
-	background: #2c3e50;
-}</string>
+    <string notr="true"/>
    </property>
    <widget class="QMenu" name="menuHelp">
     <property name="styleSheet">
-     <string notr="true">QAction {
-  background: transparent;
-}
-
-QAction:selected {
-	background: #2c3e50;
-}</string>
+     <string notr="true"/>
     </property>
     <property name="title">
      <string>Help</string>
