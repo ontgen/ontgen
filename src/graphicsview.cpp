@@ -4,7 +4,7 @@
 
 GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
-
+    setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing);
 }
 
 void GraphicsView::mousePressEvent(QMouseEvent *e)

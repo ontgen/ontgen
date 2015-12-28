@@ -1,5 +1,6 @@
 #include "GraphEditor.hpp"
 #include "graphicsview.h"
+#include <QGraphicsTextItem>
 
 GraphEditor::GraphEditor(QGraphicsView *q)
 {
@@ -91,14 +92,29 @@ void GraphEditor::rerender()
             }
         }
 
-        scene->addPath(path);
+        QPen pathPen;
+        pathPen.setWidth(2);
+        pathPen.setColor(QColor("#333"));
+
+        scene->addPath(path, pathPen);
     }
 
     for(ogdf::node iterateNode = g.firstNode(); iterateNode; iterateNode = iterateNode->succ()){
+
         double x = GA.x(iterateNode);
         double y = GA.y(iterateNode);
 
-        scene->addEllipse(x,y,20,20, pen, QBrush(QColor("#ffffff")));
+        QPen pathPen;
+        pathPen.setWidth(2);
+        pathPen.setColor(QColor("#333"));
+
+        scene->addEllipse(x,y,22,22, pathPen, QBrush(QColor("#ffffff")));
+
+        QFont font;
+        font.Black;
+        string in = to_string(iterateNode->index());
+        QGraphicsTextItem *text =  scene->addText(QString::fromStdString(in));
+        text->setPos(x+2,y-5);
     }
 
     this->view->setScene(scene);
