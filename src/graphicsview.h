@@ -11,13 +11,12 @@ class GraphicsView : public QGraphicsView
 public:
     explicit GraphicsView(QWidget *parent=0);
     GraphEditor *editor;
+    QGraphicsScene *scene;
 
 signals:
 
 public slots:
     void mousePressEvent(QMouseEvent *e);
-private:
-    QGraphicsScene *scene;
 };
 
 #endif // GRAPHICSVIEW_H

@@ -15,6 +15,7 @@ GraphEditor::GraphEditor(QGraphicsView *q)
     this->view->setBackgroundBrush(QBrush(QColor("#fff")));
     rerender();
     ((GraphicsView *)this->view)->editor = this;
+    this->nSelected = 0;
 }
 GraphEditor::~GraphEditor(){}
 
@@ -53,6 +54,46 @@ void GraphEditor::rerender()
     QPen pen;
     pen.setColor(QColor("#000000"));
 
+
+
+    for (ogdf::edge iterateEdge = g.firstEdge(); iterateEdge; iterateEdge = iterateEdge->succ())
+    {
+        auto polyLine = GA.bends(iterateEdge);
+        QPainterPath path;
+
+        if ((int)polyLine.size() == 0)
+        {
+            path.moveTo(GA.x(iterateEdge->adjSource()->theNode())+10, GA.y(iterateEdge->adjSource()->theNode())+10);
+            path.lineTo(GA.x(iterateEdge->adjTarget()->theNode())+10, GA.y(iterateEdge->adjTarget()->theNode())+10);
+        }
+        else
+        {
+            auto pointIterator = polyLine.begin();
+
+            path.moveTo((*pointIterator).m_x, (*pointIterator).m_y);
+
+            if ((int)polyLine.size() % 3 != 0) {
+                ++pointIterator;
+            }
+
+            for(uint i = 0; i < polyLine.size() / 3; i++) {
+                auto point1 = *(pointIterator++);
+                auto point2 = *(pointIterator++);
+                auto point3 = *(pointIterator++);
+
+                path.cubicTo(point1.m_x, point1.m_y, point2.m_x, point2.m_y, point3.m_x, point3.m_y);
+            }
+
+            if ( ( (int)polyLine.size() % 3 ) == 2)
+            {
+                path.lineTo((*pointIterator).m_x, (*pointIterator).m_y);
+                ++pointIterator;
+            }
+        }
+
+        scene->addPath(path);
+    }
+
     for(ogdf::node iterateNode = g.firstNode(); iterateNode; iterateNode = iterateNode->succ()){
         double x = GA.x(iterateNode);
         double y = GA.y(iterateNode);
@@ -61,5 +102,35 @@ void GraphEditor::rerender()
     }
 
     this->view->setScene(scene);
+    ((GraphicsView *)this->view)->scene = scene;
     this->view->show();
+}
+
+void GraphEditor::addEdge(int x, int y)
+{
+    this->nSelected++;
+
+    for(ogdf::node iterateNode = g.firstNode(); iterateNode; iterateNode = iterateNode->succ()){
+        if(GA.x(iterateNode) == x + 1 && GA.y(iterateNode) == y + 1)
+        {
+            if(this->nSelected <= 1)
+            {
+                this->selected = iterateNode;
+            }
+            else
+            {
+                if(iterateNode->index() != this->selected->index())
+                {
+                    this->g.newEdge(this->selected, iterateNode);
+
+                    rerender();
+
+                }
+
+                this->nSelected = 0;
+            }
+
+            break;
+        }
+    }
 }

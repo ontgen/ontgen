@@ -14,6 +14,7 @@ public:
 
 	void addNode(int x, int y);
 	void rerender();
+    void addEdge(int x,int y);//adiciona aresta se for o segundo nó selecionado
 
     bool addingNode;
     bool addingEdge;
@@ -21,6 +22,8 @@ public:
     QGraphicsView *view;
     ogdf::Graph g;
 	ogdf::GraphAttributes GA;
+    ogdf::node selected;
+    int nSelected;
 };
 
 #endif
