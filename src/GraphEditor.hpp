@@ -15,6 +15,7 @@ public:
 	void addNode(int x, int y);
 	void rerender();
     void addEdge(int x,int y);//adiciona aresta se for o segundo nó selecionado
+    bool checkEdgeExists(int,int);
 
     bool addingNode;
     bool addingEdge;

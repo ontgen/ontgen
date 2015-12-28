@@ -142,6 +142,7 @@ void GraphEditor::addEdge(int x, int y)
     this->nSelected++;
 
     for(ogdf::node iterateNode = g.firstNode(); iterateNode; iterateNode = iterateNode->succ()){
+
         if(GA.x(iterateNode) == x + 1 && GA.y(iterateNode) == y + 1)
         {
             if(this->nSelected <= 1)
@@ -150,7 +151,9 @@ void GraphEditor::addEdge(int x, int y)
             }
             else
             {
-                if(iterateNode->index() != this->selected->index())
+                bool edgeAlreadyExists = checkEdgeExists(this->selected->index(), iterateNode->index());
+
+                if(iterateNode->index() != this->selected->index() && edgeAlreadyExists == false)
                 {
                     this->g.newEdge(this->selected, iterateNode);
 
@@ -164,4 +167,20 @@ void GraphEditor::addEdge(int x, int y)
             break;
         }
     }
+}
+bool GraphEditor::checkEdgeExists(int u,int v)
+{
+    ogdf::edge e;
+
+    forall_edges(e,g)
+    {
+        int a = e->adjSource()->theNode()->index(), b = e->adjTarget()->theNode()->index();
+
+        if( ( a == u && b == v ) || ( a == v && b == u ) )
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
