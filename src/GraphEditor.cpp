@@ -2,6 +2,7 @@
 #include "graphicsview.h"
 #include <QGraphicsTextItem>
 #include "editorpathitem.h"
+#include <QSvgGenerator>
 
 GraphEditor::GraphEditor(QGraphicsView *q)
 {
@@ -183,4 +184,16 @@ bool GraphEditor::checkEdgeExists(int u,int v)
     }
 
     return false;
+}
+
+void GraphEditor::saveAsSVG(QString filename)
+{
+    QSvgGenerator svgGen;
+
+    svgGen.setFileName(filename);
+    svgGen.setSize(view->size());
+    svgGen.setViewBox(view->sceneRect());
+
+    QPainter painter( &svgGen );
+    ((GraphicsView *)this->view)->scene->render( &painter );
 }

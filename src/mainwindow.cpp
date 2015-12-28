@@ -10,6 +10,7 @@
 #include "FileWriter.hpp"
 #include "DrawGraph.hpp"
 #include "graphicsview.h"
+#include <QFileDialog>
 
 using namespace std;
 
@@ -353,8 +354,8 @@ void MainWindow::on_help_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    cout << "aqui" << endl;
-    graphEditor->addingNode = true;
+    QString filename = QFileDialog::getSaveFileName();
+    graphEditor->saveAsSVG(filename);
 }
 
 void MainWindow::addNode(int x, int y)
