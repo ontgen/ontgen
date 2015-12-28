@@ -90,7 +90,7 @@ void GraphicsView::mouseDoubleClickEvent(QMouseEvent *e)
     //aresta selecionada
     foreach(QGraphicsItem *item, scene->items())
     {
-        QGraphicsPathItem *path = (QGraphicsPathItem *) item;
+        EditorPathItem *path = (EditorPathItem *) item;
 
         if (!path)
         {
@@ -121,6 +121,10 @@ void GraphicsView::mouseDoubleClickEvent(QMouseEvent *e)
                 k++;
             }
 
+            if (distance < 1) {
+                return;
+            }
+
             QString text = QInputDialog::getText(this, "Enter the distance of the link", "Distance:", QLineEdit::Normal, QString::fromStdString(to_string(distance)), &ok);
             cout << "text: " << text.toStdString() << endl;
             cout << "ok? " << ok << endl;
@@ -131,6 +135,8 @@ void GraphicsView::mouseDoubleClickEvent(QMouseEvent *e)
                 editor->GA.intWeight(edge) = distance;
                 editor->rerender();
             }
+
+            return;
         }
     }
 
