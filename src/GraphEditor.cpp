@@ -56,7 +56,6 @@ void GraphEditor::rerender()
     pen.setColor(QColor("#000000"));
 
 
-
     for (ogdf::edge iterateEdge = g.firstEdge(); iterateEdge; iterateEdge = iterateEdge->succ())
     {
         auto polyLine = GA.bends(iterateEdge);
@@ -64,8 +63,8 @@ void GraphEditor::rerender()
 
         if ((int)polyLine.size() == 0)
         {
-            path.moveTo(GA.x(iterateEdge->adjSource()->theNode())+10, GA.y(iterateEdge->adjSource()->theNode())+10);
-            path.lineTo(GA.x(iterateEdge->adjTarget()->theNode())+10, GA.y(iterateEdge->adjTarget()->theNode())+10);
+            path.moveTo(GA.x(iterateEdge->adjSource()->theNode())+15, GA.y(iterateEdge->adjSource()->theNode())+10);
+            path.lineTo(GA.x(iterateEdge->adjTarget()->theNode())+15, GA.y(iterateEdge->adjTarget()->theNode())+10);
         }
         else
         {
@@ -108,13 +107,12 @@ void GraphEditor::rerender()
         pathPen.setWidth(2);
         pathPen.setColor(QColor("#333"));
 
-        scene->addEllipse(x,y,22,22, pathPen, QBrush(QColor("#ffffff")));
+        scene->addEllipse(x,y,30,30, pathPen, QBrush(QColor("#ffffff")));
 
-        QFont font;
-        font.Black;
+        //configurações da fonte
         string in = to_string(iterateNode->index());
         QGraphicsTextItem *text =  scene->addText(QString::fromStdString(in));
-        text->setPos(x+2,y-5);
+        text->setPos(x+(iterateNode->index() < 10 ? 6 : 2),y);//posição do indice do nó
     }
 
     this->view->setScene(scene);

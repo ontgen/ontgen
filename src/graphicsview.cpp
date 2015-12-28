@@ -11,16 +11,16 @@ void GraphicsView::mousePressEvent(QMouseEvent *e)
 {
     bool t = false;
 
-    for (auto iterator = scene->items().begin(); iterator != scene->items().end(); iterator++)
+    foreach(QGraphicsItem *item, scene->items())
     {
-        QGraphicsItem *item = *iterator;
+        QGraphicsEllipseItem *ellipse = (QGraphicsEllipseItem *) item;
 
-        if (!item)
+        if (!ellipse)
         {
             break;
         }
 
-        QRectF rect = item->boundingRect();
+        QRectF rect = ellipse->boundingRect();
 
         if (rect.contains(e->pos()))
         {
