@@ -9,8 +9,13 @@ using namespace std;
 Node::Node()
 {
 	this->degree = 0;
-
+	this->relativeDegreeCentrality = 0;
+	this->betweenCentrality = 0;
+	this->closenessCentrality = 0;
+	this->efficientCentrality = 0;
 	this->numberOfPaths = 0;
+	this->degreeCentrality = 0;
+	this->region = 1;
 }
 
 Node::~Node(){}
@@ -121,9 +126,10 @@ vector<double> Node::getEuclideanDistance()
 	return this->distance;
 }
 
-vector<int> Node::getAdjacentsNodes() 
+vector<int> &Node::getAdjacentsNodes() 
 {
-	return this->adjacents;
+    vector<int>  &adj = this->adjacents;
+    return adj;
 }	
 
 int Node::getRegionOfNode()

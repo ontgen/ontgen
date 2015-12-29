@@ -58,6 +58,7 @@ void MainWindow::on_pushButton_clicked()
      
      SVGViewer *svg = new SVGViewer();
      svg->setWindowFlags(Qt::Dialog | Qt::Desktop);
+     bool survivor = false, ok = false;
      
      while( simulation <= limitSimulation )
      {
@@ -162,15 +163,15 @@ void MainWindow::on_pushButton_clicked()
             }
          }
 
-         // for(int w = 0; w < graph.getNumberOfNodes();w++) graph.printAdjacents(w);
+          for(int w = 0; w < graph.getNumberOfNodes();w++) graph.printAdjacents(w);
 
         Suurballe s;
 
-        bool survivor = s.execute(graph);
+        survivor = s.execute(graph);
 
         if(survivor == true)
         {
-
+            ok = true;
             if (simulation == 1)
             {
                 file.openFile();
@@ -275,17 +276,21 @@ void MainWindow::on_pushButton_clicked()
 
      svg->show();
 
-     QString message = "Simulation complete. File located at \"";
-     message.append(QDir::homePath());
-     message.append("/simulations\"");
-
-     ui->error->setText(message);
-
-     file.closeFileTopologies();
-     if (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked())
+     if (ok == true)
      {
-        file.closeFileMeasures();
+         QString message = "Simulation complete. File located at \"";
+         message.append(QDir::homePath());
+         message.append("/simulations\"");
+
+         ui->error->setText(message);
+
+         file.closeFileTopologies();
+         if (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked())
+         {
+            file.closeFileMeasures();
+         }
      }
+     
      ui->pushButton->setEnabled(true);
      ui->pushButton->setText("Begin simulation");
 }
@@ -382,22 +387,11 @@ void MainWindow::on_m_simulation_clicked()
      FileWriter file;
 
      Graph graph; // cria objeto grafo
-     cout<<"number of nodes "<<graphEditor->g.numberOfNodes()<<endl;
-
-     graph.setNumberOfNodes(graphEditor->g.numberOfNodes()); //número de nós
-
-     graph.setMinimumDegree(2);//grau mínimo
-
-     graph.setMaximumDegree(graphEditor->g.numberOfNodes()-1);//grau máximo
-
-     graph.setMinimumDistanceOfNode(0);//distância mínima entre dois nós
-
-    graph.memsetGraph();
 
     graphEditor->constructGraph(graph);
 
     for(int u = 0; u < graph.getNumberOfNodes();u++) graph.printAdjacents(u);
-    cout<<"ACABOU?"<<endl;
+
      /**
       * Verifica se o número de ligações foi atingido
       * Se sim verifica se a topologia gerada é sobrevivente
@@ -406,9 +400,8 @@ void MainWindow::on_m_simulation_clicked()
       */
 
     Suurballe s;
-    cout<<"Suurballe\n";
+
     bool survivor = s.execute(graph);
-    cout<<"\n survivor "<<survivor<<endl;
 
     if(survivor == true)
     {
@@ -435,7 +428,8 @@ void MainWindow::on_m_simulation_clicked()
              file.closeFileMeasures();
          }
 
-         ui->m_simulation->setEnabled(true);
-         ui->m_simulation->setText("Begin simulation");
     }
+
+    ui->m_simulation->setEnabled(true);
+    ui->m_simulation->setText("Begin simulation");
 }

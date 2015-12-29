@@ -7,7 +7,7 @@
 QT       += core gui svg
 
 CONFIG += c++11
-QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++11 -O3
 
 include(src/xlsx/qtxlsx.pri)
 

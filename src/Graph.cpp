@@ -45,6 +45,16 @@ void Graph::setEuclideanDistance(int u,int v,double euclidean)
 	nodes[v].setEuclideanDistance(euclidean);
 }
 
+/**
+ * Atribui a distancia eucliana 
+ */
+void Graph::setDistancePairOfNodes(int u,int v,double distance)
+{
+	nodes[u].setDistanceNode(distance);
+	nodes[v].setDistanceNode(distance);
+}
+
+
 void Graph::setEdgeDirected(int u,int v)
 {
 	if (getDegree(u) < this->maxDegree  && getDegree(v) < this->maxDegree && u != v)
@@ -86,15 +96,6 @@ void Graph::setMaximumDegree(int max)
 void Graph::setMinimumDistanceOfNode(int min)
 {
 	this->minDistance = min;
-}
-
-/**
- * Atribui a distancia eucliana 
- */
-void Graph::setDistancePairOfNodes(int u,int v,double distance)
-{
-	this->nodes[u].setDistanceNode(distance);
-	this->nodes[v].setDistanceNode(distance);
 }
 
 void Graph::setWeightEdgeDirected(int u,int v, double value)
@@ -204,9 +205,10 @@ int Graph::getMinimumDistanceOfNode()
 	return this->minDistance;
 }
 
-Node Graph::getNodeAtPosition(int index)
+Node & Graph::getNodeAtPosition(int index)
 {
-	return this->nodes[index];
+    Node &node = nodes.at(index);
+    return node;
 }
 
 int Graph::getRegionOfNode(int u)

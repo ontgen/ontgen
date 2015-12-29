@@ -62,7 +62,7 @@ public:
     double getBetweennessCentrality();		//centralidade de intermediação
     double getClosenessCentrality();	//centralidade de proximidade
     double getEfficientCentrality();	//centralidade de eficiência
-    vector<int> getAdjacentsNodes();	//retorna vetor de nós adjacentes
+    vector<int> &getAdjacentsNodes();	//retorna vetor de nós adjacentes
     int getNumberOfNodesFromPath(int);	//número de nodos em um caminho minimo
     vector<double>  getEuclideanDistance();//retorna um vetor com as distâncias euclidianas de cada ligação
 

@@ -47,7 +47,7 @@ public:
 	vector<Node> getNodes();	//retorna um vetor de nós do grafo
 	double getAverageDegree();	//retorna grau médio do grafo
 	double getMaximumAverageDegree();
-	Node getNodeAtPosition(int);
+    Node & getNodeAtPosition(int);
 	int getMinimumDistanceOfNode();
 	int getMinimumNumberOfEdges();
 	int getMaximumNumberOfEdges();

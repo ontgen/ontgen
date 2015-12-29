@@ -207,14 +207,25 @@ void GraphEditor::clearGraph()
 void GraphEditor::constructGraph(Graph &graph)
 {
 
+    graph.setNumberOfNodes(g.numberOfNodes()); //número de nós
+
+    graph.setMinimumDegree(2);//grau mínimo
+
+    graph.setMaximumDegree(g.numberOfNodes()-1);//grau máximo
+
+    graph.setMinimumDistanceOfNode(0);//distância mínima entre dois nós
+
+    graph.memsetGraph();
+
     ogdf::edge e;
 
     forall_edges(e,g)
     {
-        int u = e->adjSource()->theNode()->index(), v = e->adjTarget()->theNode()->index();
+        int u = e->adjSource()->theNode()->index();
+        int v = e->adjTarget()->theNode()->index();
 
         graph.setEdge(u,v);
-        graph.setDistancePairOfNodes(u,v,GA.intWeight(e));
+        graph.setDistancePairOfNodes(u,v,(double)GA.intWeight(e));
     }
 
 }
