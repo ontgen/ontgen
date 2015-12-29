@@ -41,6 +41,8 @@ private slots:
 
     void on_addnode_clicked();
 
+    void on_new_topology_clicked();
+
 private:
     Ui::MainWindow *ui;
     About *aboutWindow;

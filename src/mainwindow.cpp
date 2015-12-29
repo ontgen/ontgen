@@ -26,7 +26,6 @@ MainWindow::MainWindow(QWidget *parent) :
     GraphicsView *q = new GraphicsView();
 
     this->graphEditor = new GraphEditor(q);
-    cout << "grapheditor n nodes " << graphEditor->g.numberOfNodes() << endl;
 
     q->setGeometry(0, 0, ui->gridLayout->geometry().width(), ui->gridLayout->geometry().height());
     ui->gridLayout->addWidget(q);
@@ -368,4 +367,9 @@ void MainWindow::addNode(int x, int y)
 void MainWindow::on_addnode_clicked()
 {
     graphEditor->addingNode = true;
+}
+
+void MainWindow::on_new_topology_clicked()
+{
+
 }
