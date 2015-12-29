@@ -19,12 +19,14 @@ Suurballe::Suurballe(){}
 
 Suurballe::~Suurballe(){}
 
-void Suurballe::insertSubtree(Graph graph, tree<int> &tr, typename tree<int>::iterator root,vector<int> nodes, vector<int> &controller, int source)
+void Suurballe::insertSubtree(Graph &graph, tree<int> &tr, typename tree<int>::iterator &root,vector<int> &nodes, vector<int> &controller, int source)
 {
-    Node node = graph.getNodeAtPosition(source);
-    vector<int> adjacents = node.getAdjacentsNodes();
+    Node &node = graph.getNodeAtPosition(source);
+    vector<int> &adjacents = node.getAdjacentsNodes();
+
     typename tree<int>::iterator temp;
     typename tree<int>::iterator newRoot;
+    
     int newSource = source;
 
     if (find(this->nodeInTree.begin(),this->nodeInTree.end(),source) == this->nodeInTree.end())
@@ -32,9 +34,10 @@ void Suurballe::insertSubtree(Graph graph, tree<int> &tr, typename tree<int>::it
         this->nodeInTree.push_back(source);
     }
 
-    unsigned int it = 0;
+    int it = 0;
+    int n = (int)adjacents.size();
 
-    while( adjacents.size() > it )
+    while( it <  n)
     {
         if (controller[ adjacents[it] ] == -1)
         {
@@ -54,13 +57,12 @@ void Suurballe::insertSubtree(Graph graph, tree<int> &tr, typename tree<int>::it
             }
         }
 
-
         it++;
     }
 
-    int n = nodes.size()-1;
+    n = ((int)nodes.size())-1;
 
-    if (source == nodes[n] )
+    if (source == nodes[n] || newSource == source)
     {
         return;
     }
@@ -68,14 +70,14 @@ void Suurballe::insertSubtree(Graph graph, tree<int> &tr, typename tree<int>::it
     insertSubtree(graph,tr,newRoot,nodes,controller,newSource);
 }
 
-tree<int> Suurballe::makeTree(Graph graph, vector<int> nodes, int source)
+tree<int> Suurballe::makeTree(Graph &graph, vector<int> nodes, int source)
 {
     vector<Node> auxiliar;
     auxiliar = graph.getNodes();
 
     tree<int> tr;
 
-    tree<int>::iterator root, top, parent;
+    tree<int>::iterator root, top;
 
     top = tr.begin();
     root = tr.insert( top, source );
@@ -474,6 +476,10 @@ bool Suurballe::makeDisjointPaths(vector<int> path1, vector<int> path2, Graph &g
 
 bool Suurballe::execute(Graph & graph)
 {
+    if (graph.getNumberOfNodes() < 2)
+    {
+        return false;
+    }
 
     bool survivor = false;
 
@@ -524,7 +530,7 @@ bool Suurballe::execute(Graph & graph)
             // cout<<"----------------------------\n"<<endl;
             // cout<<"U "<<u<<" V "<<v<<endl;
             this->treePath = vector<vector<int>> (this->numberOfNodes,vector<int>(this->numberOfNodes,0)); 
-            tree<int> tr = makeTree(auxiliar, this->path[iterator], u);
+            tree<int> tr = makeTree(auxiliar,this->path[iterator], u);
             // cout<<"------------------------ "<<u<<" "<<v<<"------------------"<<endl;
             changeEdgesWeights(auxiliar, tr, this->path[iterator]);
             // for(int w = 0; w < auxiliar.getNumberOfNodes();w++) auxiliar.printAdjacents(w);
@@ -545,9 +551,9 @@ bool Suurballe::execute(Graph & graph)
             }
 
             //verifica se os dois caminhos são aresta disjuntas
-            for(int w = 0; w < (int)newPath.size();w++) cout<<" "<<newPath[w];
-            cout<<endl;
-            for(int w = 0; w < (int)path[iterator].size();w++) cout<<" "<<path[iterator][w];
+            // for(int w = 0; w < (int)newPath.size();w++) cout<<" "<<newPath[w];
+            // cout<<endl;
+//            for(int w = 0; w < (int)path[iterator].size();w++) cout<<" "<<path[iterator][w];
             survivor = makeDisjointPaths(path[iterator],newPath, graph);
             
             if (survivor == false)
@@ -555,7 +561,7 @@ bool Suurballe::execute(Graph & graph)
                 return survivor;
             }
 
-            // this->nodeInTree.clear();
+            this->nodeInTree.clear();
 
             iterator++;
             survivor = false;

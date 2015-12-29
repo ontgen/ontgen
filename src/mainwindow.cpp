@@ -9,6 +9,8 @@
 #include "Suurballe.hpp"
 #include "FileWriter.hpp"
 #include "DrawGraph.hpp"
+#include "graphicsview.h"
+#include <QFileDialog>
 
 using namespace std;
 
@@ -20,6 +22,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionOpen_help, SIGNAL(triggered()), this, SLOT(on_help_clicked()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(openNewWindow()));
+
+    GraphicsView *q = new GraphicsView();
+
+    this->graphEditor = new GraphEditor(q);
+
+    q->setGeometry(0, 0, ui->gridLayout->geometry().width(), ui->gridLayout->geometry().height());
+    ui->gridLayout->addWidget(q);
+
+    addingNode = false;
+
 }
 
 MainWindow::~MainWindow()
@@ -46,6 +58,7 @@ void MainWindow::on_pushButton_clicked()
      
      SVGViewer *svg = new SVGViewer();
      svg->setWindowFlags(Qt::Dialog | Qt::Desktop);
+     bool survivor = false, ok = false;
      
      while( simulation <= limitSimulation )
      {
@@ -150,15 +163,15 @@ void MainWindow::on_pushButton_clicked()
             }
          }
 
-         // for(int w = 0; w < graph.getNumberOfNodes();w++) graph.printAdjacents(w);
+          for(int w = 0; w < graph.getNumberOfNodes();w++) graph.printAdjacents(w);
 
         Suurballe s;
 
-        bool survivor = s.execute(graph);
+        survivor = s.execute(graph);
 
         if(survivor == true)
         {
-
+            ok = true;
             if (simulation == 1)
             {
                 file.openFile();
@@ -263,17 +276,21 @@ void MainWindow::on_pushButton_clicked()
 
      svg->show();
 
-     QString message = "Simulation complete. File located at \"";
-     message.append(QDir::homePath());
-     message.append("/simulations\"");
-
-     ui->error->setText(message);
-
-     file.closeFileTopologies();
-     if (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked())
+     if (ok == true)
      {
-        file.closeFileMeasures();
+         QString message = "Simulation complete. File located at \"";
+         message.append(QDir::homePath());
+         message.append("/simulations\"");
+
+         ui->error->setText(message);
+
+         file.closeFileTopologies();
+         if (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked())
+         {
+            file.closeFileMeasures();
+         }
      }
+     
      ui->pushButton->setEnabled(true);
      ui->pushButton->setText("Begin simulation");
 }
@@ -339,4 +356,80 @@ void MainWindow::on_help_clicked()
     QDesktopServices::openUrl(QUrl(QString::fromStdString(this->appPath+"/help/index.html"), QUrl::TolerantMode));
 }
 
+void MainWindow::on_pushButton_2_clicked()
+{
+    QString filename = QFileDialog::getSaveFileName();
+    graphEditor->saveAsSVG(filename);
+}
 
+void MainWindow::addNode(int x, int y)
+{
+    graphEditor->addNode(x, y);
+}
+
+void MainWindow::on_addnode_clicked()
+{
+    graphEditor->addingNode = true;
+}
+
+void MainWindow::on_new_topology_clicked()
+{
+    graphEditor->clearGraph();
+}
+
+void MainWindow::on_m_simulation_clicked()
+{
+     ui->error->setText(QString::fromUtf8(""));
+     ui->error->setText(QString::fromUtf8(""));
+     ui->m_simulation->setEnabled(false);
+     ui->m_simulation->setText("Simulating...");
+     ui->m_simulation->repaint();
+     FileWriter file;
+
+     Graph graph; // cria objeto grafo
+
+    graphEditor->constructGraph(graph);
+
+    for(int u = 0; u < graph.getNumberOfNodes();u++) graph.printAdjacents(u);
+
+     /**
+      * Verifica se o número de ligações foi atingido
+      * Se sim verifica se a topologia gerada é sobrevivente
+      * Do contrário realiza sorteio randômico de nós até atingir
+      * o limit e máximo, verificando-se a sobrevivência
+      */
+
+    Suurballe s;
+
+    bool survivor = s.execute(graph);
+
+    if(survivor == true)
+    {
+
+        if( (ui->m_bc->isChecked() || ui->m_cc->isChecked() || ui->m_dc->isChecked() || ui->m_ec->isChecked() ) && survivor)
+        {
+            file.createXls();
+
+            Measure measures;
+            
+            measures.initialize( graph,graph.getNumberOfNodes(),ui->m_bc->isChecked(),ui->cc->isChecked(),ui->m_dc->isChecked(),ui->m_ec->isChecked() ); //obtêm as medidas de centralidade para cada nó da rede
+
+            file.writeMeasures(graph,ui->m_bc->isChecked(),ui->m_ec->isChecked(),ui->m_dc->isChecked(),ui->m_cc->isChecked());
+        }
+
+
+         if (ui->m_bc->isChecked() || ui->m_cc->isChecked() || ui->m_dc->isChecked() || ui->m_ec->isChecked())
+         {
+             QString message = "File located at \"";
+             message.append(QDir::homePath());
+             message.append("/simulations\"");
+
+             ui->m_error->setText(message);
+             file.closeFileMeasures();
+         }
+
+    }
+
+    ui->m_simulation->setEnabled(true);
+    ui->m_simulation->setText("Begin simulation");
+}

@@ -13,6 +13,17 @@
 #include <random>
 #include <fstream>//manipulação de arquivos
 
+
+#include <ogdf/basic/graphics.h>
+#include <ogdf/basic/Graph.h>
+#include <ogdf/basic/graph_generators.h>
+#include <ogdf/layered/DfsAcyclicSubgraph.h>
+#include <ogdf/fileformats/GraphIO.h>
+#include <ogdf/layered/SugiyamaLayout.h>
+#include <ogdf/layered/OptimalRanking.h>
+#include <ogdf/layered/MedianHeuristic.h>
+#include <ogdf/layered/OptimalHierarchyLayout.h>
+
 using namespace std;
 
 class Node
@@ -51,7 +62,7 @@ public:
     double getBetweennessCentrality();		//centralidade de intermediação
     double getClosenessCentrality();	//centralidade de proximidade
     double getEfficientCentrality();	//centralidade de eficiência
-    vector<int> getAdjacentsNodes();	//retorna vetor de nós adjacentes
+    vector<int> &getAdjacentsNodes();	//retorna vetor de nós adjacentes
     int getNumberOfNodesFromPath(int);	//número de nodos em um caminho minimo
     vector<double>  getEuclideanDistance();//retorna um vetor com as distâncias euclidianas de cada ligação
 

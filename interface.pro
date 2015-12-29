@@ -7,7 +7,7 @@
 QT       += core gui svg
 
 CONFIG += c++11
-QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++11 -O3
 
 include(src/xlsx/qtxlsx.pri)
 
@@ -35,7 +35,10 @@ SOURCES += src/about.cpp \
     src/Suurballe.cpp \
     src/DrawGraph.cpp \
     src/svgviewer.cpp \
-    src/svgview.cpp
+    src/svgview.cpp \
+    src/GraphEditor.cpp \
+    src/graphicsview.cpp \
+    src/editorpathitem.cpp
 
 HEADERS  += src/about.h \
     src/Brandes.hpp \
@@ -51,7 +54,10 @@ HEADERS  += src/about.h \
     src/tree_util.hh \
     src/DrawGraph.hpp \
     src/svgviewer.h \
-    src/svgview.h
+    src/svgview.h \
+    src/GraphEditor.hpp \
+    src/graphicsview.h \
+    src/editorpathitem.h
 
 FORMS    += src/mainwindow.ui \
     src/about.ui \
