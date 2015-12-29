@@ -397,7 +397,7 @@ void MainWindow::on_m_simulation_clicked()
     graphEditor->constructGraph(graph);
 
     for(int u = 0; u < graph.getNumberOfNodes();u++) graph.printAdjacents(u);
-    
+    cout<<"ACABOU?"<<endl;
      /**
       * Verifica se o número de ligações foi atingido
       * Se sim verifica se a topologia gerada é sobrevivente
@@ -423,19 +423,19 @@ void MainWindow::on_m_simulation_clicked()
 
             file.writeMeasures(graph,ui->m_bc->isChecked(),ui->m_ec->isChecked(),ui->m_dc->isChecked(),ui->m_cc->isChecked());
         }
+
+
+         if (ui->m_bc->isChecked() || ui->m_cc->isChecked() || ui->m_dc->isChecked() || ui->m_ec->isChecked())
+         {
+             QString message = "File located at \"";
+             message.append(QDir::homePath());
+             message.append("/simulations\"");
+
+             ui->m_error->setText(message);
+             file.closeFileMeasures();
+         }
+
+         ui->m_simulation->setEnabled(true);
+         ui->m_simulation->setText("Begin simulation");
     }
-
-     QString message = "Simulation complete. File located at \"";
-     message.append(QDir::homePath());
-     message.append("/simulations\"");
-
-     ui->error->setText(message);
-
-     file.closeFileTopologies();
-     if (ui->m_bc->isChecked() || ui->m_cc->isChecked() || ui->m_dc->isChecked() || ui->m_ec->isChecked())
-     {
-        file.closeFileMeasures();
-     }
-     ui->m_simulation->setEnabled(true);
-     ui->m_simulation->setText("Begin simulation");
 }
