@@ -197,3 +197,14 @@ void GraphEditor::saveAsSVG(QString filename)
     QPainter painter( &svgGen );
     ((GraphicsView *)this->view)->scene->render( &painter );
 }
+
+void GraphEditor::clearGraph()
+{
+    this->g.clear();
+    rerender();
+}
+
+void GraphEditor::constructGraph(Graph &)
+{
+
+}

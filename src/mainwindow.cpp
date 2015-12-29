@@ -359,8 +359,6 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::addNode(int x, int y)
 {
-    cout << "grapheditor n nodes 2: " << graphEditor->g.numberOfNodes() << endl;
-
     graphEditor->addNode(x, y);
 }
 
@@ -371,5 +369,68 @@ void MainWindow::on_addnode_clicked()
 
 void MainWindow::on_new_topology_clicked()
 {
+    graphEditor->clearGraph();
+}
 
+void MainWindow::on_m_simulation_clicked()
+{
+     ui->error->setText(QString::fromUtf8(""));
+     ui->error->setText(QString::fromUtf8(""));
+     ui->m_simulation->setEnabled(false);
+     ui->m_simulation->setText("Simulating...");
+     ui->m_simulation->repaint();
+     FileWriter file;
+
+     Graph graph; // cria objeto grafo
+
+     graph.setNumberOfNodes(graphEditor->g.numberOfEdges()); //número de nós
+
+     graph.setMinimumDegree(2);//grau mínimo
+
+     graph.setMaximumDegree(graphEditor->g.numberOfEdges()-1);//grau máximo
+
+     graph.setMinimumDistanceOfNode(0);//distância mínima entre dois nós
+
+    graph.memsetGraph();
+    graphEditor->constructGraph(graph);
+    
+     /**
+      * Verifica se o número de ligações foi atingido
+      * Se sim verifica se a topologia gerada é sobrevivente
+      * Do contrário realiza sorteio randômico de nós até atingir
+      * o limit e máximo, verificando-se a sobrevivência
+      */
+
+    Suurballe s;
+
+    bool survivor = s.execute(graph);
+
+    if(survivor == true)
+    {
+
+        if( (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked() ) && survivor)
+        {
+            file.createXls();
+
+            Measure measures;
+            
+            measures.initialize( graph,graph.getNumberOfNodes(),ui->bc->isChecked(),ui->cc->isChecked(),ui->dc->isChecked(),ui->ec->isChecked() ); //obtêm as medidas de centralidade para cada nó da rede
+
+            file.writeMeasures(graph,ui->bc->isChecked(),ui->ec->isChecked(),ui->dc->isChecked(),ui->cc->isChecked());
+        }
+    }
+
+     QString message = "Simulation complete. File located at \"";
+     message.append(QDir::homePath());
+     message.append("/simulations\"");
+
+     ui->error->setText(message);
+
+     file.closeFileTopologies();
+     if (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked())
+     {
+        file.closeFileMeasures();
+     }
+     ui->pushButton->setEnabled(true);
+     ui->pushButton->setText("Begin simulation");
 }

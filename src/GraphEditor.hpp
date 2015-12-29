@@ -17,6 +17,8 @@ public:
     void addEdge(int x,int y);//adiciona aresta se for o segundo nó selecionado
     bool checkEdgeExists(int,int);
     void saveAsSVG(QString);
+    void clearGraph();
+    void constructGraph(Graph &);
 
     bool addingNode;
     bool addingEdge;

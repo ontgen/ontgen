@@ -43,6 +43,8 @@ private slots:
 
     void on_new_topology_clicked();
 
+    void on_m_simulation_clicked();
+
 private:
     Ui::MainWindow *ui;
     About *aboutWindow;

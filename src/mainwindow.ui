@@ -1323,7 +1323,7 @@ color:#000</string>
        <string>Efficiency Centrality</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="m_simulation">
       <property name="geometry">
        <rect>
         <x>560</x>
