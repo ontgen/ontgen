@@ -1108,7 +1108,7 @@ color:#000</string>
        <string>New</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="ec_2">
+     <widget class="QCheckBox" name="m_ec">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -1364,7 +1364,7 @@ color:#000</string>
        <string>Measures</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="dc_2">
+     <widget class="QCheckBox" name="m_dc">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -1386,7 +1386,7 @@ color:#000</string>
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QCheckBox" name="bc_2">
+     <widget class="QCheckBox" name="m_bc">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -1402,7 +1402,7 @@ color:#000</string>
        <string>Betwenness Centrality</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="cc_2">
+     <widget class="QCheckBox" name="m_cc">
       <property name="enabled">
        <bool>true</bool>
       </property>

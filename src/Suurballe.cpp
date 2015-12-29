@@ -500,6 +500,7 @@ bool Suurballe::execute(Graph & graph)
             //não têm caminho entre u e v
             if ( (int)path[n].size() <= 1)
             {
+                cout<<" "<<u<<" "<<v<<endl;
                 return survivor;
             }
 
@@ -534,6 +535,7 @@ bool Suurballe::execute(Graph & graph)
             //verifica se encontrou caminho
             if ( dist == std::numeric_limits<double>::max() )
             {
+                cout<<" "<<u<<" "<<v<<endl;
                 return survivor;
             }
 
@@ -541,17 +543,19 @@ bool Suurballe::execute(Graph & graph)
             //não encontrou caminho
             if ((int)newPath.size() <= 1)
             {
+                cout<<" "<<u<<" "<<v<<endl;
                 return survivor;
             }
 
             //verifica se os dois caminhos são aresta disjuntas
-            for(int w = 0; w < (int)newPath.size();w++) cout<<" "<<newPath[w];
-            cout<<endl;
+            // for(int w = 0; w < (int)newPath.size();w++) cout<<" "<<newPath[w];
+            // cout<<endl;
             for(int w = 0; w < (int)path[iterator].size();w++) cout<<" "<<path[iterator][w];
             survivor = makeDisjointPaths(path[iterator],newPath, graph);
             
             if (survivor == false)
             {
+                cout<<" "<<u<<" "<<v<<endl;
                 return survivor;
             }
 

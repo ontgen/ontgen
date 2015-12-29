@@ -382,17 +382,21 @@ void MainWindow::on_m_simulation_clicked()
      FileWriter file;
 
      Graph graph; // cria objeto grafo
+     cout<<"number of nodes "<<graphEditor->g.numberOfNodes()<<endl;
 
-     graph.setNumberOfNodes(graphEditor->g.numberOfEdges()); //número de nós
+     graph.setNumberOfNodes(graphEditor->g.numberOfNodes()); //número de nós
 
      graph.setMinimumDegree(2);//grau mínimo
 
-     graph.setMaximumDegree(graphEditor->g.numberOfEdges()-1);//grau máximo
+     graph.setMaximumDegree(graphEditor->g.numberOfNodes()-1);//grau máximo
 
      graph.setMinimumDistanceOfNode(0);//distância mínima entre dois nós
 
     graph.memsetGraph();
+
     graphEditor->constructGraph(graph);
+
+    for(int u = 0; u < graph.getNumberOfNodes();u++) graph.printAdjacents(u);
     
      /**
       * Verifica se o número de ligações foi atingido
@@ -402,21 +406,22 @@ void MainWindow::on_m_simulation_clicked()
       */
 
     Suurballe s;
-
+    cout<<"Suurballe\n";
     bool survivor = s.execute(graph);
+    cout<<"\n survivor "<<survivor<<endl;
 
     if(survivor == true)
     {
 
-        if( (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked() ) && survivor)
+        if( (ui->m_bc->isChecked() || ui->m_cc->isChecked() || ui->m_dc->isChecked() || ui->m_ec->isChecked() ) && survivor)
         {
             file.createXls();
 
             Measure measures;
             
-            measures.initialize( graph,graph.getNumberOfNodes(),ui->bc->isChecked(),ui->cc->isChecked(),ui->dc->isChecked(),ui->ec->isChecked() ); //obtêm as medidas de centralidade para cada nó da rede
+            measures.initialize( graph,graph.getNumberOfNodes(),ui->m_bc->isChecked(),ui->cc->isChecked(),ui->m_dc->isChecked(),ui->m_ec->isChecked() ); //obtêm as medidas de centralidade para cada nó da rede
 
-            file.writeMeasures(graph,ui->bc->isChecked(),ui->ec->isChecked(),ui->dc->isChecked(),ui->cc->isChecked());
+            file.writeMeasures(graph,ui->m_bc->isChecked(),ui->m_ec->isChecked(),ui->m_dc->isChecked(),ui->m_cc->isChecked());
         }
     }
 
@@ -427,10 +432,10 @@ void MainWindow::on_m_simulation_clicked()
      ui->error->setText(message);
 
      file.closeFileTopologies();
-     if (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked())
+     if (ui->m_bc->isChecked() || ui->m_cc->isChecked() || ui->m_dc->isChecked() || ui->m_ec->isChecked())
      {
         file.closeFileMeasures();
      }
-     ui->pushButton->setEnabled(true);
-     ui->pushButton->setText("Begin simulation");
+     ui->m_simulation->setEnabled(true);
+     ui->m_simulation->setText("Begin simulation");
 }

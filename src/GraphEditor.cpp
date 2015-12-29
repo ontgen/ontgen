@@ -204,7 +204,17 @@ void GraphEditor::clearGraph()
     rerender();
 }
 
-void GraphEditor::constructGraph(Graph &)
+void GraphEditor::constructGraph(Graph &graph)
 {
+
+    ogdf::edge e;
+
+    forall_edges(e,g)
+    {
+        int u = e->adjSource()->theNode()->index(), v = e->adjTarget()->theNode()->index();
+
+        graph.setEdge(u,v);
+        graph.setDistancePairOfNodes(u,v,GA.intWeight(e));
+    }
 
 }
