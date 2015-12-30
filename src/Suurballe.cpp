@@ -34,6 +34,8 @@ void Suurballe::insertSubtree(Graph &graph, tree<int> &tr, typename tree<int>::i
     if (find(this->nodeInTree.begin(),this->nodeInTree.end(),source) == this->nodeInTree.end())
     {
         this->nodeInTree.push_back(source);
+    } else {
+        return;
     }
 
     int it = 0;
@@ -64,7 +66,7 @@ void Suurballe::insertSubtree(Graph &graph, tree<int> &tr, typename tree<int>::i
 
     n = ((int)nodes.size())-1;
 
-    if (source == nodes[n] || newSource == source)
+    if (source == nodes[n])
     {
         return;
     }
@@ -81,14 +83,29 @@ tree<int> Suurballe::makeTree(Graph &graph, vector<int> nodes, int source)
 
     tree<int>::iterator root, top;
 
-    top = tr.begin();
-    root = tr.insert( top, source );
+    top = root = tr.begin();
 
     vector<int> controller = vector<int> (this->numberOfNodes,-1);
 
     controller[source] = source;
 
-    insertSubtree(graph,tr,root,nodes,controller,source);
+    // insertSubtree(graph,tr,root,nodes,controller,source);
+
+    for (int i = 0; i < (int) nodes.size(); i++)
+    {
+        root = tr.insert( root, nodes[i] );
+        controller[nodes[i]] = 1;
+
+        Node n = graph.getNodeAtPosition(nodes[i]);
+        vector<int> adjacents = n.getAdjacentsNodes();
+
+        for (int k = 0; k < (int) adjacents.size(); k++)
+        {
+            if (controller[adjacents[k]] == -1 && find(nodes.begin(), nodes.end(), adjacents[k]) == nodes.end()) {
+                tr.insert(root, adjacents[k]);
+            }
+        }
+    }
 
     // cout<<endl;
     // kptree::print_tree_bracketed(tr,cout); //imprime árvore

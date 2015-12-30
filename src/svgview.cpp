@@ -81,7 +81,6 @@ SvgView::SvgView(QWidget *parent)
 void SvgView::mousePressEvent(QMouseEvent *event)
 {
     QPoint p = this->mapFromGlobal(event->pos());
-    std::cout << event->pos().x() << " " << event->pos().y() << std::endl;
 
     if (this->main) {
         ((MainWindow *) main)->addNode(event->pos().x(), event->pos().y());
@@ -99,11 +98,8 @@ void SvgView::drawBackground(QPainter *p, const QRectF &)
 void SvgView::openFile(const QFile &file)
 {
     if (!file.exists()) {
-        printf("ah é");
         return;
     }
-
-    printf("ah é 2");
 
     QGraphicsScene *s = scene();
 

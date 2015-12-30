@@ -180,7 +180,7 @@ void MainWindow::on_pushButton_clicked()
             }
          }
 
-          for(int w = 0; w < graph.getNumberOfNodes();w++) graph.printAdjacents(w);
+          // for(int w = 0; w < graph.getNumberOfNodes();w++) graph.printAdjacents(w);
 
         Suurballe s;
 
@@ -392,10 +392,13 @@ void MainWindow::on_addnode_clicked()
 void MainWindow::on_new_topology_clicked()
 {
     graphEditor->clearGraph();
+
+     ui->m_error->setText("");
 }
 
 void MainWindow::on_m_simulation_clicked()
 {
+    ui->m_error->setText("");
      ui->error->setText(QString::fromUtf8(""));
      ui->error->setText(QString::fromUtf8(""));
      ui->m_simulation->setEnabled(false);
@@ -407,7 +410,7 @@ void MainWindow::on_m_simulation_clicked()
 
     graphEditor->constructGraph(graph);
 
-    for(int u = 0; u < graph.getNumberOfNodes();u++) graph.printAdjacents(u);
+    // for(int u = 0; u < graph.getNumberOfNodes();u++) graph.printAdjacents(u);
 
      /**
       * Verifica se o número de ligações foi atingido
@@ -419,7 +422,7 @@ void MainWindow::on_m_simulation_clicked()
     Suurballe s;
 
     bool survivor = s.execute(graph);
-
+ 
     if(survivor == true)
     {
 
@@ -446,7 +449,11 @@ void MainWindow::on_m_simulation_clicked()
          }
 
     }
-
+    else 
+    {
+        ui->m_error->setText("Topology isn't survivor.");
+    }
+    
     ui->m_simulation->setEnabled(true);
     ui->m_simulation->setText("Begin simulation");
 }

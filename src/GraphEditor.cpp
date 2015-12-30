@@ -42,7 +42,6 @@ GraphEditor::~GraphEditor(){}
 
 void GraphEditor::addNode(int x, int y)
 {
-    cout << addingNode << endl;
     if (!addingNode) {
         return;
     }

@@ -143,9 +143,6 @@ void GraphicsView::mouseDoubleClickEvent(QMouseEvent *e)
             }
             //janela para digitar a distância entre um par de nós
             QString text = QInputDialog::getText(this, "Enter the distance of the link", "Distance:", QLineEdit::Normal, QString::fromStdString(to_string(distance)), &ok);
-            cout << "text: " << text.toStdString() << endl;
-            cout << "ok? " << ok << endl;
-            cout << "edge index " << index << endl;
 
             if (ok) {
                 distance = text.toDouble();
