@@ -23,8 +23,13 @@
 class EditorPathItem : public QGraphicsPathItem
 {
 public:
+
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
     int edgeIndex;
-    double distance;
+    bool isHover;
 };
 
 #endif // EDITORPATHITEM_H

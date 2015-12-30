@@ -114,16 +114,18 @@ void GraphEditor::rerender()
         pathPen.setWidth(2);
         pathPen.setColor(QColor("#333"));
 
-        QGraphicsPathItem *s = scene->addPath(path, pathPen);
-        ((EditorPathItem *)s)->edgeIndex = iterateEdge->index();
+        EditorPathItem *item = new EditorPathItem();
+        item->edgeIndex = iterateEdge->index();
+        item->setPath(path);
+        item->setPen(pathPen);
+        item->setAcceptHoverEvents(true);
+        item->setActive(true);
+
+        scene->addItem(item);
         QPointF middle = path.pointAtPercent(path.percentAtLength(path.length() / 2));
 
         QGraphicsTextItem *label = scene->addText(QString::fromStdString(to_string(GA.intWeight(iterateEdge))));
         label->setPos(middle);
-
-        s->setAcceptHoverEvents(true);
-        s->setActive(true);
-        s->setFlag(QGraphicsItem::ItemIsSelectable, true);
     }
 
     for(ogdf::node iterateNode = g.firstNode(); iterateNode; iterateNode = iterateNode->succ()){

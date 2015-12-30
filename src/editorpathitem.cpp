@@ -16,3 +16,33 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "editorpathitem.h"
+#include <QPainter>
+#include <iostream>
+
+//troca de cor quando passar o mouse por cima da aresta
+void EditorPathItem::hoverEnterEvent(QGraphicsSceneHoverEvent * event)
+{
+    isHover = true;
+    update();
+}
+
+//volta a cor normal da aresta
+void EditorPathItem::hoverLeaveEvent(QGraphicsSceneHoverEvent * event)
+{
+    isHover = false;
+    update();
+}
+
+void EditorPathItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    QPen pen("#333");
+    pen.setWidth(2);
+
+    if (isHover) {
+        pen.setColor(QColor("#0000ff"));
+    }
+
+    painter->setPen(pen);
+
+    painter->drawPath(this->path());
+}
