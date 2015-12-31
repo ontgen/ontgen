@@ -20,6 +20,8 @@
 #include <QGraphicsTextItem>
 #include "editorpathitem.h"
 #include <QSvgGenerator>
+#include <QMessageBox>
+
 
 GraphEditor::GraphEditor(QGraphicsView *q)
 {
@@ -70,6 +72,8 @@ void GraphEditor::rerender()
 {
     QGraphicsScene *scene = new QGraphicsScene();//cria a cena
     scene->setSceneRect(QRect(0,0,view->width(),view->height()));
+
+    if(this->backgroundImage) scene->addItem(this->backgroundImage);
 
     QPen pen;
     pen.setColor(QColor("#000000"));
@@ -246,4 +250,21 @@ void GraphEditor::constructGraph(Graph &graph)
         graph.setDistancePairOfNodes(u,v,(double)GA.intWeight(e));
     }
 
+}
+
+//Carrega imagem
+void GraphEditor::loadBackgroundImage(QString filename)
+{
+    QImage image(filename);
+
+    if(image.isNull())
+    {
+//        QMessageBox::information(this,QString("Graph Editor"),QString("Couldn't load image"));
+
+        return;
+    }
+
+    this->backgroundImage = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+
+    rerender();
 }

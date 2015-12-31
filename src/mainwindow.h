@@ -62,6 +62,8 @@ private slots:
 
     void on_m_simulation_clicked();
 
+    void on_background_image_clicked();
+
 private:
     Ui::MainWindow *ui;
     About *aboutWindow;

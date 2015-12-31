@@ -457,3 +457,15 @@ void MainWindow::on_m_simulation_clicked()
     ui->m_simulation->setEnabled(true);
     ui->m_simulation->setText("Begin simulation");
 }
+
+void MainWindow::on_background_image_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this,QString("Open image file"),QDir::home().path());
+
+    if(filename.isEmpty())
+    {
+        return;
+    }
+
+    graphEditor->loadBackgroundImage(filename);
+}

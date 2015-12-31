@@ -22,6 +22,7 @@
 #include "svgview.h"
 #include <QFile>
 #include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
 
 class GraphEditor
 {
@@ -36,6 +37,7 @@ public:
     void saveAsSVG(QString);
     void clearGraph();
     void constructGraph(Graph &);
+    void loadBackgroundImage(QString);
 
     bool addingNode;
     bool addingEdge;
@@ -44,6 +46,7 @@ public:
     ogdf::Graph g;
 	ogdf::GraphAttributes GA;
     ogdf::node selected;
+    QGraphicsPixmapItem *backgroundImage;
     int nSelected;
 };
 
