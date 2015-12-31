@@ -46,3 +46,8 @@ void EditorPathItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
 
     painter->drawPath(this->path());
 }
+
+int EditorPathItem::type()
+{
+    return QGraphicsPathItem::Type;
+}

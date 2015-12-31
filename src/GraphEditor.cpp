@@ -74,7 +74,9 @@ void GraphEditor::rerender()
 
     if(this->backgroundImage) {
         QGraphicsPixmapItem *img = new QGraphicsPixmapItem();
-        img->setPixmap(backgroundImage->scaled(view->width(), view->height()));
+        scene->setSceneRect(QRect(0,0,this->backgroundImage->width(), this->backgroundImage->height()));
+
+        img->setPixmap(*(this->backgroundImage));
         scene->addItem(img);
     }
 

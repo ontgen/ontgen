@@ -30,6 +30,8 @@ GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
 void GraphicsView::mousePressEvent(QMouseEvent *e)
 {
     bool t = false;
+    QPointF p = this->mapToScene(e->pos());
+
 
     foreach(QGraphicsItem *item, scene->items())
     {
@@ -44,7 +46,7 @@ void GraphicsView::mousePressEvent(QMouseEvent *e)
 
         QRectF rect = ellipse->boundingRect();
 
-        if (rect.contains(e->pos()))
+        if (rect.contains(p))
         {
             editor->addEdge(rect.x(), rect.y());
             t = true;
@@ -52,24 +54,26 @@ void GraphicsView::mousePressEvent(QMouseEvent *e)
         }
     }
 
-    if(t == false) editor->addNode(e->pos().x(), e->pos().y());
+    if(t == false) editor->addNode(p.x() - 15, p.y() - 15);
 }
 
 void GraphicsView::mouseMoveEvent(QMouseEvent *e)
 {
+    QPointF p = this->mapToScene(e->pos());
     //nó selecionado
     foreach(QGraphicsItem *item, scene->items())
     {
+        int type = item->type();
         QGraphicsEllipseItem *ellipse = (QGraphicsEllipseItem *) item;
 
-        if (!ellipse)
+        if (type != QGraphicsEllipseItem::Type)
         {
-            break;
+            continue;
         }
 
         QRectF rect = ellipse->boundingRect();
 
-        if (rect.contains(e->pos()))
+        if (rect.contains(p))
         {
             ellipse->setSelected(true);
         }
@@ -82,15 +86,16 @@ void GraphicsView::mouseMoveEvent(QMouseEvent *e)
     //aresta selecionada
     foreach(QGraphicsItem *item, scene->items())
     {
+        int type = item->type();
         QGraphicsPathItem *path = (QGraphicsPathItem *) item;
 
-        if (!path)
+        if (type != QGraphicsPathItem::Type)
         {
-            break;
+            continue;
         }
 
 
-        if (path->contains(e->pos()))
+        if (path->contains(p))
         {
             path->setSelected(true);
         }
@@ -106,19 +111,20 @@ void GraphicsView::mouseMoveEvent(QMouseEvent *e)
 
 void GraphicsView::mouseDoubleClickEvent(QMouseEvent *e)
 {
-
+    QPointF p = this->mapToScene(e->pos());
     //aresta selecionada para inserir distância
     foreach(QGraphicsItem *item, scene->items())
     {
-        EditorPathItem *path = (EditorPathItem *) item;
+        int type = item->type();
 
-        if (!path)
+        if (type != QGraphicsPathItem::Type)
         {
-            break;
+            continue;
         }
 
+        EditorPathItem *path = (EditorPathItem *) item;
 
-        if (path->contains(e->pos()))
+        if (path->contains(p))
         {
             path->setSelected(true);
             bool ok;

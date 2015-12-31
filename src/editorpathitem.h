@@ -27,6 +27,7 @@ public:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    int type();
 
     int edgeIndex;
     bool isHover;
