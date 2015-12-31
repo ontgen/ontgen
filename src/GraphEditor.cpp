@@ -73,7 +73,11 @@ void GraphEditor::rerender()
     QGraphicsScene *scene = new QGraphicsScene();//cria a cena
     scene->setSceneRect(QRect(0,0,view->width(),view->height()));
 
-    if(this->backgroundImage) scene->addItem(this->backgroundImage);
+    if(this->backgroundImage) {
+        QGraphicsPixmapItem *img = new QGraphicsPixmapItem();
+        img->setPixmap(backgroundImage->scaled(view->width(), view->height()));
+        scene->addItem(img);
+    }
 
     QPen pen;
     pen.setColor(QColor("#000000"));
@@ -223,6 +227,8 @@ void GraphEditor::saveAsSVG(QString filename)
 void GraphEditor::clearGraph()
 {
     this->g.clear();
+    this->backgroundImage = NULL;
+
     rerender();
 }
 
@@ -264,7 +270,7 @@ void GraphEditor::loadBackgroundImage(QString filename)
         return;
     }
 
-    this->backgroundImage = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+    this->backgroundImage = new QPixmap(filename);
 
     rerender();
 }

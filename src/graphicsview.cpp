@@ -33,11 +33,13 @@ void GraphicsView::mousePressEvent(QMouseEvent *e)
 
     foreach(QGraphicsItem *item, scene->items())
     {
+        int type = item->type();
+
         QGraphicsEllipseItem *ellipse = (QGraphicsEllipseItem *) item;
 
-        if (!ellipse)
+        if (type != QGraphicsEllipseItem::Type)
         {
-            break;
+            continue;
         }
 
         QRectF rect = ellipse->boundingRect();

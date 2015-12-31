@@ -46,7 +46,7 @@ public:
     ogdf::Graph g;
 	ogdf::GraphAttributes GA;
     ogdf::node selected;
-    QGraphicsPixmapItem *backgroundImage;
+    QPixmap *backgroundImage;
     int nSelected;
 };
 
