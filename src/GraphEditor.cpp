@@ -70,7 +70,7 @@ void GraphEditor::addNode(int x, int y)
 void GraphEditor::rerender()
 {
     QGraphicsScene *scene = new QGraphicsScene();//cria a cena
-    scene->setSceneRect(QRect(0,0,view->width(),view->height()));
+    scene->setSceneRect(QRect(0,0,2000,2000));
 
     if(this->backgroundImage) {
         QGraphicsPixmapItem *img = new QGraphicsPixmapItem();
