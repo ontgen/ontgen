@@ -22,7 +22,6 @@
 #include <QSvgGenerator>
 #include <QMessageBox>
 
-
 GraphEditor::GraphEditor(QGraphicsView *q)
 {
     this->view = q;
@@ -227,7 +226,7 @@ void GraphEditor::saveAsSVG(QString filename)
 void GraphEditor::clearGraph()
 {
     this->g.clear();
-    this->backgroundImage = NULL;
+    this->backgroundImage = NULL;//remove plano de fundo
 
     rerender();
 }
@@ -265,7 +264,7 @@ void GraphEditor::loadBackgroundImage(QString filename)
 
     if(image.isNull())
     {
-//        QMessageBox::information(this,QString("Graph Editor"),QString("Couldn't load image"));
+        QMessageBox::information(0,QString("Graph Editor"),QString("Couldn't load image"), QMessageBox::Ok);
 
         return;
     }
