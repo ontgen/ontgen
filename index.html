@@ -29,7 +29,7 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h3>
-<a id="Introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
+<a id="automatic" class="anchor" href="#automatic" aria-hidden="true"><span class="octicon octicon-link"></span></a>Automatic Topology Generation</h3>
 
 <p>This is Network Topologies Generator, a tool with the objective to assist network architects in creating new survivor topologies. </p>
 <p>It is designed specifically for optical telecommunication networks, and is based on a paper by Claunir Pavan, entitled <em>Generating Realistic Optical Transport Network Topologies</em> published on IEEE in 2010 <a href="http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=5434712&newsearch=true&queryText=.QT.Generating%20Realistic%20Optical%20Transport%20Network%20Topologies.QT.">[1]</a>.</p>
@@ -108,11 +108,18 @@
   <p>
     The text file contains the topologies generated.
     The first part are the xy coordinates of the nodes on the plane.
-    Next, are the generated topologies; each row represents a link. The first and second column are the nodes' indices, and the third column is euclian distance between them. 
+    Next, are the generated topologies; each row represents a link. The first and second column are the nodes' indices, and the third column is euclian distance between them.
   </p>
   <p>
     On the xls file, you'll find the values of the centrality measures of each node.
   </p>
+  <p>
+    Also, for each topology generated, a SVG file is created, which is a vector image format. 
+    At the end of all simulations, all topologies are displayed as image in a new window.
+  </p>
+  <br>
+  <img src="images/ontgen_simulations.png">
+  <br>
 <h3>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
@@ -135,7 +142,49 @@
         </aside>
       </div>
     </div>
+<h3>Manual Topology Geration</h3>
+<p>
+  Aside from automatically generating topologies, it's possible to manually design the topology and check its survivability and apply some measures on it. 
+</p>
+<p>
+  To access the manual generation, click on the "Manual" tab, as you can see in the image below.
+</p>
+<br>
+<img src="images/ontgen_manual.png">
+<br>
+<p>
+To create a node, first you need to click on the "Node" button on the right and then click on the desired position. If you want to create more nodes, you will need to click the "Node" button before adding each one.
+</p>
+<p>
+To create a link, first you need to click on a node then click on another node. By default all links have distance 1 (one).
+</p>
+<!-- Inserir imagem só com nós -->
+<br>
+<img src="images/sdfj.png">
+<br>
+<p>
+To enter the distance of a link, double click the link and a pop-up will show, allowing you to enter the value. NOTE: the distance must be entered as an integer value. 
+</p>
+<br>
+<img src="images/ontgen_insert_distance.png">
+<br>
+It's also possible to add a background image to the topology.
+To do so, click on the "Image" button and a dialog will open for you to select the image.
+<br>
+<img src="images/tela_mapa_arestas_sem_simulacao.png">
+<br>
+<p>
+  If you wish to save the topology as an image file click on the "Save" button, this will open a dialog to select the location and the file name.
+  The file will be saved in the SVG format.
+</p>
+<p>
+  To reset everthing click on the "New" button, this will remove all nodes, links and the background image.
+</p>
+<h3>Requirements</h3>
 
-  
+<h3>Technologies</h3>
+This project is developed in C++ (c++ 11 standard) using the Qt framework version 5 under LGPL license and also uses OGDF version v.2015.05.
+<h3>License</h3>
+This project is licensed under LGPL.
   </body>
 </html>
