@@ -58,3 +58,15 @@ h2, h3, h4, h5 {
 .navbar-brand {
 	color: #fff !important;
 }
+
+.nav li ul {
+	display: none;
+}
+
+.nav li.active ul {
+	display: block;
+}
+
+.nav .nav li:not(.active) a {
+	font-weight: normal !important;
+}
