@@ -24,6 +24,7 @@ FileWriter::FileWriter()
 	this->simulation = 0;
 	this->lastSimulation = 0;
 	this->row = 1;
+	this->dateTime = "";
 }
 
 FileWriter::~FileWriter(){}
@@ -70,7 +71,6 @@ void FileWriter::openFile()
     temp.append(".txt");
 
     string file = temp.toStdString();
-    // cout << file << endl;
 
     this->output.open(file);
 
@@ -160,7 +160,6 @@ void FileWriter::writeTopologies(Graph g, int s, int topology)
 void FileWriter::writeMeasures(Graph &graph, bool bc, bool ec, bool dc, bool cc)
 {
 	int it = this->row,node = 0;
-
     
 	string str = "Simulation( "+to_string(this->simulation)+" )";
     string cell = "A"+to_string(this->row);
@@ -271,6 +270,11 @@ void FileWriter::closeFileMeasures()
 
     QString temp = QDir::homePath();
     temp.append("/simulations/measure_");
+    
+    if ((int)this->dateTime.size() == 0)
+    {
+    	this->dateTime = returnCurrentTimeAndDate();
+    }
     temp.append(QString::fromStdString(this->dateTime));
     temp.append(".xlsx");
 
