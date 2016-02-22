@@ -191,7 +191,6 @@ void Plane::setCoordinatesRegion()
  */
 void Plane::getNumberOfNodesRegion(int numberRegion, vector<int> &nodes)
 {
-    // cout<<" "<<this->regionsWithNodes[numberRegion][0]<<" "<<this->regionsWithNodes[numberRegion][2]<<endl;
     for (int i = this->regionsWithNodes[numberRegion][0]; i < this->regionsWithNodes[numberRegion][1]; i++)
     {
         for (int j = this->regionsWithNodes[numberRegion][2]; j < this->regionsWithNodes[numberRegion][3]; j++)
@@ -290,7 +289,7 @@ void Plane::setRegionsMeasures()
     int A = 1;
 
     //busca no vetor de primos para verificar se o número de regiões é primo
-    while(prime == false && temp < primes.size()) {
+    while(prime == false && temp < (int)primes.size()) {
 
         if(R == primes[temp])
         {
@@ -353,7 +352,7 @@ void Plane::setRegionsMeasures()
             }
         }
 
-        int n = (int) ceil(factorial.size()/2);
+        int n = (int) ceil(((int)factorial.size())/2);
 
         for(int i = 0; i < n; i++){
 
@@ -429,7 +428,7 @@ int Plane::getCoordinateY(int node)
  * Bloqueia pelo raio de modo que não se consiga inserir nenhum nó
  * conforme a restrição da distância
  */
-void Plane::blockedAreaAroundTheNode(Graph graph,int x,int y)
+void Plane::blockedAreaAroundTheNode(Graph &graph,int x,int y)
 {
 
     int distance = graph.getMinimumDistanceOfNode();
@@ -498,7 +497,7 @@ int Plane::getMaximumNodesRegion()
     return (this->regionRow*this->regionColumn);
 }
 
-bool Plane::waxmanProbability(Graph graph,int u,int v)
+bool Plane::waxmanProbability(Graph &graph,int u,int v)
 {
 
     if (u == v)
@@ -561,7 +560,7 @@ void Plane::limitArea(int nNodes)
 /**
  * Atribui coordenadas randomicas no plano
  */
-void Plane::generateCoordinates(Graph graph,int position)
+void Plane::generateCoordinates(Graph &graph,int position)
 {
 
     /**
@@ -600,7 +599,7 @@ void Plane::generateCoordinates(Graph graph,int position)
 /**
  * Atribui coordenadas randomicas no plano
  */
-void Plane::generateCoordinatesUniform(Graph graph,int position)
+void Plane::generateCoordinatesUniform(Graph &graph,int position)
 {
 
     /**
@@ -645,7 +644,7 @@ void Plane::generateCoordinatesUniform(Graph graph,int position)
  * Choose any N regions randomly, out of the total R regions, and some of the
  * regions may be chosen more than once (i.e., have more than one nodes).
  */
-void Plane::setCoodinatesRandomRegion(Graph graph)
+void Plane::setCoodinatesRandomRegion(Graph &graph)
 {
 
     int nNodes = graph.getNumberOfNodes();
@@ -664,7 +663,7 @@ void Plane::setCoodinatesRandomRegion(Graph graph)
  * Choose any N regions randomly, out of the total R regions, and some of the
  * regions may be chosen more than once (i.e., have more than one nodes).
  */
-void Plane::setCoodinatesUniformRegion(Graph graph)
+void Plane::setCoodinatesUniformRegion(Graph &graph)
 {
 
     int nNodes = graph.getNumberOfNodes();
@@ -739,7 +738,7 @@ bool Plane::regionEqual(vector<int> nodes,int node)
 /**
  * Encontra um nó destino mais próximo ao source passao como parâmetro
  */
-int Plane::targetSearch(int source,Graph graph, vector<vector<int>> nodes, int indexRegion )
+int Plane::targetSearch(int source,Graph &graph, vector<vector<int>> nodes, int indexRegion )
 {
     int minimum = 1, i = 0, j = 0, k = 0;
     int maximum = graph.getNumberOfNodes();
@@ -805,7 +804,7 @@ int Plane::targetSearch(int source,Graph graph, vector<vector<int>> nodes, int i
  * Busca nodo destino mais próximo
  * Busca utilizando o raio
  */
-void Plane::targetSearch(int source,Graph graph, vector<vector<int>> nodes, vector<int> &controller, int indexRegion )
+void Plane::targetSearch(int source,Graph &graph, vector<vector<int>> nodes, vector<int> &controller, int indexRegion )
 {
     int minimum = 1, i = 0, j = 0, k = 0;
     int maximum = graph.getNumberOfNodes();
@@ -872,7 +871,7 @@ void Plane::targetSearch(int source,Graph graph, vector<vector<int>> nodes, vect
 /**
  * Busca no plano por força bruta pelo nó mais próximo
  */
-int Plane::nearestNeighbor(int node,Graph graph)
+int Plane::nearestNeighbor(int node,Graph &graph)
 {
 
     int neighbor = node;
@@ -911,7 +910,7 @@ int Plane::nearestNeighbor(int node,Graph graph)
  * Retorna o número de nós com grau dois
  * Caso todos os nós tenham grau 2 então existe ciclo
  */
-int Plane::ring(Graph graph)
+int Plane::ring(Graph &graph)
 {
 
     int count = 0;
@@ -1158,11 +1157,8 @@ void Plane::regionsInterconnection(Graph &graph,vector<vector<int>> &nodes)
 /**
  * Faz a inicialização do plano
  */
-void Plane::initialize(Graph &graph,int simulation)
+void Plane::initialize(Graph &graph)
 {
-    // if (simulation == 1)
-    // {
-
     memsetCoordinates( graph.getNumberOfNodes() );
 
     this->xy = vector<vector<int>> (graph.getNumberOfNodes(),vector<int>(2,0));
@@ -1272,12 +1268,12 @@ int Plane::randomLink(Graph &graph)
         }
     }
 
-    if (nodes.size() <= 1)
+    if ((int)nodes.size() <= 1)
     {
-        return nodes.size();
+        return (int)nodes.size();
     }
 
-    else if (nodes.size() == 2)
+    else if ((int)nodes.size() == 2)
     {
         if ( graph.getEdge(nodes[0],nodes[1]) ==  false && waxmanProbability(graph,nodes[0],nodes[1]) == true )
         {
@@ -1307,10 +1303,10 @@ int Plane::randomLink(Graph &graph)
     while(true)
     {
 
-        int indexNode = random(0,nodes.size()-1);
+        int indexNode = random(0,(int)nodes.size()-1);
         int source = nodes[ indexNode ];
 
-        indexNode = random(0,nodes.size()-1);
+        indexNode = random(0,(int)nodes.size()-1);
         int target = nodes[ indexNode ];
 
 
@@ -1325,7 +1321,7 @@ int Plane::randomLink(Graph &graph)
 
                 if(controller == graph.getNumberOfNodes())
                 {
-                    return nodes.size();
+                    return (int)nodes.size();
                 }
 
                 controller++;

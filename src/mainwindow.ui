@@ -39,7 +39,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -173,7 +173,7 @@ background: rgba(255, 255, 255, 0);
        <number>1000</number>
       </property>
       <property name="value">
-       <number>50</number>
+       <number>5</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_12">
@@ -280,7 +280,7 @@ color:#000
        <double>0.500000000000000</double>
       </property>
       <property name="value">
-       <double>2.000000000000000</double>
+       <double>4.000000000000000</double>
       </property>
      </widget>
      <widget class="QSpinBox" name="minimumDegree">
@@ -343,6 +343,9 @@ color:#000</string>
       </property>
       <property name="maximum">
        <number>99999</number>
+      </property>
+      <property name="value">
+       <number>4</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_18">
@@ -757,7 +760,7 @@ color:#000
        <number>999</number>
       </property>
       <property name="value">
-       <number>8</number>
+       <number>4</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_4">
@@ -1022,7 +1025,7 @@ color:#000</string>
        <number>100000</number>
       </property>
       <property name="value">
-       <number>100</number>
+       <number>10</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_14">

@@ -92,7 +92,6 @@ void MainWindow::on_pushButton_clicked()
 
          graph.setMaximumAverageDegree(ui->max_average_degree->value());
 
-
          /**
           * Configurações do plano
           */
@@ -114,8 +113,17 @@ void MainWindow::on_pushButton_clicked()
          }
          else
          {
+             //verificando limite para o número de regiões
+             //onde não deve ser maior que a raiz do plano
+             if(ui->area->value() < ui->numberOfRegions->value())
+             {
+                ui->error->setText(QString::fromUtf8("1 ≤ R ≤ sqrt(A)\n"));
+                ui->pushButton->setEnabled(true);
+                ui->pushButton->setText("Begin simulation");
+                return;
+             }
 
-            plane.setNumberRegions(ui->numberOfRegions->value());
+             plane.setNumberRegions(ui->numberOfRegions->value());
 
             plane.setRegionsMeasures();
          }
@@ -158,8 +166,9 @@ void MainWindow::on_pushButton_clicked()
          plane.setNumberOfSimulations(ui->numberOfSimulations->value());
 
         graph.memsetGraph();
-        plane.initialize(graph,simulation);
-        
+
+        plane.initialize(graph);
+
          /**
           * Verifica se o número de ligações foi atingido
           * Se sim verifica se a topologia gerada é sobrevivente
@@ -170,7 +179,7 @@ void MainWindow::on_pushButton_clicked()
          int notMax = std::numeric_limits<int>::max();
          int topology = 1;
 
-         while( ( graph.getNumberOfEdges() < graph.getMinimumNumberOfEdges() && notMax >= 2) && ( (graph.getAverageDegree() < graph.getMaximumAverageDegree() ) && notMax >= 2) )
+         while( ( graph.getNumberOfEdges() < graph.getMinimumNumberOfEdges() ) && ( (graph.getAverageDegree() < graph.getMaximumAverageDegree() ) && ( notMax >= 2 ) ) )
          {
             notMax = plane.randomLink(graph);
 
@@ -180,15 +189,16 @@ void MainWindow::on_pushButton_clicked()
             }
          }
 
-          // for(int w = 0; w < graph.getNumberOfNodes();w++) graph.printAdjacents(w);
+//        for(int w = 0; w < graph.getNumberOfNodes();w++) graph.printAdjacents(w);
 
         Suurballe s;
-
+        survivor = false;
         survivor = s.execute(graph);
 
         if(survivor == true)
         {
             ok = true;
+
             if (simulation == 1)
             {
                 file.openFile();
@@ -197,12 +207,13 @@ void MainWindow::on_pushButton_clicked()
 
             file.writeTopologies(graph,simulation,topology);
 
-            if( (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked() ) && survivor)
+            if( (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked() ) && survivor == true)
             {
                 if (simulation)
                 {
                     file.createXls();
                 }
+
                 Measure measures;
                 
                 measures.initialize( graph,graph.getNumberOfNodes(),ui->bc->isChecked(),ui->cc->isChecked(),ui->dc->isChecked(),ui->ec->isChecked() ); //obtêm as medidas de centralidade para cada nó da rede
@@ -214,13 +225,11 @@ void MainWindow::on_pushButton_clicked()
              * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
              */
             DrawGraph draw(graph,plane,file.getDateTime(),topology,simulation);//desenha grafo
-
+            cout << "really?" << endl;
             svg->openSVG(draw.getFile(),topology);
 
             topology++;
         }
-
-
 
         int nEdges = graph.getNumberOfEdges();
 
@@ -228,7 +237,7 @@ void MainWindow::on_pushButton_clicked()
         while( (graph.getNumberOfEdges() < graph.getMaximumNumberOfEdges() && notMax >= 2) && ( (graph.getAverageDegree() < graph.getMaximumAverageDegree() ) && notMax >= 2) )
         {
             notMax = plane.randomLink(graph);
-          
+
             if (graph.getNumberOfEdges() > nEdges)
             {
                 nEdges = graph.getNumberOfEdges();
@@ -240,12 +249,13 @@ void MainWindow::on_pushButton_clicked()
                 if (survivor == false)
                 {
                     Suurballe suurballe;
-
                     survivor = suurballe.execute(graph);
                 }
 
-                if(survivor)
+                if(survivor == true)
                 {
+                    ok = true;
+
                     if (simulation == 1 && topology == 1)
                     {
                         file.openFile();
@@ -255,7 +265,7 @@ void MainWindow::on_pushButton_clicked()
                     file.writeTopologies(graph,simulation,topology);
 
 
-                    if( (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked() ) && survivor )
+                    if( (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked() ) && survivor == true )
                     {
                         if (simulation)
                         {
@@ -267,6 +277,7 @@ void MainWindow::on_pushButton_clicked()
                          measures.initialize(graph,graph.getNumberOfNodes(),ui->bc->isChecked(),ui->cc->isChecked(),ui->dc->isChecked(),ui->ec->isChecked() ); //obtêm as medidas de centralidade para cada nó da rede
 
                          file.writeMeasures(graph,ui->bc->isChecked(),ui->ec->isChecked(),ui->dc->isChecked(),ui->cc->isChecked());
+
                     }
 
                     /**
@@ -276,25 +287,23 @@ void MainWindow::on_pushButton_clicked()
 
                     svg->openSVG(draw.getFile(),topology);
 
+
                     topology++;
                 }
+            }
 
-                if (graph.getAverageDegree() >= graph.getMaximumAverageDegree())
-                {
-                    break;
-                }
-
-                survivor = false;
+            //atinge limites em relação ao grau
+            if (graph.getAverageDegree() >= graph.getMaximumAverageDegree())
+            {
+                break;
             }
         }
-
         simulation++;
      }
 
-     svg->show();
-
      if (ok == true)
      {
+         svg->show();//exibe janela de visualização
          QString message = "Simulation complete. File located at \"";
          message.append(QDir::homePath());
          message.append("/simulations\"");
@@ -302,6 +311,7 @@ void MainWindow::on_pushButton_clicked()
          ui->error->setText(message);
 
          file.closeFileTopologies();
+
          if (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked())
          {
             file.closeFileMeasures();
