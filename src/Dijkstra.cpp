@@ -41,11 +41,11 @@ vector<int> Dijkstra::shortestPath(int target)
 
     reverse( path.begin(),path.end() );//inverte caminho
 
-     for (int i = 0; i < (int)path.size(); i++)
-     {
-         cout<<" "<<path[i];
-     }
-     cout<<endl;
+//     for (int i = 0; i < (int)path.size(); i++)
+//     {
+//         cout<<" "<<path[i];
+//     }
+//     cout<<endl;
     return path;
 }
 

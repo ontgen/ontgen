@@ -129,9 +129,9 @@ int Plane::getNumberOfSimulations()
  */
 int Plane::getEuclidean(int u, int v)
 {
-
-    int baseU = abs(this->coordinates[u][0]-this->coordinates[u][1]);
-    int baseV = abs(this->coordinates[v][0]-this->coordinates[v][1]);
+    //distância euclidiana para o plano
+    int baseU = (this->coordinates[u][0]-this->coordinates[v][0]) * (this->coordinates[u][0]-this->coordinates[v][0]);
+    int baseV = (this->coordinates[u][1]-this->coordinates[v][1]) * (this->coordinates[u][1]-this->coordinates[v][1]);
 
     this->euclidean = sqrt( pow(baseU,2) + pow(baseV,2) );
 

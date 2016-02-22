@@ -563,7 +563,7 @@ bool Suurballe::execute(Graph &graph)
             n++;
         }
     }
-    cout<<"-----------------------------\n";
+//    cout<<"-----------------------------\n";
     int iterator = 0;
     double dist = 0;
 
@@ -624,8 +624,6 @@ bool Suurballe::execute(Graph &graph)
         }
     }
     survivor = true;
-    cout<<"SURVIVOR "<<survivor<<endl;
-
     return true;//conseguiu encontrar 2 caminhos de arestas disjuntos para todos os pares de nós
 
 }
