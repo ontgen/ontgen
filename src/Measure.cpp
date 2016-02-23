@@ -90,9 +90,9 @@ void Measure::initialize(Graph &graph,int n, bool bc, bool cc, bool dc, bool ec)
         {
             vector <int> adjacents = nodes[i].getAdjacentsNodes();
 
-            for (unsigned int j = 0; j < adjacents.size(); j++)
+            for (int j = 0; j < (int)adjacents.size(); j++)
             {
-                graph[i][ adjacents[j] ] = 1;//atribui ligação
+                graph[i][ adjacents[j] ] = nodes[i].getWeightEdge(j);//atribui ligação
             }
         }
 
@@ -116,24 +116,24 @@ void Measure::initialize(Graph &graph,int n, bool bc, bool cc, bool dc, bool ec)
 
         if (bc)
         {
-            betweennessCentrality(nodes);       //centralidade de intermediação
+            betweennessCentrality(nodes);   //centralidade de intermediação
         }
 
         if (cc)
         { 
-            closenessCentrality(nodes,shortestPath);    //centralidade de proximidade
+            closenessCentrality(nodes,shortestPath); //centralidade de proximidade
         }
 
         if (ec)
         {
-            efficientCentrality(nodes,shortestPath);        //centralidade de eficiência
+            efficientCentrality(nodes,shortestPath);  //centralidade de eficiência
         }
 
     }
 
     if (dc)
     {  
-        degreeCentrality(nodes);                        //centralidade de grau
+        degreeCentrality(nodes);  //centralidade de grau
     }
 
     graph.setNodesMeasures(nodes);
@@ -254,13 +254,11 @@ double Measure::geodesic(vector<Node> nodes,int source)
 
       if (j != source && i != j && i != source)
       {
-        // cout<<"j "<<j<<" i "<<i<<" source "<<source<<endl;
         vector< vector<int> > paths;
 
         int nPaths = pathsSearch(nodes,i,j,paths);//número de geodésicas de i até j
 
         int nNodes = nodeSearch(paths,source,nPaths);
-        // cout<<" "<<nPaths<<" "<<nNodes<<endl;
 
         bc = bc + ( (double)nNodes / (double)nPaths );
 
@@ -285,9 +283,9 @@ int Measure::pathsSearch(vector<Node> nodes, int source, int target, vector< vec
 
     int nPaths = 0;
 
-    unsigned int n = nodes[source].getNumberOfPaths(), k = 0;
+    int n = nodes[source].getNumberOfPaths();
 
-    for (unsigned int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         int auxiliar = nodes[source].getNumberOfNodesFromPath(i)-1;
 
@@ -295,7 +293,7 @@ int Measure::pathsSearch(vector<Node> nodes, int source, int target, vector< vec
         {
             paths.push_back(vector<int>(auxiliar+1));
 
-            for (k = 0; k <= auxiliar; k++)
+            for (int k = 0; k <= auxiliar; k++)
             {
                 paths[nPaths][k] = nodes[source].returnNode(i,k);
             }
@@ -318,7 +316,7 @@ int Measure::nodeSearch(vector< vector<int> > &paths, int node, int nPaths)
 
     for (int i = 0; i < nPaths; i++)
     {
-        for (unsigned int j = 0; j < paths[i].size(); j++)
+        for ( int j = 0; j < (int)paths[i].size(); j++)
         {
           if (node == paths[i][j])
           {

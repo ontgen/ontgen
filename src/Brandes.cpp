@@ -147,7 +147,7 @@ int Brandes::addPaths(vector<Node> & nodes,vector<vector<int>> &path,int adjacen
           if (i >= (int)path.size())
           {
 
-            path.push_back(vector<int>(nodes.size()));
+            path.push_back(vector<int>((int)nodes.size()));
           }
 
         }
@@ -200,7 +200,7 @@ void Brandes::insertPaths(vector<Node> &nodes,int source,int target,int adjacent
 
 /**
  * Calcula o menor caminho, de um node até outro
- * @param graph com uma matriz adjacente, e o source
+ * graph com uma matriz adjacente, e o source
  */
 void Brandes::execute(vector<vector<int>> graph, int source,vector<Node> &nodes)
 {
