@@ -100,7 +100,6 @@ DrawGraph::DrawGraph(Graph &graph, Plane &plane,string dateTime, int index,int s
     this->file = temp.toStdString();
     
     ogdf::GraphIO::drawSVG( GA,this->file, s );//gera imagem
- 
 }
 
 DrawGraph::~DrawGraph(){}

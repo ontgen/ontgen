@@ -64,11 +64,14 @@ void MainWindow::openNewWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
+     cout<<"PASSOU MAIN Please INIT:'(\n";
     ui->error->setText(QString::fromUtf8(""));
      ui->error->setText(QString::fromUtf8(""));
      ui->pushButton->setEnabled(false);
      ui->pushButton->setText("Simulating...");
+     cout<<"PASSOU MAIN Please INIT:'(\n";
      ui->pushButton->repaint();
+
      int simulation = 1;
      int limitSimulation = ui->numberOfSimulations->value();
      FileWriter file;
@@ -79,7 +82,6 @@ void MainWindow::on_pushButton_clicked()
      
      while( simulation <= limitSimulation )
      {
-
         Graph graph; // cria objeto grafo
 
          graph.setNumberOfNodes( ui->nodes->value() ); //número de nós
@@ -96,7 +98,7 @@ void MainWindow::on_pushButton_clicked()
           * Configurações do plano
           */
          Plane plane;
-
+         cout<<"PASSOU MAIN Please :'(\n";
          plane.setArea(ui->area->value()); //valor da raiz da area
 
          /**
@@ -127,7 +129,7 @@ void MainWindow::on_pushButton_clicked()
 
             plane.setRegionsMeasures();
          }
-
+         cout<<"PASSOU MAIN Please 2:'(\n";
          plane.setWaxmanParameters(ui->alpha->value(),ui->beta->value());
 
          if(ui->nodesDistribution->currentText() == "Uniform")
@@ -166,7 +168,6 @@ void MainWindow::on_pushButton_clicked()
          plane.setNumberOfSimulations(ui->numberOfSimulations->value());
 
         graph.memsetGraph();
-
         plane.initialize(graph);
 
          /**
@@ -225,7 +226,7 @@ void MainWindow::on_pushButton_clicked()
              * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
              */
             DrawGraph draw(graph,plane,file.getDateTime(),topology,simulation);//desenha grafo
-            cout << "really?" << endl;
+
             svg->openSVG(draw.getFile(),topology);
 
             topology++;
@@ -298,6 +299,7 @@ void MainWindow::on_pushButton_clicked()
                 break;
             }
         }
+        cout<<"survivor "<<survivor<<endl;
         simulation++;
      }
 
