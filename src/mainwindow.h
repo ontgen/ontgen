@@ -64,6 +64,10 @@ private slots:
 
     void on_background_image_clicked();
 
+    void on_open_topology_clicked();
+
+    void on_save_topology_clicked();
+
 private:
     Ui::MainWindow *ui;
     About *aboutWindow;

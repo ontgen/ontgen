@@ -385,15 +385,17 @@ void MainWindow::on_help_clicked()
     QDesktopServices::openUrl(QUrl(QString::fromStdString(this->appPath+"/help/index.html"), QUrl::TolerantMode));
 }
 
+/**
+ * Salva imagem, no local que o usuário escolher
+ */
 void MainWindow::on_pushButton_2_clicked()
 {
     QString filename = QFileDialog::getSaveFileName();
     graphEditor->saveAsSVG(filename);
 }
-
 void MainWindow::addNode(int x, int y)
 {
-    graphEditor->addNode(x, y);
+    graphEditor->addNode(x, y);//adiciona um novo nó na topologia manual
 }
 
 void MainWindow::on_addnode_clicked()
@@ -421,8 +423,6 @@ void MainWindow::on_m_simulation_clicked()
      Graph graph; // cria objeto grafo
 
     graphEditor->constructGraph(graph);
-
-    // for(int u = 0; u < graph.getNumberOfNodes();u++) graph.printAdjacents(u);
 
      /**
       * Verifica se o número de ligações foi atingido
@@ -463,13 +463,16 @@ void MainWindow::on_m_simulation_clicked()
     }
     else 
     {
-        ui->m_error->setText("Topology isn't survivor.");
+        ui->m_error->setText("Topology isn't survivor");
     }
     
     ui->m_simulation->setEnabled(true);
     ui->m_simulation->setText("Begin simulation");
 }
 
+/**
+ * Insere imagem de plano de fundo
+ */
 void MainWindow::on_background_image_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this,QString("Open image file"),QDir::home().path());
@@ -480,4 +483,22 @@ void MainWindow::on_background_image_clicked()
     }
 
     graphEditor->loadBackgroundImage(filename);
+}
+
+void MainWindow::on_open_topology_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this,QString("Open topology file"),QDir::home().path());
+
+    if(filename.isEmpty())
+    {
+        return;
+    }
+
+    graphEditor->loadTopology(filename);
+}
+
+void MainWindow::on_save_topology_clicked()
+{
+    QString filename = QFileDialog::getSaveFileName();
+    graphEditor->saveAsGML(filename);
 }

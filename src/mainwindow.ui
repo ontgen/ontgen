@@ -1456,7 +1456,7 @@ color:#000</string>
        <string>Set background image</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="save">
+     <widget class="QPushButton" name="save_topology">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -1469,7 +1469,7 @@ color:#000</string>
        <string>Save</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="open">
+     <widget class="QPushButton" name="open_topology">
       <property name="geometry">
        <rect>
         <x>170</x>

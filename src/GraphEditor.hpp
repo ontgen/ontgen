@@ -38,6 +38,8 @@ public:
     void clearGraph();
     void constructGraph(Graph &);
     void loadBackgroundImage(QString);
+    void loadTopology(QString);
+    void saveAsGML(QString);
 
     bool addingNode;
     bool addingEdge;

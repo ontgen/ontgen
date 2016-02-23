@@ -104,7 +104,7 @@ void GraphEditor::rerender()
                 ++pointIterator;
             }
 
-            for(uint i = 0; i < polyLine.size() / 3; i++) {
+            for(uint i = 0; i < (uint)polyLine.size() / 3; i++) {
                 auto point1 = *(pointIterator++);
                 auto point2 = *(pointIterator++);
                 auto point3 = *(pointIterator++);
@@ -274,4 +274,24 @@ void GraphEditor::loadBackgroundImage(QString filename)
     this->backgroundImage = new QPixmap(filename);
 
     rerender();
+}
+
+
+void GraphEditor::loadTopology(QString filename)
+{
+
+    bool successful = ogdf::GraphIO::readDOT(this->GA,this->g,filename.toStdString());
+
+    if(!successful)
+    {
+        QMessageBox::information(0,QString("Graph Editor"),QString("Couldn't load file"), QMessageBox::Ok);
+
+    }
+
+    rerender();
+}
+
+void GraphEditor::saveAsGML(QString filename)
+{
+    ogdf::GraphIO::writeDOT(this->GA,filename.toStdString());
 }
