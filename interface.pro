@@ -38,7 +38,9 @@ SOURCES += src/about.cpp \
     src/svgview.cpp \
     src/GraphEditor.cpp \
     src/graphicsview.cpp \
-    src/editorpathitem.cpp
+    src/editorpathitem.cpp \
+    src/pngview.cpp \
+    src/pngviewer.cpp
 
 HEADERS  += src/about.h \
     src/Brandes.hpp \
@@ -57,11 +59,14 @@ HEADERS  += src/about.h \
     src/svgview.h \
     src/GraphEditor.hpp \
     src/graphicsview.h \
-    src/editorpathitem.h
+    src/editorpathitem.h \
+    src/pngview.h \
+    src/pngviewer.h
 
 FORMS    += src/mainwindow.ui \
     src/about.ui \
-    src/svgviewer.ui
+    src/svgviewer.ui \
+    src/pngviewer.ui
 
 unix: LIBS += -L$$PWD/OGDF/_release/ -lOGDF
 
