@@ -20,7 +20,7 @@
 DrawGraph::DrawGraph(Graph &graph, Plane &plane,string dateTime, int index,int simulation)
 {
  
-    ogdf::Graph g = constructGraphOGDF(graph,plane);//constrói grafo no formato da biblioteca
+    ogdf::Graph g = constructGraphOGDF(graph);//constrói grafo no formato da biblioteca
 
     ogdf::GraphAttributes GA( g, ogdf::GraphAttributes::nodeGraphics |
         ogdf::GraphAttributes::edgeGraphics |
@@ -109,7 +109,7 @@ string DrawGraph::getFile()
     return this->file;
 }
 
-ogdf::Graph DrawGraph::constructGraphOGDF(Graph &g,Plane &plane)
+ogdf::Graph DrawGraph::constructGraphOGDF(Graph &g)
 {
 	ogdf::Graph _g;
 	         
@@ -134,14 +134,12 @@ ogdf::Graph DrawGraph::constructGraphOGDF(Graph &g,Plane &plane)
     }
 
 	//faz as ligações entre os nós
-//    cout<<"-------------------------\n";
 	for (int i = 0; i < g.getNumberOfNodes()-1; i++)
 	{
 		for (int j = i+1; j < g.getNumberOfNodes(); j++)
 		{
             if(mAdjacents[i][j] > 0.0f)
             {
-//                cout<<" "<<i<<" "<<j<<endl;
                 _g.newEdge(nodes[i], nodes[j]);
             }
 		}

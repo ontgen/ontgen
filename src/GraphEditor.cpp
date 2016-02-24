@@ -215,14 +215,30 @@ bool GraphEditor::checkEdgeExists(int u,int v)
 
 void GraphEditor::saveAsSVG(QString filename)
 {
-    QSvgGenerator svgGen;
 
-    svgGen.setFileName(filename);
-    svgGen.setSize(view->size());
-    svgGen.setViewBox(view->sceneRect());
+//    QSvgGenerator svgGen; //salvar em modo SVG
 
-    QPainter painter( &svgGen );
-    ((GraphicsView *)this->view)->scene->render( &painter );
+//    svgGen.setFileName(filename);
+//    svgGen.setSize(view->size());
+//    svgGen.setViewBox(view->sceneRect());
+
+//    QPainter painter( &svgGen );
+//    ((GraphicsView *)this->view)->scene->render( &painter );
+
+    //Salvar em modo PNG
+    ((GraphicsView *)this->view)->scene->clearSelection();
+    QRectF before = ((GraphicsView *)this->view)->scene->sceneRect();
+
+    ((GraphicsView *)this->view)->scene->setSceneRect(((GraphicsView *)this->view)->scene->itemsBoundingRect());                          // Re-shrink the scene to it's bounding contents
+    QImage image(((GraphicsView *)this->view)->scene->sceneRect().size().toSize(), QImage::Format_ARGB32);  // Create the image with the exact size of the shrunk scene
+    image.fill(Qt::transparent);                                              // Start all pixels transparent
+
+    QPainter painter(&image);
+    painter.setRenderHint(QPainter::Antialiasing);
+    ((GraphicsView *)this->view)->scene->render(&painter);
+    image.save(filename);
+    ((GraphicsView *)this->view)->scene->setSceneRect(before);
+    ((GraphicsView *)this->view)->centerOn(before.center());
 }
 
 void GraphEditor::clearGraph()
