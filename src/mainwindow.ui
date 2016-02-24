@@ -39,7 +39,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -170,7 +170,7 @@ background: rgba(255, 255, 255, 0);
        <number>3</number>
       </property>
       <property name="maximum">
-       <number>1000</number>
+       <number>120</number>
       </property>
       <property name="value">
        <number>5</number>
@@ -1382,12 +1382,6 @@ color:#000</string>
       <property name="text">
        <string>Degree Centrality</string>
       </property>
-      <property name="checkable">
-       <bool>true</bool>
-      </property>
-      <property name="checked">
-       <bool>false</bool>
-      </property>
      </widget>
      <widget class="QCheckBox" name="m_bc">
       <property name="enabled">
@@ -1522,25 +1516,38 @@ color:#000</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>beta</tabstop>
-  <tabstop>alpha</tabstop>
-  <tabstop>pushButton</tabstop>
-  <tabstop>minimumDegree</tabstop>
   <tabstop>nodes</tabstop>
+  <tabstop>minimumDegree</tabstop>
   <tabstop>maximumDegree</tabstop>
+  <tabstop>max_average_degree</tabstop>
   <tabstop>distance</tabstop>
   <tabstop>area</tabstop>
+  <tabstop>alpha</tabstop>
+  <tabstop>beta</tabstop>
+  <tabstop>nodesDistribution</tabstop>
+  <tabstop>fixedRegions</tabstop>
+  <tabstop>fexibleRegions</tabstop>
   <tabstop>numberOfRegions</tabstop>
   <tabstop>length</tabstop>
   <tabstop>breadth</tabstop>
-  <tabstop>fixedRegions</tabstop>
-  <tabstop>fexibleRegions</tabstop>
-  <tabstop>nodesDistribution</tabstop>
-  <tabstop>bc</tabstop>
-  <tabstop>dc</tabstop>
-  <tabstop>ec</tabstop>
-  <tabstop>cc</tabstop>
   <tabstop>numberOfSimulations</tabstop>
+  <tabstop>bc</tabstop>
+  <tabstop>ec</tabstop>
+  <tabstop>dc</tabstop>
+  <tabstop>cc</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>new_topology</tabstop>
+  <tabstop>save_topology</tabstop>
+  <tabstop>open_topology</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>addnode</tabstop>
+  <tabstop>background_image</tabstop>
+  <tabstop>m_bc</tabstop>
+  <tabstop>m_ec</tabstop>
+  <tabstop>m_dc</tabstop>
+  <tabstop>m_cc</tabstop>
+  <tabstop>m_simulation</tabstop>
+  <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources/>
  <connections/>

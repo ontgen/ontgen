@@ -36,6 +36,7 @@ public:
 	~FileWriter();
 
 	string getDateTime();
+    void setNumberOfTopology(int);
 
 	void openFile();
 	string returnCurrentTimeAndDate();

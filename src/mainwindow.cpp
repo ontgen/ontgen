@@ -64,12 +64,12 @@ void MainWindow::openNewWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-     cout<<"PASSOU MAIN Please INIT:'(\n";
+
     ui->error->setText(QString::fromUtf8(""));
      ui->error->setText(QString::fromUtf8(""));
      ui->pushButton->setEnabled(false);
      ui->pushButton->setText("Simulating...");
-     cout<<"PASSOU MAIN Please INIT:'(\n";
+
      ui->pushButton->repaint();
 
      int simulation = 1;
@@ -98,7 +98,7 @@ void MainWindow::on_pushButton_clicked()
           * Configurações do plano
           */
          Plane plane;
-         cout<<"PASSOU MAIN Please :'(\n";
+
          plane.setArea(ui->area->value()); //valor da raiz da area
 
          /**
@@ -129,7 +129,7 @@ void MainWindow::on_pushButton_clicked()
 
             plane.setRegionsMeasures();
          }
-         cout<<"PASSOU MAIN Please 2:'(\n";
+
          plane.setWaxmanParameters(ui->alpha->value(),ui->beta->value());
 
          if(ui->nodesDistribution->currentText() == "Uniform")
@@ -299,7 +299,7 @@ void MainWindow::on_pushButton_clicked()
                 break;
             }
         }
-        cout<<"survivor "<<survivor<<endl;
+
         simulation++;
      }
 
@@ -419,10 +419,11 @@ void MainWindow::on_m_simulation_clicked()
      ui->m_simulation->setText("Simulating...");
      ui->m_simulation->repaint();
      FileWriter file;
+     file.setNumberOfTopology(1);//indice da topologia
 
      Graph graph; // cria objeto grafo
 
-    graphEditor->constructGraph(graph);
+     graphEditor->constructGraph(graph);
 
      /**
       * Verifica se o número de ligações foi atingido

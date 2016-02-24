@@ -134,14 +134,14 @@ ogdf::Graph DrawGraph::constructGraphOGDF(Graph &g,Plane &plane)
     }
 
 	//faz as ligações entre os nós
-    cout<<"-------------------------\n";
+//    cout<<"-------------------------\n";
 	for (int i = 0; i < g.getNumberOfNodes()-1; i++)
 	{
 		for (int j = i+1; j < g.getNumberOfNodes(); j++)
 		{
             if(mAdjacents[i][j] > 0.0f)
             {
-                cout<<" "<<i<<" "<<j<<endl;
+//                cout<<" "<<i<<" "<<j<<endl;
                 _g.newEdge(nodes[i], nodes[j]);
             }
 		}

@@ -965,11 +965,11 @@ void Plane::connectionNodesRegion(Graph &graph,vector<vector<int>> &nodes)
         }
         else if (n >= 3)
         {
-            for (int j = 0; j < n; j++)
-            {
-               cout<<" "<<nodes[i][j];
-            }
-            cout<<endl;
+//            for (int j = 0; j < n; j++)
+//            {
+//               cout<<" "<<nodes[i][j];
+//            }
+//            cout<<endl;
             random_shuffle(nodes[i].begin(),nodes[i].end());//sorteio
 
             /**
@@ -1019,7 +1019,7 @@ void Plane::connectionNodesRegion(Graph &graph,vector<vector<int>> &nodes)
                     }
                     else if(targets[target] == 0 && target != end && controller < n && waxmanProbability(graph,source,target) == true)
                     {
-                        cout<<"( "<<source<<" , "<<target<<")\n";
+
                         graph.setEdge(source,target);//liga os dois nós no grafo
                         double e = getEuclidean(source,target);
                         graph.setEuclideanDistance(source,target,e);
@@ -1033,7 +1033,7 @@ void Plane::connectionNodesRegion(Graph &graph,vector<vector<int>> &nodes)
                     }
                     else if( targets[target] == 0  && controller == n-1 && waxmanProbability(graph,source,target) == true)
                     {
-                        cout<<"( "<<source<<" , "<<target<<")\n";
+
                         graph.setEdge(source,target);//liga os dois nós no grafo
                         double e = getEuclidean(source,target);
                         graph.setEuclideanDistance(source,target,e);
@@ -1168,9 +1168,8 @@ void Plane::regionsInterconnection(Graph &graph,vector<vector<int>> &nodes)
  */
 void Plane::initialize(Graph &graph)
 {
-    cout<<"PASSOU DAQUI Please :'(\n";
     memsetCoordinates( graph.getNumberOfNodes() );
-    cout<<"PASSOU DAQUI Please *** :'(\n";
+
     this->xy = vector<vector<int>> (graph.getNumberOfNodes(),vector<int>(2,0));
 
     /**
@@ -1219,7 +1218,7 @@ void Plane::initialize(Graph &graph)
      */
 
     connectionNodesRegion(graph,nodesFromRegion);
-    cout<<"PASSOU DAQUI\n";
+
     int j = 0;
     int n = 0;
 
@@ -1251,7 +1250,6 @@ void Plane::initialize(Graph &graph)
         regionsInterconnection(graph,nodesFromRegion);
     }
 
-    cout<<"PASSOU..."<<endl;
 }
 
 

@@ -32,7 +32,12 @@ FileWriter::~FileWriter(){}
 
 string FileWriter::getDateTime()
 {
-	return this->dateTime;
+    return this->dateTime;
+}
+
+void FileWriter::setNumberOfTopology(int t)
+{
+    this->topology = t;
 }
 
 string FileWriter::returnCurrentTimeAndDate()
