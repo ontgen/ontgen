@@ -36,6 +36,7 @@ public:
 	~FileWriter();
 
 	string getDateTime();
+    QString getFilePNGImage();
     void setNumberOfTopology(int);
 
 	void openFile();
@@ -47,11 +48,13 @@ public:
 	void closeFileTopologies();
 	void closeFileMeasures();
 
+
 private:
 	string dateTime; 	//armazena data e hora
 	ofstream output;	//arquivo onde será armazenado as topologias geradas
 	Document xlsx;		//arquivo xls
 	Format hFmt;		//formato 
+    QString image;       //nome do arquivo de imagem .png
 	int row;			//guarda a linha da ultima topologia gravada
 	int simulation;		//guarda a simulação anterior
 	int lastSimulation; //número da simulação anterior

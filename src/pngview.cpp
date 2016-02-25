@@ -43,7 +43,7 @@
 #include <QWheelEvent>
 #include <QMouseEvent>
 #include <QGraphicsRectItem>
-#include <QGraphicsSvgItem>
+#include <QImage>
 #include <QPaintEvent>
 #include <qmath.h>
 #include <iostream>
@@ -109,7 +109,10 @@ void PngView::openFile(const QFile &file)
     s->clear();
     resetTransform();
 
-    m_pngItem = new QGraphicsSvgItem(file.fileName());
+    QImage image(file.fileName());
+    QGraphicsPixmapItem *item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+    m_pngItem = item;
+
     m_pngItem->setFlags(QGraphicsItem::ItemClipsToShape);
     m_pngItem->setCacheMode(QGraphicsItem::NoCache);
     m_pngItem->setZValue(0);

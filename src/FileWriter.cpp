@@ -35,6 +35,35 @@ string FileWriter::getDateTime()
     return this->dateTime;
 }
 
+QString FileWriter::getFilePNGImage()
+{
+    QString temp = QDir::homePath();
+    temp.append("/simulations");
+    /**
+     * Cria diretório caso não exista
+     */
+    QDir dir(temp);
+
+    if (!dir.exists())
+    {
+        dir.mkpath(".");
+    }
+
+    //adicionando caminho e nome de arquivo completo
+    //indice da simulação+indice da topologia+instante da simulação
+    temp.append("/topology_");
+    temp.append(QString::fromStdString(to_string(simulation)));
+    temp.append("_");
+    temp.append(QString::fromStdString(to_string(this->topology)));
+    temp.append("_");
+    temp.append(QString::fromStdString(dateTime));
+    temp.append(".png");
+
+    this->image = temp;
+
+    return this->image;
+}
+
 void FileWriter::setNumberOfTopology(int t)
 {
     this->topology = t;

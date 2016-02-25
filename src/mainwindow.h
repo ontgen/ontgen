@@ -22,6 +22,7 @@
 #include "about.h"
 #include "svgview.h"
 #include "GraphEditor.hpp"
+#include "DrawGraph.hpp"
 #include <QGraphicsView>
 
 namespace Ui {
@@ -37,6 +38,7 @@ public:
     ~MainWindow();
     std::string appPath;
     bool addingNode;
+    DrawGraph *draw;
     GraphEditor *graphEditor;
 
     void addNode(int x, int y);

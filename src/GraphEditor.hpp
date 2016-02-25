@@ -18,11 +18,16 @@
 #ifndef GRAPH_EDITOR_H
 #define GRAPH_EDITOR_H
 
-#include "Graph.hpp"
+#include "Plane.hpp"
 #include "svgview.h"
 #include <QFile>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+
+
+#include <QtCore>
+#include "xlsxdocument.h"
+#include "xlsxconditionalformatting.h"
 
 class GraphEditor
 {
@@ -35,11 +40,14 @@ public:
     void addEdge(int x,int y);//adiciona aresta se for o segundo nó selecionado
     bool checkEdgeExists(int,int);
     void saveAsSVG(QString);
+    void saveAsPNG(QString);
     void clearGraph();
     void constructGraph(Graph &);
+    string setOGDFGraph(Graph &, Plane &,string, int, int);
     void loadBackgroundImage(QString);
     void loadTopology(QString);
     void saveAsGML(QString);
+    ogdf::Graph constructGraphOGDF(Graph &);
 
     bool addingNode;
     bool addingEdge;
@@ -50,6 +58,9 @@ public:
     ogdf::node selected;
     QPixmap *backgroundImage;
     int nSelected;
+
+    vector<vector<double>> mAdjacents;//matriz de adjacências com a distância entre cada par de nós
+    std::vector<ogdf::node> nodes;//nós do grafo
 };
 
 #endif

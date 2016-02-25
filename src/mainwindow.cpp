@@ -17,6 +17,7 @@
  */
 #include "mainwindow.h"
 #include "svgviewer.h"
+#include "pngviewer.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QString>
@@ -25,7 +26,6 @@
 #include "Measure.hpp"
 #include "Suurballe.hpp"
 #include "FileWriter.hpp"
-#include "DrawGraph.hpp"
 #include "graphicsview.h"
 #include <QFileDialog>
 
@@ -43,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     GraphicsView *q = new GraphicsView();
 
     this->graphEditor = new GraphEditor(q);
+    this->draw = new DrawGraph(q);
 
     q->setGeometry(0, 0, ui->gridLayout->geometry().width(), ui->gridLayout->geometry().height());
     ui->gridLayout->addWidget(q);
@@ -62,6 +63,9 @@ void MainWindow::openNewWindow()
     this->aboutWindow->show();
 }
 
+/**
+ * Simulação no modo automático
+ */
 void MainWindow::on_pushButton_clicked()
 {
 
@@ -77,6 +81,7 @@ void MainWindow::on_pushButton_clicked()
      FileWriter file;
      
      SVGViewer *svg = new SVGViewer();
+     PNGViewer *png = new PNGViewer();
      svg->setWindowFlags(Qt::Dialog | Qt::Desktop);
      bool survivor = false, ok = false;
      
@@ -225,9 +230,14 @@ void MainWindow::on_pushButton_clicked()
             /**
              * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
              */
-            DrawGraph draw(graph,plane,file.getDateTime(),topology,simulation);//desenha grafo
+//            DrawGraph draw(graph,plane,file.getDateTime(),topology,simulation);//desenha grafo
 
-            svg->openSVG(draw.getFile(),topology);
+//            svg->openSVG(draw.getFile(),topology);
+
+            draw->setOGDFGraph(graph,plane,file.getDateTime(),topology,simulation);
+            draw->rerender();
+            draw->saveAsPNG(QString::fromStdString(draw->getFile()));
+            png->openPNG(draw->getFile(),topology);
 
             topology++;
         }
@@ -284,10 +294,17 @@ void MainWindow::on_pushButton_clicked()
                     /**
                      * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
                      */
-                    DrawGraph draw(graph,plane,file.getDateTime(),topology,simulation);//desenha grafo
+//                    DrawGraph draw(graph,plane,file.getDateTime(),topology,simulation);//desenha grafo
 
-                    svg->openSVG(draw.getFile(),topology);
+//                    svg->openSVG(draw.getFile(),topology);
+                    /**
+                     * Adicionando imagem do grafo em formato png e abrindo caixa de diálago
+                     */
 
+                    draw->setOGDFGraph(graph,plane,file.getDateTime(),topology,simulation);
+                    draw->rerender();
+                    draw->saveAsPNG(QString::fromStdString(draw->getFile()));
+                    png->openPNG(draw->getFile(),topology);
 
                     topology++;
                 }
@@ -305,7 +322,8 @@ void MainWindow::on_pushButton_clicked()
 
      if (ok == true)
      {
-         svg->show();//exibe janela de visualização
+//       svg->show();//exibe janela de visualização
+         png->show();//exibe janela de visualização
          QString message = "Simulation complete. File located at \"";
          message.append(QDir::homePath());
          message.append("/simulations\"");
@@ -340,6 +358,10 @@ void MainWindow::on_fexibleRegions_clicked()
     ui->length->setEnabled(true);
 }
 
+
+/**
+ * Verificação das medidas de centralidade
+ */
 void MainWindow::on_measures_clicked()
 {
     if(ui->bc->isChecked())
@@ -380,6 +402,9 @@ void MainWindow::on_measures_clicked()
     }
 }
 
+/**
+ * Ajuda ao usuário, onde abre arquivo html no navegador
+ */
 void MainWindow::on_help_clicked()
 {
     QDesktopServices::openUrl(QUrl(QString::fromStdString(this->appPath+"/help/index.html"), QUrl::TolerantMode));
@@ -391,8 +416,12 @@ void MainWindow::on_help_clicked()
 void MainWindow::on_pushButton_2_clicked()
 {
     QString filename = QFileDialog::getSaveFileName();
-    graphEditor->saveAsSVG(filename);
+    graphEditor->saveAsPNG(filename);
 }
+
+/**
+ * Adiciona um novo nó na topologia gerada automática
+ */
 void MainWindow::addNode(int x, int y)
 {
     graphEditor->addNode(x, y);//adiciona um novo nó na topologia manual
@@ -403,6 +432,9 @@ void MainWindow::on_addnode_clicked()
     graphEditor->addingNode = true;
 }
 
+/**
+ * Limpa, para a geração de uma nova topologia
+ */
 void MainWindow::on_new_topology_clicked()
 {
     graphEditor->clearGraph();
@@ -410,6 +442,9 @@ void MainWindow::on_new_topology_clicked()
      ui->m_error->setText("");
 }
 
+/**
+ * Simula uma nova topologia
+ */
 void MainWindow::on_m_simulation_clicked()
 {
     ui->m_error->setText("");
@@ -486,6 +521,10 @@ void MainWindow::on_background_image_clicked()
     graphEditor->loadBackgroundImage(filename);
 }
 
+/**
+ * Abre um arquivo com uma topologia já existente
+ * pelo modo manual
+ */
 void MainWindow::on_open_topology_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this,QString("Open topology file"),QDir::home().path());
@@ -498,6 +537,9 @@ void MainWindow::on_open_topology_clicked()
     graphEditor->loadTopology(filename);
 }
 
+/**
+ * Salva a topologia gerada no modo manual
+ */
 void MainWindow::on_save_topology_clicked()
 {
     QString filename = QFileDialog::getSaveFileName();

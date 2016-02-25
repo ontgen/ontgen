@@ -28,6 +28,7 @@ PNGViewer::PNGViewer(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->gridLayout->addWidget(tabs);
+    this->setWindowFlags(Qt::Window);//habilita botão de fechar
 }
 
 PNGViewer::~PNGViewer()
@@ -37,11 +38,12 @@ PNGViewer::~PNGViewer()
 
 void PNGViewer::openPNG(string file, int index)
 {
-
     QFile f(QString::fromStdString(file));
     QWidget *tab = new QWidget();
     PngView *png = new PngView();
+
     png->openFile(f);
+
     QHBoxLayout *l = new QHBoxLayout;
     tab->setLayout(l);
     l->addWidget(png);

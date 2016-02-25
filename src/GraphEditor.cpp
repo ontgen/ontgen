@@ -32,13 +32,14 @@ GraphEditor::GraphEditor(QGraphicsView *q)
         ogdf::GraphAttributes::edgeType |
         ogdf::GraphAttributes::edgeArrow |
         ogdf::GraphAttributes::edgeStyle |
-        ogdf::GraphAttributes::edgeIntWeight ); // cria atributos para o grafo
+        ogdf::GraphAttributes::edgeIntWeight); // cria atributos para o grafo
 
     this->view->setBackgroundBrush(QBrush(QColor("#fff")));
     rerender();
     ((GraphicsView *)this->view)->editor = this;
     this->nSelected = 0;
 }
+
 GraphEditor::~GraphEditor(){}
 
 void GraphEditor::addNode(int x, int y)
@@ -104,7 +105,8 @@ void GraphEditor::rerender()
                 ++pointIterator;
             }
 
-            for(uint i = 0; i < (uint)polyLine.size() / 3; i++) {
+            for(uint i = 0; i < (uint)polyLine.size() / 3; i++)
+            {
                 auto point1 = *(pointIterator++);
                 auto point2 = *(pointIterator++);
                 auto point3 = *(pointIterator++);
@@ -196,6 +198,7 @@ void GraphEditor::addEdge(int x, int y)
         }
     }
 }
+
 bool GraphEditor::checkEdgeExists(int u,int v)
 {
     ogdf::edge e;
@@ -215,16 +218,18 @@ bool GraphEditor::checkEdgeExists(int u,int v)
 
 void GraphEditor::saveAsSVG(QString filename)
 {
+    QSvgGenerator svgGen; //salvar em modo SVG
 
-//    QSvgGenerator svgGen; //salvar em modo SVG
+    svgGen.setFileName(filename);
+    svgGen.setSize(view->size());
+    svgGen.setViewBox(view->sceneRect());
 
-//    svgGen.setFileName(filename);
-//    svgGen.setSize(view->size());
-//    svgGen.setViewBox(view->sceneRect());
+    QPainter painter( &svgGen );
+    ((GraphicsView *)this->view)->scene->render( &painter );
+}
 
-//    QPainter painter( &svgGen );
-//    ((GraphicsView *)this->view)->scene->render( &painter );
-
+void GraphEditor::saveAsPNG(QString filename)
+{
     //Salvar em modo PNG
     ((GraphicsView *)this->view)->scene->clearSelection();
     QRectF before = ((GraphicsView *)this->view)->scene->sceneRect();
@@ -240,6 +245,7 @@ void GraphEditor::saveAsSVG(QString filename)
     ((GraphicsView *)this->view)->scene->setSceneRect(before);
     ((GraphicsView *)this->view)->centerOn(before.center());
 }
+
 
 void GraphEditor::clearGraph()
 {
@@ -310,4 +316,124 @@ void GraphEditor::loadTopology(QString filename)
 void GraphEditor::saveAsGML(QString filename)
 {
     ogdf::GraphIO::writeDOT(this->GA,filename.toStdString());
+}
+
+
+string GraphEditor::setOGDFGraph(Graph &graph, Plane &plane, string dateTime, int index,int simulation)
+{
+    clearGraph();
+    constructGraphOGDF(graph);//constrói grafo no formato da biblioteca
+
+    ogdf::node v;
+
+    int i = 0, f = 50, fn = 20, fontSize = 12;
+
+    if(plane.getSqrtArea() > 30)
+    {
+        f = 18;
+        fn = 50;
+        fontSize = 24;
+    }
+
+    forall_nodes( v, g ){ // itera sobre todos os nós do grafo
+        GA.fillColor( v ) = ogdf::Color( "#fff" );//adiciona cor branca ao interior do nó
+
+        GA.height( v ) = fn; // set the height to
+        GA.width( v ) = fn; // set the width to
+
+        GA.shape(v) = ogdf::shEllipse;
+
+        string s = to_string(v->index());
+        char const *pchar = s.c_str(); //use char const* as target type
+        GA.label( v ) = pchar;
+
+        //posições x e y da imagem
+        GA.x(v) = plane.getCoordinateX(i)*f;
+        GA.y(v) = plane.getCoordinateY(i)*f;
+
+        i++;
+    }
+
+    ogdf::edge e;
+    forall_edges(e ,g) // adiciona cor as arestas
+    {
+        GA.bends(e);
+        GA.arrowType(e) = ogdf::eaNone;
+        GA.strokeColor(e) = ogdf::Color("#444");
+        GA.strokeWidth(e) = 3;
+    }
+
+    ogdf::SugiyamaLayout SL; //Computa o desenho hierárquico do grafo g (usando SugiyamaLayout)
+    SL.setRanking( new ogdf::OptimalRanking );
+    SL.setCrossMin( new ogdf::MedianHeuristic );
+
+    ogdf::GraphIO::SVGSettings s;
+    s.fontSize(fontSize);
+
+    QString temp = QDir::homePath();
+    string file;
+    temp.append("/simulations");
+    /**
+     * Cria diretório caso não exista
+     */
+    QDir dir(temp);
+
+    if (!dir.exists())
+    {
+        dir.mkpath(".");
+    }
+
+    //adicionando caminho e nome de arquivo completo
+    //indice da simulação+indice da topologia+instante da simulação
+    temp.append("/topology_");
+    temp.append(QString::fromStdString(to_string(simulation)));
+    temp.append("_");
+    temp.append(QString::fromStdString(to_string(index)));
+    temp.append("_");
+    temp.append(QString::fromStdString(dateTime));
+    temp.append(".png");
+    file = temp.toStdString();
+
+    return file;
+
+}
+
+
+ogdf::Graph GraphEditor::constructGraphOGDF(Graph &graph)
+{
+    ogdf::Graph _g;
+
+    //cria todos os nós do grafo
+    for(int i = 0; i < graph.getNumberOfNodes(); i++)
+    {
+        nodes.push_back(g.newNode());
+    }
+
+    vector<Node> n = graph.getNodes();
+    mAdjacents = vector<vector<double>> (graph.getNumberOfNodes(),vector<double>(graph.getNumberOfNodes(),0.0f));
+
+    //Constrói matriz de adjacencias
+    for (int i = 0; i < graph.getNumberOfNodes(); i++)
+    {
+        vector<int> adjacents = n[i].getAdjacentsNodes();
+
+        for (int j = 0; j < (int)adjacents.size(); j++)
+        {
+            mAdjacents[i][ adjacents[j] ] = n[i].getWeightEdge(j);
+        }
+    }
+
+    //faz as ligações entre os nós
+    for (int i = 0; i < graph.getNumberOfNodes()-1; i++)
+    {
+        for (int j = i+1; j < graph.getNumberOfNodes(); j++)
+        {
+            if(mAdjacents[i][j] > 0.0f)
+            {
+                g.newEdge(nodes[i], nodes[j]);
+            }
+        }
+    }
+
+    return _g;
 }
