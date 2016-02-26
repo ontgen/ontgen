@@ -35,7 +35,7 @@ DrawGraph::DrawGraph(QGraphicsView *q)
         ogdf::GraphAttributes::edgeDoubleWeight); // cria atributos para o grafo
 
     this->view->setBackgroundBrush(QBrush(QColor("#fff")));
-    rerender();
+//    rerender();
     this->nSelected = 0;
 }
 
@@ -134,7 +134,11 @@ void DrawGraph::rerender()
         scene->addItem(item);
         QPointF middle = path.pointAtPercent(path.percentAtLength(path.length() / 2));
 
-        QGraphicsTextItem *label = scene->addText(QString::fromStdString(to_string(GA.doubleWeight(iterateEdge))));
+        std::string str = to_string( GA.doubleWeight(iterateEdge) );
+        int length = str.length();
+        std::string newstr = str.substr(0, length - 4);
+
+        QGraphicsTextItem *label = scene->addText(QString::fromStdString(newstr));
         label->setPos(middle);
     }
 

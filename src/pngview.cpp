@@ -78,15 +78,6 @@ PngView::PngView(QWidget *parent)
     setBackgroundBrush(tilePixmap);
 }
 
-void PngView::mousePressEvent(QMouseEvent *event)
-{
-    QPoint p = this->mapFromGlobal(event->pos());
-
-    if (this->main) {
-        ((MainWindow *) main)->addNode(event->pos().x(), event->pos().y());
-    }
-}
-
 void PngView::drawBackground(QPainter *p, const QRectF &)
 {
     p->save();
