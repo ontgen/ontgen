@@ -84,6 +84,7 @@ void MainWindow::on_pushButton_clicked()
      PNGViewer *png = new PNGViewer();
      svg->setWindowFlags(Qt::Dialog | Qt::Desktop);
      bool survivor = false, ok = false;
+     int total = 0; //recebe o número total de topologias para limitar abertura da janela de visualização
      
      while( simulation <= limitSimulation )
      {
@@ -316,6 +317,7 @@ void MainWindow::on_pushButton_clicked()
                 break;
             }
         }
+        total = topology + total;
 
         simulation++;
      }
@@ -323,7 +325,7 @@ void MainWindow::on_pushButton_clicked()
      if (ok == true)
      {
 //       svg->show();//exibe janela de visualização
-         png->show();//exibe janela de visualização
+         if(total <= 30) png->show();//exibe janela de visualização
          QString message = "Simulation complete. File located at \"";
          message.append(QDir::homePath());
          message.append("/simulations\"");
@@ -527,7 +529,7 @@ void MainWindow::on_background_image_clicked()
  */
 void MainWindow::on_open_topology_clicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this,QString("Open topology file"),QDir::home().path());
+    QString filename = QFileDialog::getOpenFileName(this,QString("Open topology file"),QDir::home().path(), tr("DOT Files (*.dot)"));
 
     if(filename.isEmpty())
     {
@@ -542,6 +544,10 @@ void MainWindow::on_open_topology_clicked()
  */
 void MainWindow::on_save_topology_clicked()
 {
-    QString filename = QFileDialog::getSaveFileName();
+
+    QString filename = QFileDialog::getSaveFileName(this, QString("Save topology"), QDir::home().path(), tr("DOT Files (*.dot)"));
+
+    QFileInfo file(filename);
+    if(file.suffix().isEmpty()) filename += ".dot";
     graphEditor->saveAsGML(filename);
 }
