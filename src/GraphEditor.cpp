@@ -73,12 +73,9 @@ void GraphEditor::rerender()
     QGraphicsScene *scene = new QGraphicsScene();//cria a cena
     scene->setSceneRect(QRect(0,0,2000,2000));
 
-    if(this->backgroundImage) {
-        QGraphicsPixmapItem *img = new QGraphicsPixmapItem();
-        scene->setSceneRect(QRect(0,0,this->backgroundImage->width(), this->backgroundImage->height()));
-
-        img->setPixmap(*(this->backgroundImage));
-        scene->addItem(img);
+    if(this->backgroundImage)
+    {
+        scene->addItem(this->backgroundImage);
     }
 
     QPen pen;
@@ -293,7 +290,18 @@ void GraphEditor::loadBackgroundImage(QString filename)
         return;
     }
 
-    this->backgroundImage = new QPixmap(filename);
+    QGraphicsPixmapItem *img = new QGraphicsPixmapItem();
+//        scene->setSceneRect(QRect(0,0,this->backgroundImage->width(), this->backgroundImage->height()));
+
+    QGraphicsScene *scene = ((GraphicsView *)this->view)->scene;
+
+    QPixmap *pix = new QPixmap(filename);
+    img->setPixmap(*(pix));
+    img->setFlag(QGraphicsItem::ItemIsMovable, true);
+    img->setFlag(QGraphicsItem::ItemIsSelectable,true);
+    img->setPos((scene->width() / 2) - (pix->width() / 2), (scene->height() / 2) - (pix->height() / 2));
+
+    this->backgroundImage = img;
 
     rerender();
 }

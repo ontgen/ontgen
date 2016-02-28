@@ -56,7 +56,7 @@ public:
     ogdf::Graph g;
 	ogdf::GraphAttributes GA;
     ogdf::node selected;
-    QPixmap *backgroundImage;
+    QGraphicsPixmapItem *backgroundImage;
     int nSelected;
 
     vector<vector<double>> mAdjacents;//matriz de adjacências com a distância entre cada par de nós

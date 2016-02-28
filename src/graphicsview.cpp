@@ -55,6 +55,8 @@ void GraphicsView::mousePressEvent(QMouseEvent *e)
     }
 
     if(t == false) editor->addNode(p.x() - 15, p.y() - 15);
+
+    QGraphicsView::mousePressEvent(e);
 }
 
 void GraphicsView::mouseMoveEvent(QMouseEvent *e)
