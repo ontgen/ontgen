@@ -26,7 +26,6 @@
 #include "Measure.hpp"
 #include "Suurballe.hpp"
 #include "FileWriter.hpp"
-#include "graphicsview.h"
 #include <QFileDialog>
 
 using namespace std;
@@ -40,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOpen_help, SIGNAL(triggered()), this, SLOT(on_help_clicked()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(openNewWindow()));
 
-    GraphicsView *q = new GraphicsView();
+    q = new GraphicsView();
 
     this->graphEditor = new GraphEditor(q);
     this->draw = new DrawGraph(q);
@@ -201,9 +200,11 @@ void MainWindow::on_pushButton_clicked()
         Suurballe s;
         survivor = false;
         survivor = s.execute(graph);
+        cout<<"SURVIVOR"<<survivor<<endl;
 
         if(survivor == true)
         {
+
             ok = true;
 
             if (simulation == 1)
@@ -234,11 +235,12 @@ void MainWindow::on_pushButton_clicked()
 //            DrawGraph draw(graph,plane,file.getDateTime(),topology,simulation);//desenha grafo
 
 //            svg->openSVG(draw.getFile(),topology);
+            DrawGraph *d = new DrawGraph(q);
 
-            draw->setOGDFGraph(graph,plane,file.getDateTime(),topology,simulation);
-            draw->rerender();
-            draw->saveAsPNG(QString::fromStdString(draw->getFile()));
-            png->openPNG(draw->getFile(),topology);
+            d->setOGDFGraph(graph,plane,file.getDateTime(),topology,simulation);
+            d->rerender();
+            d->saveAsPNG(QString::fromStdString(d->getFile()));
+            png->openPNG(d->getFile(),topology);
 
             topology++;
         }
@@ -263,7 +265,7 @@ void MainWindow::on_pushButton_clicked()
                     Suurballe suurballe;
                     survivor = suurballe.execute(graph);
                 }
-
+                cout<<"SURVIVOR"<<survivor<<endl;
                 if(survivor == true)
                 {
                     ok = true;
@@ -298,14 +300,15 @@ void MainWindow::on_pushButton_clicked()
 //                    DrawGraph draw(graph,plane,file.getDateTime(),topology,simulation);//desenha grafo
 
 //                    svg->openSVG(draw.getFile(),topology);
+                    DrawGraph *d = new DrawGraph(q);
                     /**
                      * Adicionando imagem do grafo em formato png e abrindo caixa de diálago
                      */
 
-                    draw->setOGDFGraph(graph,plane,file.getDateTime(),topology,simulation);
-                    draw->rerender();
-                    draw->saveAsPNG(QString::fromStdString(draw->getFile()));
-                    png->openPNG(draw->getFile(),topology);
+                    d->setOGDFGraph(graph,plane,file.getDateTime(),topology,simulation);
+                    d->rerender();
+                    d->saveAsPNG(QString::fromStdString(d->getFile()));
+                    png->openPNG(d->getFile(),topology);
 
                     topology++;
                 }

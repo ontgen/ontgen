@@ -7,7 +7,7 @@
 QT       += core gui svg
 
 CONFIG += c++11 console
-QMAKE_CXXFLAGS += -std=c++11 -O3 -g
+QMAKE_CXXFLAGS += -std=c++11 -O0 -g
 
 include(src/xlsx/qtxlsx.pri)
 
@@ -68,13 +68,17 @@ FORMS    += src/mainwindow.ui \
     src/svgviewer.ui \
     src/pngviewer.ui
 
-unix: LIBS += -L$$PWD/OGDF/_release/ -lOGDF
-
 INCLUDEPATH += $$PWD/OGDF/include
 DEPENDPATH += $$PWD/OGDF/include
 
-unix: PRE_TARGETDEPS += $$PWD/OGDF/_release/libOGDF.a
-
-unix: LIBS += -L$$PWD/OGDF/_release/ -lCOIN
-
-unix: PRE_TARGETDEPS += $$PWD/OGDF/_release/libCOIN.a
+contains(QT_ARCH, i386) {
+    unix: LIBS += -L$$PWD/OGDF/_release_32/ -lOGDF
+    unix: PRE_TARGETDEPS += $$PWD/OGDF/_release_32/libOGDF.a
+    unix: LIBS += -L$$PWD/OGDF/_release_32/ -lCOIN
+    unix: PRE_TARGETDEPS += $$PWD/OGDF/_release_32/libCOIN.a
+} else {
+    unix: LIBS += -L$$PWD/OGDF/_release_64/ -lOGDF
+    unix: PRE_TARGETDEPS += $$PWD/OGDF/_release_64/libOGDF.a
+    unix: LIBS += -L$$PWD/OGDF/_release_64/ -lCOIN
+    unix: PRE_TARGETDEPS += $$PWD/OGDF/_release_64/libCOIN.a
+}

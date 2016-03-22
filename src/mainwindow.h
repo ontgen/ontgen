@@ -24,6 +24,7 @@
 #include "GraphEditor.hpp"
 #include "DrawGraph.hpp"
 #include <QGraphicsView>
+#include "graphicsview.h"
 
 namespace Ui {
 class MainWindow;
@@ -40,6 +41,7 @@ public:
     bool addingNode;
     DrawGraph *draw;
     GraphEditor *graphEditor;
+    GraphicsView *q;
 
     void addNode(int x, int y);
 

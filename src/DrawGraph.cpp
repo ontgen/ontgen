@@ -91,8 +91,15 @@ void DrawGraph::rerender()
 
         if ((int)polyLine.size() == 0)
         {
-            path.moveTo(GA.x(iterateEdge->adjSource()->theNode())+15, GA.y(iterateEdge->adjSource()->theNode())+10);
-            path.lineTo(GA.x(iterateEdge->adjTarget()->theNode())+15, GA.y(iterateEdge->adjTarget()->theNode())+10);
+           path.moveTo(GA.x(iterateEdge->adjSource()->theNode())+15, GA.y(iterateEdge->adjSource()->theNode())+10);
+
+           int x = GA.x(iterateEdge->target());
+           int y = GA.y(iterateEdge->target());
+
+           cout <<"x "<< x << " y " << y << endl;
+           QPointF point(x+15, y+15);
+//           path.lineTo(x+15, y+10);
+           path.lineTo(point);
         }
         else
         {
@@ -315,6 +322,7 @@ void DrawGraph::setOGDFGraph(Graph &graph, Plane &plane, string dateTime, int in
     ogdf::node v;
 
     int i = 0, f = 50, fn = 20, fontSize = 12;
+    int side = 500;
 
     if(plane.getSqrtArea() > 30)
     {
@@ -336,8 +344,12 @@ void DrawGraph::setOGDFGraph(Graph &graph, Plane &plane, string dateTime, int in
         GA.label( v ) = pchar;
 
         //posições x e y da imagem
-        GA.x(v) = plane.getCoordinateX(i)*f;
-        GA.y(v) = plane.getCoordinateY(i)*f;
+        int a = plane.getSqrtArea();
+//        cout<<" "<<plane.getCoordinateX(i)<<" "<<plane.getCoordinateY(i)<<endl;
+        int px = (plane.getCoordinateX(i) * 100)/a;
+        int py = (plane.getCoordinateY(i) * 100)/a;
+        GA.x(v) = ( side * px )/100;
+        GA.y(v) =  ( side * py )/100;
 
         i++;
     }
@@ -345,7 +357,6 @@ void DrawGraph::setOGDFGraph(Graph &graph, Plane &plane, string dateTime, int in
     ogdf::edge e;
     forall_edges(e ,this->g) // adiciona cor as arestas
     {
-        GA.bends(e);
         GA.arrowType(e) = ogdf::eaNone;
         GA.strokeColor(e) = ogdf::Color("#444");
         GA.strokeWidth(e) = 3;
@@ -391,7 +402,7 @@ ogdf::Graph DrawGraph::constructGraphOGDF(Graph &graph)
     //cria todos os nós do grafo
     for(int i = 0; i < graph.getNumberOfNodes(); i++)
     {
-        nodes.push_back(g.newNode());
+        nodes.push_back(this->g.newNode());
     }
 
     vector<Node> n = graph.getNodes();
@@ -415,8 +426,8 @@ ogdf::Graph DrawGraph::constructGraphOGDF(Graph &graph)
         {
             if(mAdjacents[i][j] > 0.0f)
             {
-                ogdf::edge e = g.newEdge(nodes[i], nodes[j]);
-                GA.doubleWeight(e) = mAdjacents[i][j];
+                ogdf::edge e = this->g.newEdge(nodes[i], nodes[j]);
+                this->GA.doubleWeight(e) = mAdjacents[i][j];
             }
         }
     }

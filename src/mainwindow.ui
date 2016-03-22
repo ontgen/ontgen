@@ -83,8 +83,7 @@
        <string>Number of simulations</string>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgba(255, 255, 255, 0);
-color:#000;</string>
+       <string notr="true"/>
       </property>
       <property name="minimum">
        <number>1</number>
@@ -135,17 +134,16 @@ color:#000;</string>
        <string>Length of each region</string>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: #fff;
-color:#000;</string>
+       <string notr="true"/>
       </property>
       <property name="minimum">
        <number>1</number>
       </property>
       <property name="maximum">
-       <number>99999</number>
+       <number>40000</number>
       </property>
       <property name="value">
-       <number>20</number>
+       <number>40</number>
       </property>
      </widget>
      <widget class="QSpinBox" name="nodes">
@@ -161,19 +159,16 @@ color:#000;</string>
        <string>Number of nodes on the plane</string>
       </property>
       <property name="styleSheet">
-       <string notr="true">color: rgb(0, 0, 0);
-background: rgba(255, 255, 255, 0);
-
-</string>
+       <string notr="true"/>
       </property>
       <property name="minimum">
        <number>3</number>
       </property>
       <property name="maximum">
-       <number>120</number>
+       <number>200</number>
       </property>
       <property name="value">
-       <number>5</number>
+       <number>20</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_12">
@@ -266,21 +261,19 @@ background: rgba(255, 255, 255, 0);
        <string>Network's max average degree</string>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgba(255, 255, 255, 0);
-color:#000
-</string>
+       <string notr="true"/>
       </property>
       <property name="minimum">
        <double>2.000000000000000</double>
       </property>
       <property name="maximum">
-       <double>199.990000000000009</double>
+       <double>40000.000000000000000</double>
       </property>
       <property name="singleStep">
        <double>0.500000000000000</double>
       </property>
       <property name="value">
-       <double>4.000000000000000</double>
+       <double>3.500000000000000</double>
       </property>
      </widget>
      <widget class="QSpinBox" name="minimumDegree">
@@ -296,8 +289,7 @@ color:#000
        <string>Node's minimum degree</string>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgba(255, 255, 255, 0);
-color:#000</string>
+       <string notr="true"/>
       </property>
       <property name="minimum">
        <number>2</number>
@@ -335,8 +327,7 @@ color:#000</string>
        <string>Number of regions in which will be divided</string>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgba(255, 255, 255, 0);
-color:#000</string>
+       <string notr="true"/>
       </property>
       <property name="minimum">
        <number>1</number>
@@ -376,204 +367,8 @@ color:#000</string>
         <height>21</height>
        </rect>
       </property>
-      <property name="palette">
-       <palette>
-        <active>
-         <colorrole role="WindowText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Button">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Text">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ButtonText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Base">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Window">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ToolTipText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>236</red>
-            <green>240</green>
-            <blue>241</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </active>
-        <inactive>
-         <colorrole role="WindowText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Button">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Text">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ButtonText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Base">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Window">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ToolTipText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>236</red>
-            <green>240</green>
-            <blue>241</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </inactive>
-        <disabled>
-         <colorrole role="WindowText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Button">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Text">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ButtonText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Base">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Window">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ToolTipText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>236</red>
-            <green>240</green>
-            <blue>241</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </disabled>
-       </palette>
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>Efficiency Centrality</string>
@@ -597,7 +392,6 @@ color:#000</string>
       <property name="styleSheet">
        <string notr="true">QGroupBox {
 	border:1px solid #d0d0d0;
-	color:rgb(236, 240, 241);
 	border-radius:4px;
 	padding:3px;
 }
@@ -618,7 +412,7 @@ color:#000;
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">color:rgb(236, 240, 241)</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>Alpha ( α )</string>
@@ -634,8 +428,7 @@ color:#000;
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgba(255, 255, 255, 0);
-color: #000</string>
+        <string notr="true"/>
        </property>
        <property name="minimum">
         <double>0.010000000000000</double>
@@ -660,7 +453,7 @@ color: #000</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">color:rgb(236, 240, 241)</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string> Beta ( β )</string>
@@ -676,9 +469,7 @@ color: #000</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgba(255, 255, 255, 0);
-color:#000
-</string>
+        <string notr="true"/>
        </property>
        <property name="minimum">
         <double>0.100000000000000</double>
@@ -732,6 +523,9 @@ color:#000
         <height>26</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="text">
        <string>Betwenness Centrality</string>
       </property>
@@ -749,18 +543,16 @@ color:#000
        <string>Node's maximum degree</string>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgba(255, 255, 255, 0);
-color:#000
-</string>
+       <string notr="true"/>
       </property>
       <property name="minimum">
        <number>2</number>
       </property>
       <property name="maximum">
-       <number>999</number>
+       <number>199</number>
       </property>
       <property name="value">
-       <number>4</number>
+       <number>5</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_4">
@@ -792,17 +584,16 @@ color:#000
        <string>Breadth of each region</string>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: #fff;
-color:#000</string>
+       <string notr="true"/>
       </property>
       <property name="minimum">
        <number>1</number>
       </property>
       <property name="maximum">
-       <number>99999</number>
+       <number>40000</number>
       </property>
       <property name="value">
-       <number>5</number>
+       <number>1</number>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton">
@@ -867,6 +658,9 @@ color:#000</string>
         <height>26</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="text">
        <string>Closeness Centrality</string>
       </property>
@@ -884,7 +678,7 @@ color:#000</string>
        <bool>false</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">color:rgb(236, 240, 241) !important;</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>Flexible regions</string>
@@ -913,10 +707,13 @@ color:#000</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>Fixed regions</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
       </property>
       <property name="checked">
        <bool>true</bool>
@@ -935,9 +732,13 @@ color:#000</string>
        <string>Min distance between two nodes</string>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgba(255, 255, 255, 0);
-color:#000
-</string>
+       <string notr="true"/>
+      </property>
+      <property name="maximum">
+       <number>10000</number>
+      </property>
+      <property name="value">
+       <number>1</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_16">
@@ -966,8 +767,7 @@ color:#000
        <string>Nodes distribution on the plane</string>
       </property>
       <property name="styleSheet">
-       <string notr="true">color:#2c3e50;
-background:#fff;</string>
+       <string notr="true"/>
       </property>
       <item>
        <property name="text">
@@ -992,6 +792,9 @@ background:#fff;</string>
         <height>26</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="text">
        <string>Degree Centrality</string>
       </property>
@@ -1015,17 +818,16 @@ background:#fff;</string>
        <string>Square root of plane's area</string>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgba(255, 255, 255, 0);
-color:#000</string>
+       <string notr="true"/>
       </property>
       <property name="minimum">
        <number>6</number>
       </property>
       <property name="maximum">
-       <number>100000</number>
+       <number>40000</number>
       </property>
       <property name="value">
-       <number>10</number>
+       <number>40</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_14">
@@ -1123,207 +925,17 @@ color:#000</string>
         <height>21</height>
        </rect>
       </property>
-      <property name="palette">
-       <palette>
-        <active>
-         <colorrole role="WindowText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Button">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Text">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ButtonText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Base">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Window">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ToolTipText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>236</red>
-            <green>240</green>
-            <blue>241</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </active>
-        <inactive>
-         <colorrole role="WindowText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Button">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Text">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ButtonText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Base">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Window">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ToolTipText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>236</red>
-            <green>240</green>
-            <blue>241</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </inactive>
-        <disabled>
-         <colorrole role="WindowText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Button">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Text">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ButtonText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Base">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="Window">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>44</red>
-            <green>62</green>
-            <blue>80</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ToolTipText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>236</red>
-            <green>240</green>
-            <blue>241</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </disabled>
-       </palette>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>Efficiency Centrality</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="m_simulation">
@@ -1485,7 +1097,7 @@ color:#000</string>
      <x>0</x>
      <y>0</y>
      <width>799</width>
-     <height>26</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="styleSheet">

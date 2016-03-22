@@ -14,7 +14,7 @@ then
 	mkdir "packages/ontgen/data/ontgen/libs"
 fi
 
-~/Qt/5.4/gcc/bin/qmake -makefile -o build/Makefile
+qmake -makefile -o build/Makefile
 cd build
 make
 cp interface ../packages/ontgen/data/ontgen
@@ -28,8 +28,6 @@ do
 	cp $dep ./libs
 done
 
-rm libs/libc.so.6
-
 cd ../../../../
 
-~/Qt/QtIFW2.0.1/bin/binarycreator -c config/config.xml -p packages/ --offline-only ontgen
+binarycreator -c config/config.xml -p packages/ --offline-only ontgen
