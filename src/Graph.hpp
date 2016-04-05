@@ -15,8 +15,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef DIJKSTRA_H
-#define DIJKSTRA_H
+#ifndef GRAPH_H
+#define GRAPH_H
 
 #include "Node.hpp"
 
@@ -58,7 +58,7 @@ public:
 	int getMaximumDegree();		//número máximo do grau
 	int getNumberOfNodes();		//número de nós do grafo
 	int getRegionOfNode(int);
-	vector<Node> getNodes();	//retorna um vetor de nós do grafo
+    vector<Node> & getNodes();	//retorna um vetor de nós do grafo
 	double getAverageDegree();	//retorna grau médio do grafo
 	double getMaximumAverageDegree();
     Node & getNodeAtPosition(int);

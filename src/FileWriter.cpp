@@ -224,7 +224,7 @@ void FileWriter::writeMeasures(Graph &graph, bool bc, bool ec, bool dc, bool cc)
 	if (bc)
 	{
 		cell = "B"+to_string(this->row);
-		this->xlsx.write(cell.c_str(), "Between Centrality", this->hFmt);
+        this->xlsx.write(cell.c_str(), "Betweenness Centrality", this->hFmt);
 
    	    vector<Node> node = graph.getNodes();
         it = this->row+1;
@@ -233,7 +233,7 @@ void FileWriter::writeMeasures(Graph &graph, bool bc, bool ec, bool dc, bool cc)
         {   
 //	      	cout<<"bc( "<<u<<") = "<<betweenCentrality<<endl;
             string temp = to_string( node[u].getBetweennessCentrality() );
-            // cout<<"temp betweenCentrality "<<temp<<" "<<node[u].getBetweenCentrality()<<endl;
+//            cout<<"temp betweenCentrality "<<temp<<" "<<node[u].getBetweennessCentrality()<<endl;
             this->xlsx.write(it, 2, temp.c_str() );
 
 	        it++;

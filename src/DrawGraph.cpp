@@ -96,7 +96,7 @@ void DrawGraph::rerender()
            int x = GA.x(iterateEdge->target());
            int y = GA.y(iterateEdge->target());
 
-           cout <<"x "<< x << " y " << y << endl;
+//           cout <<"x "<< x << " y " << y << endl;
            QPointF point(x+15, y+15);
 //           path.lineTo(x+15, y+10);
            path.lineTo(point);

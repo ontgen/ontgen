@@ -15,8 +15,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "Graph.hpp"
+#ifndef BRANDES_H
+#define BRANDES_H
 
+#include "Graph.hpp"
 using namespace std;
 
  class Brandes
@@ -32,8 +34,9 @@ using namespace std;
  	void insertPaths(vector<Node> &,int,int,int); 
  	void addNode(vector<Node> &, vector< vector<int> > &, int, int, int);
  	int addPaths(vector<Node> &,vector< vector<int> > &,int,int,int);
- 	int minimumDistance(vector<int> &, vector<int> &, vector<int> &,int);
- 	void execute(vector< vector<int> >, int ,vector<Node> &);
+    double minimumDistance(vector<double> &, vector<double> &, vector<int> &,int);
+    void execute(vector< vector<double> >, int ,vector<Node> &);
+    vector<double> betweennessCentrality(vector<Node> &);
  	void printShortestPaths();
 
 private:
@@ -44,3 +47,4 @@ private:
 	vector< vector<int> > shortestPath;	//armazena os caminhos minimos de uma origem i à um destino j	
 
 };
+#endif

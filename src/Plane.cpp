@@ -842,7 +842,7 @@ void Plane::targetSearch(int source,Graph &graph, vector<vector<int>> nodes, vec
                     */
                     if(xTarget == j && k == yTarget && targetNow != source)
                     {
-                        if(radiusNow < radiusEarlier && regionEqual(nodes[indexRegion],targetNow) == false && graph.getEdge(source,targetNow) == false && graph.getDegree(targetNow) <= 2)
+                        if(radiusNow < radiusEarlier && regionEqual(nodes[indexRegion],targetNow) == false && graph.getEdge(source,targetNow) == false && graph.getDegree(targetNow) < graph.getMaximumDegree())
                         {
                             target = targetNow;
                             radiusEarlier = radiusNow;
@@ -1075,11 +1075,11 @@ void Plane::regionsInterconnection(Graph &graph,vector<vector<int>> &nodes)
          * mais próximos.
          */
 
-        if (nodes[i].size() == 0)
+        if ((int)nodes[i].size() == 0)
         {
             continue;
         }
-        else if (nodes[i].size() == 1)
+        else if ((int)nodes[i].size() == 1)
         {
             controller = 0;
             int target = nodes[i][j];

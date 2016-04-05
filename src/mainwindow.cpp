@@ -200,7 +200,7 @@ void MainWindow::on_pushButton_clicked()
         Suurballe s;
         survivor = false;
         survivor = s.execute(graph);
-        cout<<"SURVIVOR"<<survivor<<endl;
+//        cout<<"SURVIVOR"<<survivor<<endl;
 
         if(survivor == true)
         {
@@ -217,7 +217,7 @@ void MainWindow::on_pushButton_clicked()
 
             if( (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked() ) && survivor == true)
             {
-                if (simulation)
+                if (simulation == 1)
                 {
                     file.createXls();
                 }
@@ -233,7 +233,6 @@ void MainWindow::on_pushButton_clicked()
              * Adicionando imagem do grafo em formato svg e abrindo caixa de diálago
              */
 //            DrawGraph draw(graph,plane,file.getDateTime(),topology,simulation);//desenha grafo
-
 //            svg->openSVG(draw.getFile(),topology);
             DrawGraph *d = new DrawGraph(q);
 
@@ -265,7 +264,7 @@ void MainWindow::on_pushButton_clicked()
                     Suurballe suurballe;
                     survivor = suurballe.execute(graph);
                 }
-                cout<<"SURVIVOR"<<survivor<<endl;
+//                cout<<"SURVIVOR"<<survivor<<endl;
                 if(survivor == true)
                 {
                     ok = true;
@@ -279,9 +278,9 @@ void MainWindow::on_pushButton_clicked()
                     file.writeTopologies(graph,simulation,topology);
 
 
-                    if( (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked() ) && survivor == true )
+                    if( (ui->bc->isChecked() || ui->cc->isChecked() || ui->dc->isChecked() || ui->ec->isChecked() ))
                     {
-                        if (simulation)
+                        if (simulation == 1)
                         {
                             file.createXls();
                         }
@@ -479,7 +478,7 @@ void MainWindow::on_m_simulation_clicked()
     if(survivor == true)
     {
 
-        if( (ui->m_bc->isChecked() || ui->m_cc->isChecked() || ui->m_dc->isChecked() || ui->m_ec->isChecked() ) && survivor)
+        if( (ui->m_bc->isChecked() || ui->m_cc->isChecked() || ui->m_dc->isChecked() || ui->m_ec->isChecked() ))
         {
             file.createXls();
 
@@ -502,7 +501,7 @@ void MainWindow::on_m_simulation_clicked()
          }
 
     }
-    else 
+    else
     {
         ui->m_error->setText("Topology isn't survivor");
     }

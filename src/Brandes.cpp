@@ -16,6 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "Brandes.hpp"
+#include <stack>
+#include <queue>
 
 Brandes::Brandes(int n)
 {
@@ -33,18 +35,20 @@ vector< vector<int> > Brandes::getShortestPath()
   return this->shortestPath;
 }
 
-int Brandes::minimumDistance(vector<int> &distance, vector<int> &sptSet, vector<int> &array,int source)
+double Brandes::minimumDistance(vector<double> &distance, vector<double> &sptSet, vector<int> &array,int source)
 {
 
-  int min = std::numeric_limits<int>::max(), min_index,count = 0;
+  double min = std::numeric_limits<double>::max(),count = 0;
+  int min_index = -1;
 
-  for (int v = 0; v < this->nNodes; v++) {
+  for (int v = 0; v < this->nNodes; v++)
+  {
 
     if (sptSet[v] == 0 && distance[v] < min)
     {
       if (distance[v] == 0 && v != source)
       {
-        distance[v] = std::numeric_limits<int>::max();
+        distance[v] = std::numeric_limits<double>::max();
         continue;
       }
       else
@@ -167,7 +171,7 @@ int Brandes::addPaths(vector<Node> & nodes,vector<vector<int>> &path,int adjacen
  */
 void Brandes::insertPaths(vector<Node> &nodes,int source,int target,int adjacent)
 {
-  // printf("(%d , %d)\n",source,target );
+// printf("(%d , %d)\n",source,target );
   vector< vector<int> > path = vector< vector<int> > ( this->nNodes, vector<int>(this->nNodes,-1) );
 
   if (this->shortestPath[source][target] >= 3)
@@ -183,13 +187,13 @@ void Brandes::insertPaths(vector<Node> &nodes,int source,int target,int adjacent
       path[0][0] = target+0;
       path[0][1] = adjacent+0;
 
-      addNode(nodes,path,2,shortestPath[source][target],source);
+      addNode(nodes,path,2,this->shortestPath[source][target],source);
     }
     else
     {
       path[0][0] = target+0;
 
-      addNode(nodes,path,1,shortestPath[source][target],source);
+      addNode(nodes,path,1,this->shortestPath[source][target],source);
     }
   }
 
@@ -199,20 +203,20 @@ void Brandes::insertPaths(vector<Node> &nodes,int source,int target,int adjacent
 
 
 /**
- * Calcula o menor caminho, de um node até outro
+ * Calcula o menor caminho, de um node até os outros
  * graph com uma matriz adjacente, e o source
  */
-void Brandes::execute(vector<vector<int>> graph, int source,vector<Node> &nodes)
+void Brandes::execute(vector< vector<double> > graph, int source,vector<Node> &nodes)
 {
-  vector<int> distance = vector<int> (this->nNodes,std::numeric_limits<int>::max());
+  vector<double> distance = vector<double> (this->nNodes,std::numeric_limits<double>::max());
 
-  vector<int> sptSet = vector<int> (this->nNodes,0);
+  vector<double> sptSet = vector<double> (this->nNodes,0);
 
   vector< vector<int> > edge = vector< vector<int> > ( this->nNodes, vector<int>(2,-1) );
 
-  distance[source] = 0;
+  distance[source] = 0.0f;
 
-  int k = 0,v = 0,i = 0,t = 0,temp,aux;
+  int k = 0,v = 0,i = 0,t = 0,temp = 0,aux = 0;
   
   for (int count = 0; count < this->nNodes; count++)
   {
@@ -220,11 +224,11 @@ void Brandes::execute(vector<vector<int>> graph, int source,vector<Node> &nodes)
 
     vector<int> u;
 
-    int nMin = minimumDistance(distance,sptSet,u,source);
+    double nMin = minimumDistance(distance,sptSet,u,source);
 
     for (k = 0; k < nMin; k++)
     {
-      sptSet[ u[k] ] = 1;
+      sptSet[ u[k] ] = 1.0f;
     }
 
     int increment = 0;
@@ -243,6 +247,7 @@ void Brandes::execute(vector<vector<int>> graph, int source,vector<Node> &nodes)
 
         if (!sptSet[v] && graph[ nodeAdjacent[k] ][ v ] && distance[ nodeAdjacent[k] ] != std::numeric_limits<int>::max() && distance[ nodeAdjacent[k] ] + graph[ nodeAdjacent[k] ][v] <= distance[ v ] && currentTarget != v )
         {
+            cout<<" "<<v<<" "<<nodeAdjacent[k]<<endl;
           currentTarget = v;
 
           aux = distance[v];
@@ -250,6 +255,7 @@ void Brandes::execute(vector<vector<int>> graph, int source,vector<Node> &nodes)
           temp = distance[ nodeAdjacent[k] ];
 
           distance[v] =  temp + graph[ nodeAdjacent[k] ][v];
+
           this->shortestPath[source][v] = this->shortestPath[v][source] = distance[v];
 
           if ( shortestPath[source][v] > 0)
@@ -315,11 +321,11 @@ void Brandes::execute(vector<vector<int>> graph, int source,vector<Node> &nodes)
  */
 void Brandes::printShortestPaths()
 {
-  unsigned int i = 0, j = 0;
+  int i = 0, j = 0;
 
-  for (i = 0; i < this->shortestPath.size(); i++)
+  for (i = 0; i < (int)this->shortestPath.size(); i++)
   {
-    for (j = 0; j < this->shortestPath[i].size(); j++)
+    for (j = 0; j < (int)this->shortestPath[i].size(); j++)
     {
       cout<<this->shortestPath[i][j]<<" ";
     }
@@ -328,4 +334,106 @@ void Brandes::printShortestPaths()
   }
 
   cout<<endl;
+}
+
+
+vector<double> Brandes::betweennessCentrality(vector<Node> &nodes)
+{
+    int n = (int)nodes.size();
+
+    vector<double> cb = vector<double> (n,0.0f);
+
+   for(int source = 0; source < n; source++)
+   {
+        stack<int> s;
+        vector<double> sigma = vector<double> (n,0.0f);
+        vector<double> dist = vector<double> (n,-1.0f);
+        vector< pair<int,int> > q;
+        vector< vector<int> > p = vector< vector<int> > (n);
+
+        sigma[source] = 1.0f;
+        dist[source] = 0.0f;
+
+        pair<int,int> t(source,0);
+        q.push_back(t);
+        std::push_heap(q.begin(), q.end());
+
+        while(!q.empty())
+        {
+            pair<int, int> u_pair = q.front();
+
+            int u = u_pair.first;
+            pop_heap(q.begin(), q.end());
+            q.pop_back();
+
+            s.push(u);
+
+            vector<int> adj = nodes[u].getAdjacentsNodes();
+            double du = dist[u];
+
+            for(int i = 0; i < (int)adj.size(); i++)
+            {
+                 int v = adj[i];
+                 double du_we = du + nodes[u].getWeightEdge(i);
+
+                 if(sigma[v] == 0)
+                 {
+                     pair<int,int> t(v,du_we);
+                     q.push_back(t);
+
+                     push_heap(q.begin(), q.end());
+                 }
+                 else
+                 {
+                    if (du_we < dist[v])
+                    {
+                        int qn = (int)q.size();
+
+                        for(int j = 0; j < qn; j++)
+                        {
+                            if(q[j].first == v)
+                            {
+                                q[j].second = du_we;
+                                make_heap(q.begin(), q.end());
+                            }
+                        }
+
+                        p[v].clear();
+                        sigma[v] = 0;
+                    }
+                    else
+                     if (du_we > dist[v])
+                       continue;                 // do not increase number of shortest paths
+
+                 }
+                 dist[v] = du_we;
+                 sigma[v] += sigma[u];
+                 p[v].push_back(u);
+            }
+        }
+
+        vector<double> delta = vector<double> (n,0.0f);
+
+        while(!s.empty())
+        {
+            int v = s.top();
+            s.pop();
+
+            for(int i = 0; i < (int)p[v].size(); i++)
+            {
+                int u = p[v][i];
+
+                delta[u]  += sigma[u] * (1.0f + delta[v]) / (double)sigma[v];
+
+                if(v != source)
+                {
+                    cb[v] = cb[v] + delta[v];
+                }
+            }
+        }
+    }
+
+    for(int u = 0; u < (int)cb.size(); u++) cb[u] = cb[u]/2;
+
+    return cb;
 }

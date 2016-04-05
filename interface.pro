@@ -11,7 +11,7 @@ QMAKE_CXXFLAGS += -std=c++11 -O0 -g
 
 include(src/xlsx/qtxlsx.pri)
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += widgets
 
 TARGET = interface
 TEMPLATE = app

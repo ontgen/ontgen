@@ -216,7 +216,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Area ( √A )</string>
+       <string> √A </string>
       </property>
      </widget>
      <widget class="QLabel" name="label_5">
@@ -415,7 +415,7 @@ color:#000;
         <string notr="true"/>
        </property>
        <property name="text">
-        <string>Alpha ( α )</string>
+        <string>α</string>
        </property>
       </widget>
       <widget class="QDoubleSpinBox" name="alpha">
@@ -456,7 +456,7 @@ color:#000;
         <string notr="true"/>
        </property>
        <property name="text">
-        <string> Beta ( β )</string>
+        <string>β</string>
        </property>
       </widget>
       <widget class="QDoubleSpinBox" name="beta">

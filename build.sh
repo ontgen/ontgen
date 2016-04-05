@@ -5,21 +5,21 @@ then
 	mkdir "build"
 fi
 
-rm -rf ./packages/ontgen/data/ontgen
+# rm -rf ./packages/ontgen/data/ontgen
 
-if [ ! -d "packages/ontgen/data/ontgen" ];
-then
-	mkdir "packages/ontgen/data/ontgen"
-	mkdir "packages/ontgen/data/ontgen/platforms"
-	mkdir "packages/ontgen/data/ontgen/libs"
-fi
+# if [ ! -d "packages/ontgen/data/ontgen" ];
+# then
+# 	mkdir "packages/ontgen/data/ontgen"
+# 	mkdir "packages/ontgen/data/ontgen/platforms"
+# 	mkdir "packages/ontgen/data/ontgen/libs"
+# fi
 
-qmake -makefile -o build/Makefile
-cd build
-make
-cp interface ../packages/ontgen/data/ontgen
-cp -r ./help ../packages/ontgen/data/ontgen
-cd ..
+# /home/silvana/qt/qtbase/bin/qmake -makefile -spec linux-g++ -o build/Makefile
+# cd build
+# make
+# cp interface ../packages/ontgen/data/ontgen
+# cp -r ./help ../packages/ontgen/data/ontgen
+# cd ..
 
 cp libqxcb.so packages/ontgen/data/ontgen/platforms
 cd packages/ontgen/data/ontgen

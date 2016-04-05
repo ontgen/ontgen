@@ -16,63 +16,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "Measure.hpp"
+#include "Dijkstra.hpp"
 
 Measure::Measure(){}
 
 
 Measure::~Measure(){}
 
-double Measure::getDegreeCentrality(int index)
-{
-    return this->nodes[index].getDegreeCentrality();
-}
-
-
-double Measure::getBetweennessCentrality(int index)
-{
-    return this->nodes[index].getBetweennessCentrality();
-}
-
-
-double Measure::getClosenessCentrality(int index)
-{
-    return this->nodes[index].getClosenessCentrality();
-}
-
-
-double Measure::getEfficientCentrality(int index)
-{
-    return nodes[index].getEfficientCentrality();
-}
-
-
-void Measure::setDegreeCentrality(int index,double value)
-{
-    nodes[index].setDegreeCentrality(value);
-}
-
-
-void Measure::setBetweennessCentrality(int index,double value)
-{
-    nodes[index].setBetweennessCentrality(value);
-}
-
-
-void Measure::setClosenessCentrality(int index,double value)
-{
-    nodes[index].setClosenessCentrality(value);
-}
-
-
-void Measure::setEfficientCentrality(int index, double value)
-{
-    nodes[index].setEfficientCentrality(value);
-}
-
 void Measure::initialize(Graph &graph,int n, bool bc, bool cc, bool dc, bool ec)
 {
-
-    vector<Node> nodes = graph.getNodes();
 
     this->numberOfNodes = n;
 
@@ -82,69 +34,47 @@ void Measure::initialize(Graph &graph,int n, bool bc, bool cc, bool dc, bool ec)
 
     if (bc || cc || ec)
     {
-        vector< vector<int> > graph = vector< vector<int> > ( n, vector<int> ( n,0 ) );
-        /**
-         * Gera matriz de adjacência do grafo a partir do vetor de nós
-         */
-        for ( int i = 0; i < this->numberOfNodes; i++)
-        {
-            vector <int> adjacents = nodes[i].getAdjacentsNodes();
-
-            for (int j = 0; j < (int)adjacents.size(); j++)
-            {
-                graph[i][ adjacents[j] ] = nodes[i].getWeightEdge(j);//atribui ligação
-            }
-        }
-
-        Brandes brandes (this->numberOfNodes);
-
-        /**
-         * Encontra todos os caminhos mínimos entre pares de nós do grafo
-         */
-        for (int i = 0; i < this->numberOfNodes; i++)
-        {
-            brandes.execute(graph,i,nodes);
-            // brandes.printShortestPaths();
-        }
-
 
         /**
          * Obtendo medidas de centralidade
          */
 
-        vector< vector <int> > shortestPath = brandes.getShortestPath();
-
         if (bc)
         {
-            betweennessCentrality(nodes);   //centralidade de intermediação
+            /**
+             * Encontra todos os caminhos mínimos entre pares de nós do grafo
+             */
+               betweennessCentrality(graph);
         }
 
         if (cc)
         { 
-            closenessCentrality(nodes,shortestPath); //centralidade de proximidade
+            closenessCentrality(graph); //centralidade de proximidade
         }
 
         if (ec)
         {
-            efficientCentrality(nodes,shortestPath);  //centralidade de eficiência
+            efficientCentrality(graph);  //centralidade de eficiência
         }
 
     }
 
     if (dc)
     {  
-        degreeCentrality(nodes);  //centralidade de grau
+        degreeCentrality(graph);  //centralidade de grau
     }
 
+    vector<Node> nodes = graph.getNodes();
     graph.setNodesMeasures(nodes);
 
 }
 
 
-void Measure::degreeCentrality(vector<Node> &nodes)
+void Measure::degreeCentrality(Graph &graph)
 {
 
     int maximumDegree = -1;
+    vector<Node> nodes = graph.getNodes();
 
     for (int i = 0; i < this->numberOfNodes; i++)
     {
@@ -161,11 +91,15 @@ void Measure::degreeCentrality(vector<Node> &nodes)
             maximumDegree = degree;
         }
     }
+
+    graph.setNodesMeasures(nodes);
 }
 
 
-void Measure::closenessCentrality(vector<Node> &nodes, vector<vector <int> > shortestPath)
+void Measure::closenessCentrality(Graph &graph)
 {
+    vector<Node> nodes = graph.getNodes();
+
     for (int i = 0; i < this->numberOfNodes;i++)
     {
         double sum = 0;
@@ -175,18 +109,24 @@ void Measure::closenessCentrality(vector<Node> &nodes, vector<vector <int> > sho
          */
         for (int j = 0; j < this->numberOfNodes; j++)
         {
-            sum += shortestPath[i][j];
+            Dijkstra d;
+            d.execute(graph,i,j);
+            vector<int> path = d.shortestPath(j);
+            sum += (int)path.size();
         }
 
         double cc = (double)( 1.0f / sum );
 
         nodes[i].setClosenessCentrality(cc);
     }
+
+    graph.setNodesMeasures(nodes);
 }
 
 
-void Measure::efficientCentrality(vector<Node> &nodes, vector<vector <int> > shortestPath)
+void Measure::efficientCentrality(Graph &graph)
 {
+    vector<Node> nodes = graph.getNodes();
 
     for (int i = 0; i < this->numberOfNodes;i++)
     {
@@ -198,11 +138,15 @@ void Measure::efficientCentrality(vector<Node> &nodes, vector<vector <int> > sho
          */
         for (int j = 0; j < this->numberOfNodes; j++)
         {
-            if (shortestPath[i][j] >  longestPath)
-            {
-                longestPath = shortestPath[i][j];
+            Dijkstra d;
+            d.execute(graph,i,j);
+            vector<int> path = d.shortestPath(j);
 
-                double auxiliar = (double)shortestPath[i][j];
+            if ((int)path.size() > longestPath)
+            {
+                longestPath = (int)path.size();
+
+                double auxiliar = (double)path.size();
 
                 double ef = (double) ( 1 / auxiliar ) ;
 
@@ -211,119 +155,24 @@ void Measure::efficientCentrality(vector<Node> &nodes, vector<vector <int> > sho
         }
 
     }
+
+    graph.setNodesMeasures(nodes);
 }
 
-void Measure::betweennessCentrality(vector<Node> & nodes)
+void Measure::betweennessCentrality(Graph &graph)
 {
-    int node = 0;
-    double bc = -1.0;
+    Brandes brandes (this->numberOfNodes);
 
-    for (int v = 0; v < this->numberOfNodes; v++)
+    vector<Node> nodes = graph.getNodes();
+    vector<double> cb = brandes.betweennessCentrality(nodes);
+
+    for(int w = 0; w < this->numberOfNodes; w++)
     {
-        double value =  geodesic(nodes,v);
-        nodes[v].setBetweennessCentrality(value);
-
-        if (bc < value)
-        {
-          bc = value;
-          node = v;
-        }
+        nodes[w].setBetweennessCentrality(cb[w]);
     }
 
-    this->centralNode = node;//armazena nó com a centralidade maior
+    graph.setNodesMeasures(nodes);
 }
 
-/**
- * Calcula a centralidade de intermediação a partir das geodésicas obtidas
- * pelo algoritmo de Brandes e em seguida retorna a medida.
- */
-double Measure::geodesic(vector<Node> nodes,int source)
-{
-  double bc = 0.0f;
-  int i = 0, j = 0, n = this->numberOfNodes;
 
-  for (i = 0; i < n-1; i++)
-  {
-    if (i == source)
-    {
-        continue;
-    }
 
-    for (j = i+1; j < n; j++)
-    {
-
-      if (j != source && i != j && i != source)
-      {
-        vector< vector<int> > paths;
-
-        int nPaths = pathsSearch(nodes,i,j,paths);//número de geodésicas de i até j
-
-        int nNodes = nodeSearch(paths,source,nPaths);
-
-        bc = bc + ( (double)nNodes / (double)nPaths );
-
-        paths.clear();
-      }
-    }
-  }
-
-  return bc;
-}
-
-/**
- * Encontra o número de caminhos que contêm o vértice de destino
- */
-int Measure::pathsSearch(vector<Node> nodes, int source, int target, vector< vector<int> > &paths)
-{
-
-    if (source == target)
-    {
-        return 0;
-    }
-
-    int nPaths = 0;
-
-    int n = nodes[source].getNumberOfPaths();
-
-    for (int i = 0; i < n; i++)
-    {
-        int auxiliar = nodes[source].getNumberOfNodesFromPath(i)-1;
-
-        if ( nodes[source].returnNode(i,auxiliar) == target )
-        {
-            paths.push_back(vector<int>(auxiliar+1));
-
-            for (int k = 0; k <= auxiliar; k++)
-            {
-                paths[nPaths][k] = nodes[source].returnNode(i,k);
-            }
-
-            nPaths++;
-        }
-    }
-
-    return nPaths;
-}
-
-/**
- *Busca vertice em um ou mais caminhos
- *parametros de entrada: caminhos e o vertice a ser buscado e o numero de caminhos minimos a ser buscado
- *retorna o numero de vezes que o vertice foi encontrado
- */
-int Measure::nodeSearch(vector< vector<int> > &paths, int node, int nPaths)
-{
-    int count = 0;
-
-    for (int i = 0; i < nPaths; i++)
-    {
-        for ( int j = 0; j < (int)paths[i].size(); j++)
-        {
-          if (node == paths[i][j])
-          {
-            count++;
-          }
-        }
-    }
-    
-    return count;
-}

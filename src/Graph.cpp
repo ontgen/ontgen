@@ -128,7 +128,7 @@ void Graph::setRegionOfNode(int region, int node)
 	this->nodes[node].setRegion(region);
 }
 
-vector<Node> Graph::getNodes() 
+vector<Node> & Graph::getNodes()
 {
 	return this->nodes;
 }
